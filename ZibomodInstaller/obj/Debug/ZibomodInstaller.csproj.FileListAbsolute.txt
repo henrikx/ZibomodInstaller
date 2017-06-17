@@ -1,0 +1,9 @@
+C:\Users\Henrik\documents\visual studio 2015\Projects\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.csprojResolveAssemblyReference.cache
+C:\Users\Henrik\documents\visual studio 2015\Projects\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.Form1.resources
+C:\Users\Henrik\documents\visual studio 2015\Projects\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.Properties.Resources.resources
+C:\Users\Henrik\documents\visual studio 2015\Projects\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.csproj.GenerateResource.Cache
+C:\Users\Henrik\documents\visual studio 2015\Projects\ZibomodInstaller\ZibomodInstaller\bin\Debug\ZibomodInstaller.exe.config
+C:\Users\Henrik\documents\visual studio 2015\Projects\ZibomodInstaller\ZibomodInstaller\bin\Debug\ZibomodInstaller.exe
+C:\Users\Henrik\documents\visual studio 2015\Projects\ZibomodInstaller\ZibomodInstaller\bin\Debug\ZibomodInstaller.pdb
+C:\Users\Henrik\documents\visual studio 2015\Projects\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.exe
+C:\Users\Henrik\documents\visual studio 2015\Projects\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.pdb

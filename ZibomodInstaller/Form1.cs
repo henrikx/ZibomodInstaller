@@ -7,6 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
+using Microsoft.Win32;
+using Ionic.Zip;
+using System.Net;
+using System.IO;
 
 namespace ZibomodInstaller
 {
@@ -15,6 +20,14 @@ namespace ZibomodInstaller
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if(openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                textBox1.Text = openFileDialog1.FileName;
+            }
         }
     }
 }
