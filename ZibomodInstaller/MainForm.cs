@@ -15,19 +15,25 @@ using System.IO;
 
 namespace ZibomodInstaller
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
-
+        //Browse button
         private void button1_Click(object sender, EventArgs e)
         {
             if(openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 textBox1.Text = openFileDialog1.FileName;
             }
+        }
+        //Install button
+        private void button2_Click(object sender, EventArgs e)
+        {
+            InstallActions installActions = new InstallActions(); //Invoke new class
+            string DriveFolderFiles = installActions.GetDriveFolderList(); //Get list of files in Zibomod drive folder.
         }
     }
 }

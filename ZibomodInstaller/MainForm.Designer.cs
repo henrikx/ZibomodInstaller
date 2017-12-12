@@ -1,6 +1,6 @@
 ﻿namespace ZibomodInstaller
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -76,8 +76,9 @@
             this.button2.TabIndex = 3;
             this.button2.Text = "Install";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -86,7 +87,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.textBox1);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "ZiboMod Install/Update Tool";
             this.ResumeLayout(false);
             this.PerformLayout();
