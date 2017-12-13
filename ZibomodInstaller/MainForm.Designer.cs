@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.InstallLog = new System.Windows.Forms.RichTextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.button2 = new System.Windows.Forms.Button();
@@ -44,14 +44,14 @@
             this.textBox1.TabIndex = 0;
             this.textBox1.Text = "C:\\X-Plane\\X-Plane.exe";
             // 
-            // richTextBox1
+            // InstallLog
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(24, 12);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(363, 181);
-            this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "Welcome to ZiboMod Installer! Please select your X-Plane installation path below " +
+            this.InstallLog.Location = new System.Drawing.Point(24, 12);
+            this.InstallLog.Name = "InstallLog";
+            this.InstallLog.ReadOnly = true;
+            this.InstallLog.Size = new System.Drawing.Size(363, 181);
+            this.InstallLog.TabIndex = 1;
+            this.InstallLog.Text = "Welcome to ZiboMod Installer! Please select your X-Plane installation path below " +
     "and hit Install to continue!";
             // 
             // button1
@@ -85,7 +85,7 @@
             this.ClientSize = new System.Drawing.Size(417, 399);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.InstallLog);
             this.Controls.Add(this.textBox1);
             this.Name = "MainForm";
             this.Text = "ZiboMod Install/Update Tool";
@@ -97,7 +97,7 @@
         #endregion
 
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox InstallLog;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button button2;

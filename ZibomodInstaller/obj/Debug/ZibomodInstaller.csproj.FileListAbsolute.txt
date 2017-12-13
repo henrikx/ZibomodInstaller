@@ -17,3 +17,13 @@ C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\Zibomod
 C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.csproj.CoreCompileInputs.cache
 C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.exe
 C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.pdb
+C:\Users\vfk-gvs-p-henrikta\Source\Repos\ZibomodInstaller\ZibomodInstaller\bin\Debug\ZibomodInstaller.exe.config
+C:\Users\vfk-gvs-p-henrikta\Source\Repos\ZibomodInstaller\ZibomodInstaller\bin\Debug\ZibomodInstaller.exe
+C:\Users\vfk-gvs-p-henrikta\Source\Repos\ZibomodInstaller\ZibomodInstaller\bin\Debug\ZibomodInstaller.pdb
+C:\Users\vfk-gvs-p-henrikta\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.csprojResolveAssemblyReference.cache
+C:\Users\vfk-gvs-p-henrikta\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.MainForm.resources
+C:\Users\vfk-gvs-p-henrikta\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.Properties.Resources.resources
+C:\Users\vfk-gvs-p-henrikta\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.csproj.GenerateResource.Cache
+C:\Users\vfk-gvs-p-henrikta\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.csproj.CoreCompileInputs.cache
+C:\Users\vfk-gvs-p-henrikta\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.exe
+C:\Users\vfk-gvs-p-henrikta\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.pdb

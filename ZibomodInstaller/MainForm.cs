@@ -12,6 +12,7 @@ using Microsoft.Win32;
 using Ionic.Zip;
 using System.Net;
 using System.IO;
+using System.Threading;
 
 namespace ZibomodInstaller
 {
@@ -32,8 +33,14 @@ namespace ZibomodInstaller
         //Install button
         private void button2_Click(object sender, EventArgs e)
         {
-            InstallActions installActions = new InstallActions(); //Invoke new class
-            string DriveFolderFiles = installActions.GetDriveFolderList(); //Get list of files in Zibomod drive folder.
+
+            Thread ZiboInstall = new Thread(InstallAction);
+            InstallLog.AppendText("\nInstalling ZiboMod");
+            ZiboInstall.Start();
+        }
+        private void InstallAction()
+        {
+            InstallActions.ZiboInstall();
         }
     }
 }
