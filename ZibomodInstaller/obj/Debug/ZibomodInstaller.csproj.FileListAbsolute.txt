@@ -11,7 +11,6 @@ C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\bin\Debug\Zibomod
 C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\bin\Debug\ZibomodInstaller.exe
 C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\bin\Debug\ZibomodInstaller.pdb
 C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.csprojResolveAssemblyReference.cache
-C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.Form1.resources
 C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.Properties.Resources.resources
 C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.csproj.GenerateResource.Cache
 C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.csproj.CoreCompileInputs.cache
@@ -27,3 +26,4 @@ C:\Users\vfk-gvs-p-henrikta\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\D
 C:\Users\vfk-gvs-p-henrikta\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.csproj.CoreCompileInputs.cache
 C:\Users\vfk-gvs-p-henrikta\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.exe
 C:\Users\vfk-gvs-p-henrikta\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.pdb
+C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.MainForm.resources
