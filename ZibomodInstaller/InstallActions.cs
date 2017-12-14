@@ -29,7 +29,7 @@ namespace ZibomodInstaller
         {
             using (WebClient DriveClient = new WebClient())
             {
-                string DownloadString = DriveClient.DownloadString("https://drive.google.com/uc?id=" + ID + "&authuser=0&export=download");
+                DriveClient.DownloadFile("https://drive.google.com/uc?id=" + ID + "&authuser=0&export=download",DownloadLocation);
             }
         }
     }
@@ -71,7 +71,11 @@ namespace ZibomodInstaller
                     DownloadID = folderItemDriveID[selectedDownload];
                 }
             }
-            ZiboDrive.DownloadFile(DownloadID, "test.zip");
+            ZiboDrive.DownloadFile(DownloadID, Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BoeingDL.zip");
+            using (ZipFile BoeingDL = ZipFile.Read(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BoeingDL.zip"))
+            {
+                BoeingDL.ExtractAll(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BoeingDL", ExtractExistingFileAction.OverwriteSilently);
+            }
 
         }
     }
