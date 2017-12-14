@@ -35,7 +35,7 @@ namespace ZibomodInstaller
     }
     class InstallActions
     {
-        public static void ZiboInstall()
+        public static void ZiboDownload()
         {
             DriveAPI ZiboDrive = new DriveAPI(); //Import the API parser
             Dictionary<string,dynamic> folderContentData = ZiboDrive.GetDriveFolderList("0B-tdl3VvPeOOYm12Wm80V04wdDQ"); //Get list of items in folder

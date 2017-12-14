@@ -34,13 +34,13 @@ namespace ZibomodInstaller
         private void button2_Click(object sender, EventArgs e)
         {
 
-            Thread ZiboInstall = new Thread(InstallAction);
+            Thread InstallActionWorker = new Thread(InstallAction);
             InstallLog.AppendText("\nInstalling ZiboMod");
-            ZiboInstall.Start();
+            InstallActionWorker.Start();
         }
         private void InstallAction()
         {
-            InstallActions.ZiboInstall();
+            InstallActions.ZiboDownload();
         }
     }
 }
