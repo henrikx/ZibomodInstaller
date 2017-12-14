@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Net;
 using System.Web.Script.Serialization;
+using Ionic.Zip;
 #if DEBUG
 using System.Windows.Forms;
 #endif
@@ -24,6 +25,13 @@ namespace ZibomodInstaller
             }
             return folderContentData;
         }
+        public void DownloadFile(string ID, string DownloadLocation)
+        {
+            using (WebClient DriveClient = new WebClient())
+            {
+                string DownloadString = DriveClient.DownloadString("https://drive.google.com/uc?id=" + ID + "&authuser=0&export=download");
+            }
+        }
     }
     class InstallActions
     {
@@ -33,12 +41,15 @@ namespace ZibomodInstaller
             Dictionary<string,dynamic> folderContentData = ZiboDrive.GetDriveFolderList("0B-tdl3VvPeOOYm12Wm80V04wdDQ"); //Get list of items in folder
             List<string> folderItemName = new List<string>(); //Define lists for item properties
             List<double> folderItemAddedDate = new List<double>();
+            List<string> folderItemDriveID = new List<string>();
             List<int> potentialFiles = new List<int>(); //Define list of zip candidates for installation
+            List<double> potentialFilesAddedDate = new List<double>(); // Define list of zip candidates with date to find newest of the few.
 
-            for (int i = 0; i < folderContentData["items"].Count; i++)
+            for (int i = 0; i < folderContentData["items"].Count; i++) //Add a global index of files and directories in drive folder, so that we can search in it.
             {
                 folderItemName.Add(folderContentData["items"][i]["title"]); //Add title to list
                 folderItemAddedDate.Add(Convert.ToDouble(Convert.ToDateTime(folderContentData["items"][i]["createdDate"]).Ticks)); //Add the file added date to list
+                folderItemDriveID.Add(folderContentData["items"][i]["id"]);
 
                 if (folderItemName[i].Contains(".zip"))
                 {
@@ -47,17 +58,20 @@ namespace ZibomodInstaller
             }
             for (int i = 0; i < potentialFiles.Count; i++)
             {
-                List<double> potentialFilesAddedDate = new List<double>();
                 potentialFilesAddedDate.Add(folderItemAddedDate[potentialFiles[i]]);
-                var NewestFile = potentialFilesAddedDate.FindIndex(x=> potentialFilesAddedDate.Contains(potentialFilesAddedDate.Max()));
+            }
+            string DownloadID = "";
+            for (int i = 0; i < potentialFiles.Count; i++)
+            {
+                int NewestFile = potentialFiles[potentialFilesAddedDate.IndexOf(potentialFilesAddedDate.Max())]; //Find which file ID is the newest file.
                 if (potentialFiles[i] == NewestFile)
                 {
-#if DEBUG
-                    MessageBox.Show(Convert.ToString(i));
-#endif
+                    int selectedDownload;
+                    selectedDownload = potentialFiles[i];
+                    DownloadID = folderItemDriveID[selectedDownload];
                 }
-
             }
+            ZiboDrive.DownloadFile(DownloadID, "test.zip");
 
         }
     }
