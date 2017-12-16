@@ -35,6 +35,11 @@ namespace ZibomodInstaller
     }
     class InstallActions
     {
+        public static void ZiboPrepareDir(string xplaneDir)
+        {
+            DirectoryCopy(xplaneDir + @"Aircraft\Laminar Research\Boeing B737-800", xplaneDir + @"Aircraft\B737-800X", true);
+
+        }
         public static void ZiboDownload()
         {
             DriveAPI ZiboDrive = new DriveAPI(); //Import the API parser
@@ -58,25 +63,72 @@ namespace ZibomodInstaller
             }
             for (int i = 0; i < potentialFiles.Count; i++)
             {
-                potentialFilesAddedDate.Add(folderItemAddedDate[potentialFiles[i]]);
+                potentialFilesAddedDate.Add(folderItemAddedDate[potentialFiles[i]]); //Add potentialfiles' last modified date so that they get the same ID.
             }
             string DownloadID = "";
             for (int i = 0; i < potentialFiles.Count; i++)
             {
                 int NewestFile = potentialFiles[potentialFilesAddedDate.IndexOf(potentialFilesAddedDate.Max())]; //Find which file ID is the newest file.
-                if (potentialFiles[i] == NewestFile)
+                if (potentialFiles[i] == NewestFile) //If the current file is the newest one, then do:
                 {
                     int selectedDownload;
                     selectedDownload = potentialFiles[i];
-                    DownloadID = folderItemDriveID[selectedDownload];
+                    DownloadID = folderItemDriveID[selectedDownload]; //Select DriveID for downloading the file
                 }
             }
-            ZiboDrive.DownloadFile(DownloadID, Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BoeingDL.zip");
+            ZiboDrive.DownloadFile(DownloadID, Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BoeingDL.zip"); //Downloads file to %Appdata%
+        }
+        public static void ZiboExtract(string xplaneDir)
+        {
             using (ZipFile BoeingDL = ZipFile.Read(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BoeingDL.zip"))
             {
-                BoeingDL.ExtractAll(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BoeingDL", ExtractExistingFileAction.OverwriteSilently);
+                BoeingDL.ExtractAll(xplaneDir + @"Aircraft\B737-800X", ExtractExistingFileAction.OverwriteSilently);
+            }
+        }
+        public static void CleanUp()
+        {
+            File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BoeingDL.zip");
+        }
+        //
+        //
+        //
+        //DirectoryCopy
+        private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
+        {
+            // Get the subdirectories for the specified directory.
+            DirectoryInfo dir = new DirectoryInfo(sourceDirName);
+
+            if (!dir.Exists)
+            {
+                throw new DirectoryNotFoundException(
+                    "Source directory does not exist or could not be found: "
+                    + sourceDirName);
             }
 
+            DirectoryInfo[] dirs = dir.GetDirectories();
+            // If the destination directory doesn't exist, create it.
+            if (!Directory.Exists(destDirName))
+            {
+                Directory.CreateDirectory(destDirName);
+            }
+
+            // Get the files in the directory and copy them to the new location.
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                string temppath = Path.Combine(destDirName, file.Name);
+                file.CopyTo(temppath, true);
+            }
+
+            // If copying subdirectories, copy them and their contents to new location.
+            if (copySubDirs)
+            {
+                foreach (DirectoryInfo subdir in dirs)
+                {
+                    string temppath = Path.Combine(destDirName, subdir.Name);
+                    DirectoryCopy(subdir.FullName, temppath, copySubDirs);
+                }
+            }
         }
     }
 }

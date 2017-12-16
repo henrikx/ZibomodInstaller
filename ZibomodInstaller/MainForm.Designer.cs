@@ -28,21 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.xplaneDirTextBox = new System.Windows.Forms.TextBox();
             this.InstallLog = new System.Windows.Forms.RichTextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // textBox1
+            // xplaneDirTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(24, 199);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(270, 20);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "C:\\X-Plane\\X-Plane.exe";
+            this.xplaneDirTextBox.Location = new System.Drawing.Point(24, 199);
+            this.xplaneDirTextBox.Name = "xplaneDirTextBox";
+            this.xplaneDirTextBox.ReadOnly = true;
+            this.xplaneDirTextBox.Size = new System.Drawing.Size(270, 20);
+            this.xplaneDirTextBox.TabIndex = 0;
+            this.xplaneDirTextBox.Text = "C:\\X-Plane\\X-Plane.exe";
             // 
             // InstallLog
             // 
@@ -86,7 +86,7 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.InstallLog);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.xplaneDirTextBox);
             this.Name = "MainForm";
             this.Text = "ZiboMod Install/Update Tool";
             this.ResumeLayout(false);
@@ -96,7 +96,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox xplaneDirTextBox;
         private System.Windows.Forms.RichTextBox InstallLog;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
