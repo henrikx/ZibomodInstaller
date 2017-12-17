@@ -43,14 +43,21 @@ namespace ZibomodInstaller
         {
             InstallLog.AppendText("\nPreparing directory...");
             string xplaneDir = Regex.Match(xplaneDirTextBox.Text, @"([\s\S]*?)(X-Plane\.exe)").Groups[1].Value;
-            InstallActions.ZiboPrepareDir(xplaneDir);
-            InstallLog.AppendText("\nDownloading Zibomod...");
-            InstallActions.ZiboDownload();
-            InstallLog.AppendText("\nExtracting and installing Zibomod...");
-            InstallActions.ZiboExtract(xplaneDir);
-            InstallLog.AppendText("\nCleaning up...");
+            InstallActions.ZiboPrepareDir(xplaneDir); //Copy Laminar's 737
+            InstallLogAppendText("Finding the latest Zibo Update..."); 
+            string DownloadID = InstallActions.ZiboFindFile(); //Get Drive ID of the latest zibo release
+            InstallLogAppendText("Downloading ZiboMod...");
+            InstallActions.ZiboDownload(DownloadID); //Download the selected file
+            InstallLogAppendText("Extracting and installing Zibomod...");
+            InstallActions.ZiboExtract(xplaneDir); //Extract into xplane
+            InstallLogAppendText("Cleaning up...");
             InstallActions.CleanUp();
-            InstallLog.AppendText("\nDone installing Zibomod");
+            InstallLogAppendText("Done installing Zibomod");
+        }
+        public static void InstallLogAppendText(string appendString)
+        {
+            MainForm mainForm = new MainForm();
+            mainForm.InstallLog.AppendText("\n" + appendString);
         }
     }
 }

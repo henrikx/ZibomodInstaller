@@ -38,10 +38,10 @@ namespace ZibomodInstaller
         public static void ZiboPrepareDir(string xplaneDir)
         {
             DirectoryCopy(xplaneDir + @"Aircraft\Laminar Research\Boeing B737-800", xplaneDir + @"Aircraft\B737-800X", true);
-
         }
-        public static void ZiboDownload()
+        public static string ZiboFindFile()
         {
+            string DownloadID = "";
             DriveAPI ZiboDrive = new DriveAPI(); //Import the API parser
             Dictionary<string,dynamic> folderContentData = ZiboDrive.GetDriveFolderList("0B-tdl3VvPeOOYm12Wm80V04wdDQ"); //Get list of items in folder
             List<string> folderItemName = new List<string>(); //Define lists for item properties
@@ -65,7 +65,6 @@ namespace ZibomodInstaller
             {
                 potentialFilesAddedDate.Add(folderItemAddedDate[potentialFiles[i]]); //Add potentialfiles' last modified date so that they get the same ID.
             }
-            string DownloadID = "";
             for (int i = 0; i < potentialFiles.Count; i++)
             {
                 int NewestFile = potentialFiles[potentialFilesAddedDate.IndexOf(potentialFilesAddedDate.Max())]; //Find which file ID is the newest file.
@@ -76,6 +75,11 @@ namespace ZibomodInstaller
                     DownloadID = folderItemDriveID[selectedDownload]; //Select DriveID for downloading the file
                 }
             }
+            return DownloadID;
+        }
+        public static void ZiboDownload(string DownloadID)
+        {
+            DriveAPI ZiboDrive = new DriveAPI();
             ZiboDrive.DownloadFile(DownloadID, Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BoeingDL.zip"); //Downloads file to %Appdata%
         }
         public static void ZiboExtract(string xplaneDir)
