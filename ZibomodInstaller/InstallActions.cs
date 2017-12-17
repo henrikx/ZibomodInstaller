@@ -7,9 +7,7 @@ using System.IO;
 using System.Net;
 using System.Web.Script.Serialization;
 using Ionic.Zip;
-#if DEBUG
-using System.Windows.Forms;
-#endif
+using System.Text.RegularExpressions;
 namespace ZibomodInstaller
 {
     class DriveAPI //API parser
@@ -29,7 +27,7 @@ namespace ZibomodInstaller
         {
             using (WebClient DriveClient = new WebClient())
             {
-                DriveClient.DownloadFile("https://drive.google.com/uc?id=" + ID + "&authuser=0&export=download",DownloadLocation);
+                DriveClient.DownloadFile("https://www.googleapis.com/drive/v3/files/" + ID + "?alt=media&key=AIzaSyCTF8x5DeVXllRTPMrtIwnY5DaBjbjKts8", DownloadLocation);
             }
         }
     }
@@ -37,13 +35,16 @@ namespace ZibomodInstaller
     {
         public static void ZiboPrepareDir(string xplaneDir)
         {
-            DirectoryCopy(xplaneDir + @"Aircraft\Laminar Research\Boeing B737-800", xplaneDir + @"Aircraft\B737-800X", true);
+            if(!Directory.Exists(xplaneDir + @"Aircraft\B737-800X")) 
+            {
+                DirectoryCopy(xplaneDir + @"Aircraft\Laminar Research\Boeing B737-800", xplaneDir + @"Aircraft\B737-800X", true);
+            }
         }
-        public static string ZiboFindFile()
+        public static string FindLatestFile(string FolderID)
         {
             string DownloadID = "";
             DriveAPI ZiboDrive = new DriveAPI(); //Import the API parser
-            Dictionary<string,dynamic> folderContentData = ZiboDrive.GetDriveFolderList("0B-tdl3VvPeOOYm12Wm80V04wdDQ"); //Get list of items in folder
+            Dictionary<string,dynamic> folderContentData = ZiboDrive.GetDriveFolderList(FolderID); //Get list of items in folder
             List<string> folderItemName = new List<string>(); //Define lists for item properties
             List<double> folderItemAddedDate = new List<double>();
             List<string> folderItemDriveID = new List<string>();
@@ -77,6 +78,7 @@ namespace ZibomodInstaller
             }
             return DownloadID;
         }
+        //ZiboMod
         public static void ZiboDownload(string DownloadID)
         {
             DriveAPI ZiboDrive = new DriveAPI();
@@ -89,9 +91,76 @@ namespace ZibomodInstaller
                 BoeingDL.ExtractAll(xplaneDir + @"Aircraft\B737-800X", ExtractExistingFileAction.OverwriteSilently);
             }
         }
+        //AudioBird
+        public static void AudioDownload(string DownloadID)
+        {
+            DriveAPI AudioDrive = new DriveAPI();
+            AudioDrive.DownloadFile(DownloadID, Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\AXP-Immersion.zip"); //Downloads file to %Appdata%
+        }
+        public static void AudioExtract()
+        {
+            using (ZipFile AudioDL = ZipFile.Read(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\AXP-Immersion.zip"))
+            {
+                AudioDL.ExtractAll(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ExtractExistingFileAction.OverwriteSilently);
+            }
+        }
+        public static void AudioInstall(string xplaneDir)
+        {
+            string[] dirs = Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AXP IMM*");
+            DirectoryCopy(dirs[0]+"\\fmod",xplaneDir + @"Aircraft\B737-800X\fmod",true);
+        }
+        //RGMod
+        public static string FindLatestRG()
+        {
+            using (WebClient VK = new WebClient())
+            {
+                string DownloadID = "";
+                VK.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1");
+                string VKGroup = VK.DownloadString(@"https://vk.com/xplane11rgmod");
+                MatchCollection posts = Regex.Matches(VKGroup, "div id=\"post-.*?_(.*?)\" class=\"_post[\\s\\S\\n]*?title=\"https:\\/\\/drive\\.google\\.com\\/file\\/d\\/(.*?)\\/view");
+                DownloadID = posts[1].Groups[2].Value;
+                return DownloadID;
+            }
+        }
+        public static void RGDownload(string ID)
+        {
+            DriveAPI RGDrive = new DriveAPI();
+            RGDrive.DownloadFile(ID, Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RG-Mod.zip");
+        }
+        public static void RGExtract(bool isTextureOnly, string xPlanePath)
+        {
+            if (!isTextureOnly)
+            {
+                using (ZipFile RGMod = ZipFile.Read(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RG-Mod.zip"))
+                {
+                    RGMod.ExtractAll(xPlanePath + "\\Aircraft\\B737-800X", ExtractExistingFileAction.OverwriteSilently);
+                }
+            } else
+            {
+                using (ZipFile RGMod = ZipFile.Read(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RG-Mod.zip"))
+                {
+                    RGMod.ExtractSelectedEntries("name = *", "objects", xPlanePath+"\\Aircraft\\B737-800X", ExtractExistingFileAction.OverwriteSilently);
+                }
+            }
+
+        }
         public static void CleanUp()
         {
-            File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BoeingDL.zip");
+            MainForm mainForm = new MainForm();
+            if(File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BoeingDL.zip"))
+            {
+                File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BoeingDL.zip");
+            }
+            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\AXP-Immersion.zip"))
+            {
+                File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\AXP-Immersion.zip");
+                string[] dirs = Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AXP IMM*");
+                Directory.Delete(dirs[0], true);
+            }
+            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RG-Mod.zip"))
+            {
+                File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RG-Mod.zip");
+            }
         }
         //
         //
@@ -104,9 +173,7 @@ namespace ZibomodInstaller
 
             if (!dir.Exists)
             {
-                throw new DirectoryNotFoundException(
-                    "Source directory does not exist or could not be found: "
-                    + sourceDirName);
+                throw new DirectoryNotFoundException();
             }
 
             DirectoryInfo[] dirs = dir.GetDirectories();
