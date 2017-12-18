@@ -7,3 +7,4 @@ C:\Users\Henrik\source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Release\Zibom
 C:\Users\Henrik\source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Release\ZibomodInstaller.csproj.CoreCompileInputs.cache
 C:\Users\Henrik\source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Release\ZibomodInstaller.exe
 C:\Users\Henrik\source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Release\ZibomodInstaller.pdb
+C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Release\ZibomodInstaller.csprojResolveAssemblyReference.cache

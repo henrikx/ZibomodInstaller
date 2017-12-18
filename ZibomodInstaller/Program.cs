@@ -17,6 +17,7 @@ namespace ZibomodInstaller
         {
 #if !DEBUG
             Assembly start = Assembly.Load((byte[])Properties.Resources.Ionic_Zip);
+            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
 #endif
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
