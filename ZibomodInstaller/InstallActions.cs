@@ -97,18 +97,18 @@ namespace ZibomodInstaller
             DriveAPI AudioDrive = new DriveAPI();
             AudioDrive.DownloadFile(DownloadID, Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\AXP-Immersion.zip"); //Downloads file to %Appdata%
         }
-        public static void AudioExtract()
+        public static void AudioExtract(string xplaneDir)
         {
             using (ZipFile AudioDL = ZipFile.Read(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\AXP-Immersion.zip"))
             {
-                AudioDL.ExtractAll(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ExtractExistingFileAction.OverwriteSilently);
+                AudioDL.ExtractAll(xplaneDir + @"Aircraft\B737-800X", ExtractExistingFileAction.OverwriteSilently);
             }
         }
-        public static void AudioInstall(string xplaneDir)
-        {
-            string[] dirs = Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AXP IMM*");
-            DirectoryCopy(dirs[0]+"\\fmod",xplaneDir + @"Aircraft\B737-800X\fmod",true);
-        }
+        //public static void AudioInstall(string xplaneDir)
+        //{
+        //    string[] dirs = Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AXP IMM*");
+        //    DirectoryCopy(dirs[0]+"\\fmod",xplaneDir + @"Aircraft\B737-800X\fmod",true);
+        //}
         //RGMod
         public static string FindLatestRG()
         {

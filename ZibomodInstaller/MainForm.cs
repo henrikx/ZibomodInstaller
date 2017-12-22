@@ -75,13 +75,13 @@ namespace ZibomodInstaller
             if (audioBirdCheck.Checked) 
             {
                 InstallLogAppendText("\nAudioBirdXP Installation:\nFinding latest AudioBirdXP update...");
-                string DownloadIDAudio = InstallActions.FindLatestFile("0ByscEgfSB51pT2kyS05yZmx1UkU");
+                string DownloadIDAudio = InstallActions.FindLatestFile("1IgWBmhgwKg6j4cjH3jSSO8KYfG2eurVZ");
                 InstallLogAppendText("Downloading AudioBirdXP package...");
                 InstallActions.AudioDownload(DownloadIDAudio);
-                InstallLogAppendText("Extracting AudioBirdXP package to temporary directory...");
-                InstallActions.AudioExtract();
                 InstallLogAppendText("Installing into aircraft...");
-                InstallActions.AudioInstall(xplaneDir);
+                InstallActions.AudioExtract(xplaneDir);
+                //InstallLogAppendText("Installing into aircraft...");
+                //InstallActions.AudioInstall(xplaneDir);
                 InstallLogAppendText("Done installing AudioBirdXP Sound Mod.");
             }
             if (RGModCheckbox.Checked)
