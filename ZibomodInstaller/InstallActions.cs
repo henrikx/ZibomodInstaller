@@ -154,8 +154,6 @@ namespace ZibomodInstaller
             if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\AXP-Immersion.zip"))
             {
                 File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\AXP-Immersion.zip");
-                string[] dirs = Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AXP IMM*");
-                Directory.Delete(dirs[0], true);
             }
             if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RG-Mod.zip"))
             {
