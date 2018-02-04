@@ -67,9 +67,15 @@ namespace ZibomodInstaller
             InstallLogAppendText("Finding the latest Zibo Update..."); 
             string DownloadIDZibo = InstallActions.FindLatestFile("0B-tdl3VvPeOOYm12Wm80V04wdDQ"); //Get Drive ID of the latest zibo release
             InstallLogAppendText("Downloading ZiboMod...");
-            InstallActions.ZiboDownload(DownloadIDZibo); //Download the selected file
-            InstallLogAppendText("Extracting and installing ZiboMod...");
-            InstallActions.ZiboExtract(xplaneDir); //Extract into xplane
+            try
+            {
+                InstallActions.ZiboDownload(DownloadIDZibo); //Download the selected file
+                InstallLogAppendText("Extracting and installing ZiboMod...");
+                InstallActions.ZiboExtract(xplaneDir); //Extract into xplane
+            } catch (System.Net.WebException)
+            {
+                InstallLogAppendText("File couldn't be found or download quota exceeded. Ignoring...");
+            }
             InstallLogAppendText("Done installing Zibomod.");
             //AudioBird
             if (audioBirdCheck.Checked) 
@@ -79,7 +85,8 @@ namespace ZibomodInstaller
                 InstallLogAppendText("Downloading AudioBirdXP package...");
                 InstallActions.AudioDownload(DownloadIDAudio);
                 InstallLogAppendText("Installing into aircraft...");
-                InstallActions.AudioExtract(xplaneDir);
+                InstallActions.AudioExtract();
+                InstallActions.AudioInstall(xplaneDir);
                 //InstallLogAppendText("Installing into aircraft...");
                 //InstallActions.AudioInstall(xplaneDir);
                 InstallLogAppendText("Done installing AudioBirdXP Sound Mod.");
@@ -104,6 +111,8 @@ namespace ZibomodInstaller
         private void InstallLogAppendText(string appendString)
         {
             InstallLog.AppendText("\n" + appendString);
+            InstallLog.Select(InstallLog.TextLength, 0);
+            InstallLog.ScrollToCaret();
         }
         private void AfterCleanup()
         {

@@ -54,6 +54,7 @@
             // 
             // InstallLog
             // 
+            this.InstallLog.HideSelection = false;
             this.InstallLog.Location = new System.Drawing.Point(24, 12);
             this.InstallLog.Name = "InstallLog";
             this.InstallLog.ReadOnly = true;

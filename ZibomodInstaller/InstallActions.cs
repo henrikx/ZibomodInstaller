@@ -33,6 +33,7 @@ namespace ZibomodInstaller
     }
     class InstallActions
     {
+        static string AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         public static void ZiboPrepareDir(string xplaneDir)
         {
             if(!Directory.Exists(xplaneDir + @"Aircraft\B737-800X")) 
@@ -82,11 +83,11 @@ namespace ZibomodInstaller
         public static void ZiboDownload(string DownloadID)
         {
             DriveAPI ZiboDrive = new DriveAPI();
-            ZiboDrive.DownloadFile(DownloadID, Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BoeingDL.zip"); //Downloads file to %Appdata%
+            ZiboDrive.DownloadFile(DownloadID, AppData + "\\BoeingDL.zip"); //Downloads file to %Appdata%
         }
         public static void ZiboExtract(string xplaneDir)
         {
-            using (ZipFile BoeingDL = ZipFile.Read(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BoeingDL.zip"))
+            using (ZipFile BoeingDL = ZipFile.Read(AppData + "\\BoeingDL.zip"))
             {
                 BoeingDL.ExtractAll(xplaneDir + @"Aircraft\B737-800X", ExtractExistingFileAction.OverwriteSilently);
             }
@@ -95,18 +96,41 @@ namespace ZibomodInstaller
         public static void AudioDownload(string DownloadID)
         {
             DriveAPI AudioDrive = new DriveAPI();
-            AudioDrive.DownloadFile(DownloadID, Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\AXP-Immersion.zip"); //Downloads file to %Appdata%
+            AudioDrive.DownloadFile(DownloadID, AppData + "\\AXP-Immersion.zip"); //Downloads file to %Appdata%
         }
-        public static void AudioExtract(string xplaneDir)
+        public static void AudioExtract()
         {
-            using (ZipFile AudioDL = ZipFile.Read(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\AXP-Immersion.zip"))
+            using (ZipFile AudioDL = ZipFile.Read(AppData + "\\AXP-Immersion.zip"))
             {
-                AudioDL.ExtractAll(xplaneDir + @"Aircraft\B737-800X", ExtractExistingFileAction.OverwriteSilently);
+                AudioDL.ExtractAll(AppData + @"\AudioDL", ExtractExistingFileAction.OverwriteSilently);
             }
+        }
+        public static void AudioInstall(string xplaneDir)
+        {
+            string fmodDirectory = null;
+            if (!Directory.Exists (AppData + @"\AudioDL\fmod"))
+            {
+                DirectoryInfo dir = new DirectoryInfo(AppData + @"\AudioDL");
+                DirectoryInfo[] dirs = dir.GetDirectories();
+                foreach (DirectoryInfo subdir in dirs)
+                {
+                    IEnumerable<string> fmodDirectories = Directory.GetDirectories(subdir.FullName).Where(s => s.Contains("fmod"));//We must find where the fmod folder is located
+                    if (fmodDirectories.Count() > 0)
+                    {
+                        fmodDirectory = fmodDirectories.ElementAt(0);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                fmodDirectory = AppData + @"\AudioDL\fmod";
+            }
+            DirectoryCopy(fmodDirectory, xplaneDir + @"Aircraft\B737-800X", true);
         }
         //public static void AudioInstall(string xplaneDir)
         //{
-        //    string[] dirs = Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "AXP IMM*");
+        //    string[] dirs = Directory.GetDirectories(AppData, "AXP IMM*");
         //    DirectoryCopy(dirs[0]+"\\fmod",xplaneDir + @"Aircraft\B737-800X\fmod",true);
         //}
         //RGMod
@@ -125,19 +149,19 @@ namespace ZibomodInstaller
         public static void RGDownload(string ID)
         {
             DriveAPI RGDrive = new DriveAPI();
-            RGDrive.DownloadFile(ID, Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RG-Mod.zip");
+            RGDrive.DownloadFile(ID, AppData + "\\RG-Mod.zip");
         }
         public static void RGExtract(bool isTextureOnly, string xPlanePath)
         {
             if (!isTextureOnly)
             {
-                using (ZipFile RGMod = ZipFile.Read(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RG-Mod.zip"))
+                using (ZipFile RGMod = ZipFile.Read(AppData + "\\RG-Mod.zip"))
                 {
                     RGMod.ExtractAll(xPlanePath + "\\Aircraft\\B737-800X", ExtractExistingFileAction.OverwriteSilently);
                 }
             } else
             {
-                using (ZipFile RGMod = ZipFile.Read(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RG-Mod.zip"))
+                using (ZipFile RGMod = ZipFile.Read(AppData + "\\RG-Mod.zip"))
                 {
                     RGMod.ExtractSelectedEntries("name = *", "objects", xPlanePath+"\\Aircraft\\B737-800X", ExtractExistingFileAction.OverwriteSilently);
                 }
@@ -147,17 +171,21 @@ namespace ZibomodInstaller
         public static void CleanUp()
         {
             MainForm mainForm = new MainForm();
-            if(File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BoeingDL.zip"))
+            if(File.Exists(AppData + "\\BoeingDL.zip"))
             {
-                File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BoeingDL.zip");
+                File.Delete(AppData + "\\BoeingDL.zip");
             }
-            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\AXP-Immersion.zip"))
+            if (File.Exists(AppData + "\\AXP-Immersion.zip"))
             {
-                File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\AXP-Immersion.zip");
+                File.Delete(AppData + "\\AXP-Immersion.zip");
             }
-            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RG-Mod.zip"))
+            if (File.Exists(AppData + "\\RG-Mod.zip"))
             {
-                File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\RG-Mod.zip");
+                File.Delete(AppData + "\\RG-Mod.zip");
+            }
+            if (Directory.Exists(AppData + "\\AudioDL"))
+            {
+                Directory.Delete(AppData + "\\AudioDL", true);
             }
         }
         //
