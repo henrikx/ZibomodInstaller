@@ -107,6 +107,10 @@ namespace ZibomodInstaller
         }
         public static void AudioInstall(string xplaneDir)
         {
+            if (!Directory.Exists(xplaneDir + @"Aircraft\B737-800X\fmod"))
+            {
+                Directory.CreateDirectory(xplaneDir + @"Aircraft\B737-800X\fmod");
+            }
             string fmodDirectory = null;
             if (!Directory.Exists (AppData + @"\AudioDL\fmod"))
             {
@@ -126,7 +130,7 @@ namespace ZibomodInstaller
             {
                 fmodDirectory = AppData + @"\AudioDL\fmod";
             }
-            DirectoryCopy(fmodDirectory, xplaneDir + @"Aircraft\B737-800X", true);
+            DirectoryCopy(fmodDirectory, xplaneDir + @"Aircraft\B737-800X\fmod", true);
         }
         //public static void AudioInstall(string xplaneDir)
         //{
