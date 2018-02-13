@@ -111,26 +111,28 @@ namespace ZibomodInstaller
             {
                 Directory.CreateDirectory(xplaneDir + @"Aircraft\B737-800X\fmod");
             }
+            string fmodDirectory = FindFMODDir(AppData + @"\AudioDL");
+
+            DirectoryCopy(fmodDirectory, xplaneDir + @"Aircraft\B737-800X\fmod", true);
+        }
+        private static string FindFMODDir(string DirectoryToLookIn)
+        {
             string fmodDirectory = null;
-            if (!Directory.Exists (AppData + @"\AudioDL\fmod"))
+            DirectoryInfo dir = new DirectoryInfo(DirectoryToLookIn);
+            DirectoryInfo[] dirs = dir.GetDirectories();
+            foreach (DirectoryInfo subdir in dirs)
             {
-                DirectoryInfo dir = new DirectoryInfo(AppData + @"\AudioDL");
-                DirectoryInfo[] dirs = dir.GetDirectories();
-                foreach (DirectoryInfo subdir in dirs)
+                if (subdir.FullName.Contains("fmod"))
                 {
-                    IEnumerable<string> fmodDirectories = Directory.GetDirectories(subdir.FullName).Where(s => s.Contains("fmod"));//We must find where the fmod folder is located
-                    if (fmodDirectories.Count() > 0)
-                    {
-                        fmodDirectory = fmodDirectories.ElementAt(0);
-                        break;
-                    }
+                    fmodDirectory = subdir.FullName;
+                    break;
+                }
+                else
+                {
+                    fmodDirectory = FindFMODDir(subdir.FullName);
                 }
             }
-            else
-            {
-                fmodDirectory = AppData + @"\AudioDL\fmod";
-            }
-            DirectoryCopy(fmodDirectory, xplaneDir + @"Aircraft\B737-800X\fmod", true);
+            return fmodDirectory;
         }
         //public static void AudioInstall(string xplaneDir)
         //{
