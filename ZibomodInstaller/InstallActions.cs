@@ -169,7 +169,7 @@ namespace ZibomodInstaller
             {
                 using (ZipFile RGMod = ZipFile.Read(AppData + "\\RG-Mod.zip"))
                 {
-                    RGMod.ExtractSelectedEntries("name = *", "objects", xPlanePath+"\\Aircraft\\B737-800X", ExtractExistingFileAction.OverwriteSilently);
+                    RGMod.ExtractSelectedEntries("name = *.dds", "objects", xPlanePath+"\\Aircraft\\B737-800X", ExtractExistingFileAction.OverwriteSilently);
                 }
             }
 
