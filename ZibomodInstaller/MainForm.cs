@@ -22,6 +22,19 @@ namespace ZibomodInstaller
         {
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
+            InstallActions.InitConfig();
+            LoadConfig();
+        }
+        //Load configuration
+        string AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ZiboModInstaller";
+        private void LoadConfig()
+        {
+            
+            System.Xml.XmlDocument xmlConfigDoc = new System.Xml.XmlDocument();
+            xmlConfigDoc.PreserveWhitespace = true;
+            xmlConfigDoc.Load(AppData + "\\data.xml");
+            xplaneDirTextBox.Text = xmlConfigDoc.SelectSingleNode("installer/configuration/xplanePath").InnerText;
+            xmlConfigDoc.Save(AppData + "\\data.xml");
         }
         //Browse button
         private void button1_Click(object sender, EventArgs e)
@@ -29,6 +42,11 @@ namespace ZibomodInstaller
             if(openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 xplaneDirTextBox.Text = openFileDialog1.FileName;
+                System.Xml.XmlDocument xmlConfigDoc = new System.Xml.XmlDocument();
+                xmlConfigDoc.PreserveWhitespace = true;
+                xmlConfigDoc.Load(AppData + "\\data.xml");
+                xmlConfigDoc.SelectSingleNode("installer/configuration/xplanePath").InnerText = xplaneDirTextBox.Text;
+                xmlConfigDoc.Save(AppData + "\\data.xml");
             }
         }
         //Install button

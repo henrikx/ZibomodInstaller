@@ -89,5 +89,9 @@
   <ItemGroup>
     <None Include="Ionic.Zip.dll" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\defaultconfig.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

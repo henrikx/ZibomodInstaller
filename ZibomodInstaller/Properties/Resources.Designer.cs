@@ -63,6 +63,16 @@ namespace ZibomodInstaller.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] defaultconfig {
+            get {
+                object obj = ResourceManager.GetObject("defaultconfig", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] Ionic_Zip {
             get {
                 object obj = ResourceManager.GetObject("Ionic_Zip", resourceCulture);

@@ -33,7 +33,18 @@ namespace ZibomodInstaller
     }
     class InstallActions
     {
-        static string AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        static string AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ZiboModInstaller";
+        public static void InitConfig()
+        {
+            if (!Directory.Exists(AppData))
+            {
+                Directory.CreateDirectory(AppData);
+            }
+            if (!File.Exists(AppData + "\\data.xml"))
+            {
+                File.WriteAllBytes(AppData + "\\data.xml", Properties.Resources.defaultconfig);
+            }
+        }
         public static void ZiboPrepareDir(string xplaneDir)
         {
             if(!Directory.Exists(xplaneDir + @"Aircraft\B737-800X")) 

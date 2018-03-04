@@ -1,0 +1,9 @@
+<installer>
+		<configuration>
+			<xplanePath>C:\X-Plane\X-Plane.exe</xplanePath>
+		</configuration>
+		<data>
+			<ziboVer></ziboVer>
+			<fmodVer></fmodVer>
+        </data>
+</installer>
