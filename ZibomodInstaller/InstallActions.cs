@@ -8,27 +8,31 @@ using System.Net;
 using System.Web.Script.Serialization;
 using Ionic.Zip;
 using System.Text.RegularExpressions;
+using System.Threading;
+
 namespace ZibomodInstaller
 {
     class DriveAPI //API parser
     {
+        public WebClient DriveClient = new WebClient();
         public Dictionary<string,dynamic> GetDriveFolderList(string DriveFolderID)
         {
             Dictionary<string, dynamic> folderContentData = null; //Define data storage for parsed JSON content
             JavaScriptSerializer jsonParser = new JavaScriptSerializer(); 
-            using (WebClient DriveClient = new WebClient()) //WebClient can be scrapped after the file has been downloaded into memory.
-            {
-                string jsonData = DriveClient.DownloadString("https://www.googleapis.com/drive/v2beta/files?openDrive=true&reason=102&syncType=0&errorRecovery=false&q=trashed = false and '" + DriveFolderID + "' in parents&fields=kind,nextPageToken,items(kind,title,mimeType,createdDate,modifiedDate,modifiedByMeDate,lastViewedByMeDate,fileSize,owners(kind,permissionId,displayName,picture),lastModifyingUser(kind,permissionId,displayName,picture),hasThumbnail,thumbnailVersion,iconLink,id,shared,sharedWithMeDate,userPermission(role),explicitlyTrashed,quotaBytesUsed,shareable,copyable,fileExtension,sharingUser(kind,permissionId,displayName,picture),spaces,editable,version,teamDriveId,hasAugmentedPermissions,trashingUser(kind,permissionId,displayName,picture),trashedDate,parents(id),labels(starred,hidden,trashed,restricted,viewed),capabilities(canCopy,canDownload,canEdit,canAddChildren,canDelete,canRemoveChildren,canShare,canTrash,canRename,canReadTeamDrive,canMoveTeamDriveItem)),incompleteSearch&appDataFilter=NO_APP_DATA&spaces=drive&maxResults=50&orderBy=folder,title_natural asc&key=AIzaSyCTF8x5DeVXllRTPMrtIwnY5DaBjbjKts8"); //Key at the end
-                folderContentData = jsonParser.Deserialize<Dictionary<string, dynamic>>(jsonData); //Convert downloaded JSON data to data which is readable by C#
-            }
+            string jsonData = DriveClient.DownloadString("https://www.googleapis.com/drive/v2beta/files?openDrive=true&reason=102&syncType=0&errorRecovery=false&q=trashed = false and '" + DriveFolderID + "' in parents&fields=kind,nextPageToken,items(kind,title,mimeType,createdDate,modifiedDate,modifiedByMeDate,lastViewedByMeDate,fileSize,owners(kind,permissionId,displayName,picture),lastModifyingUser(kind,permissionId,displayName,picture),hasThumbnail,thumbnailVersion,iconLink,id,shared,sharedWithMeDate,userPermission(role),explicitlyTrashed,quotaBytesUsed,shareable,copyable,fileExtension,sharingUser(kind,permissionId,displayName,picture),spaces,editable,version,teamDriveId,hasAugmentedPermissions,trashingUser(kind,permissionId,displayName,picture),trashedDate,parents(id),labels(starred,hidden,trashed,restricted,viewed),capabilities(canCopy,canDownload,canEdit,canAddChildren,canDelete,canRemoveChildren,canShare,canTrash,canRename,canReadTeamDrive,canMoveTeamDriveItem)),incompleteSearch&appDataFilter=NO_APP_DATA&spaces=drive&maxResults=50&orderBy=folder,title_natural asc&key=AIzaSyCTF8x5DeVXllRTPMrtIwnY5DaBjbjKts8"); //Key at the end
+            folderContentData = jsonParser.Deserialize<Dictionary<string, dynamic>>(jsonData); //Convert downloaded JSON data to data which is readable by C#
             return folderContentData;
         }
         public void DownloadFile(string ID, string DownloadLocation)
         {
-            using (WebClient DriveClient = new WebClient())
-            {
-                DriveClient.DownloadFile("https://www.googleapis.com/drive/v3/files/" + ID + "?alt=media&key=AIzaSyCTF8x5DeVXllRTPMrtIwnY5DaBjbjKts8", DownloadLocation);
-            }
+            System.Uri Uri = new System.Uri("https://www.googleapis.com/drive/v3/files/" + ID + "?alt=media&key=AIzaSyCTF8x5DeVXllRTPMrtIwnY5DaBjbjKts8");
+            DriveClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(Downloader_DownloadProgressChanged);
+            DriveClient.DownloadFileAsync(Uri, DownloadLocation);
+        }
+        public int downloadProgress;
+        public void Downloader_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            downloadProgress = e.ProgressPercentage;
         }
     }
     class InstallActions
@@ -94,7 +98,13 @@ namespace ZibomodInstaller
         public static void ZiboDownload(string DownloadID)
         {
             DriveAPI ZiboDrive = new DriveAPI();
-            ZiboDrive.DownloadFile(DownloadID, AppData + "\\BoeingDL.zip"); //Downloads file to %Appdata%
+            ZiboDrive.DownloadFile(DownloadID, AppData + "\\BoeingDL.zip"); //Downloads file to %Appdata%. Operation is async!
+            while (ZiboDrive.DriveClient.IsBusy)
+            {
+                InstallPage._InstallPage.UpdateProgressbar(ZiboDrive.downloadProgress);
+                Thread.Sleep(2);
+            }
+
         }
         public static void ZiboExtract(string xplaneDir)
         {
@@ -159,7 +169,13 @@ namespace ZibomodInstaller
                 VK.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1");
                 string VKGroup = VK.DownloadString(@"https://vk.com/xplane11rgmod");
                 MatchCollection posts = Regex.Matches(VKGroup, "div id=\"post-.*?_(.*?)\" class=\"_post[\\s\\S\\n]*?title=\"https:\\/\\/drive\\.google\\.com\\/file\\/d\\/(.*?)\\/view");
-                DownloadID = posts[1].Groups[2].Value;
+                try
+                {
+                    DownloadID = posts[1].Groups[2].Value;
+                } catch (ArgumentOutOfRangeException)
+                {
+                    DownloadID = "1aZPQMD4tI51XFbdmlgT-bPh6RqlgKwlF";
+                }
                 return DownloadID;
             }
         }
