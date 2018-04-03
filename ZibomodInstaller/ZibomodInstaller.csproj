@@ -52,6 +52,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InstallActions.cs" />
+    <Compile Include="InstallOptionsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InstallOptionsPage.Designer.cs">
+      <DependentUpon>InstallOptionsPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="InstallPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -66,6 +72,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="InstallOptionsPage.resx">
+      <DependentUpon>InstallOptionsPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="InstallPage.resx">
       <DependentUpon>InstallPage.cs</DependentUpon>
     </EmbeddedResource>

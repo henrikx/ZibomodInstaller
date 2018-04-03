@@ -28,19 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.installPage1 = new ZibomodInstaller.InstallPage();
             this.closebutton = new System.Windows.Forms.Button();
             this.titleBar = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.installPage1 = new ZibomodInstaller.InstallPage();
+            this.installOptionsPage = new ZibomodInstaller.InstallOptionsPage();
             this.titleBar.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // installPage1
-            // 
-            this.installPage1.Location = new System.Drawing.Point(33, 59);
-            this.installPage1.Name = "installPage1";
-            this.installPage1.Size = new System.Drawing.Size(364, 322);
-            this.installPage1.TabIndex = 0;
             // 
             // closebutton
             // 
@@ -48,12 +42,13 @@
             this.closebutton.FlatAppearance.BorderSize = 0;
             this.closebutton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red;
             this.closebutton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.closebutton.Font = new System.Drawing.Font("Arial Narrow", 10F);
-            this.closebutton.Location = new System.Drawing.Point(388, 3);
+            this.closebutton.Font = new System.Drawing.Font("Calibri", 8.5F);
+            this.closebutton.Location = new System.Drawing.Point(387, 3);
             this.closebutton.Name = "closebutton";
+            this.closebutton.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
             this.closebutton.Size = new System.Drawing.Size(42, 26);
             this.closebutton.TabIndex = 1;
-            this.closebutton.Text = "x";
+            this.closebutton.Text = "X";
             this.closebutton.UseVisualStyleBackColor = false;
             this.closebutton.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -80,14 +75,30 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "ZiboMod Installer";
             // 
+            // installPage1
+            // 
+            this.installPage1.Location = new System.Drawing.Point(33, 59);
+            this.installPage1.Name = "installPage1";
+            this.installPage1.Size = new System.Drawing.Size(368, 319);
+            this.installPage1.TabIndex = 3;
+            this.installPage1.Visible = false;
+            // 
+            // installOptionsPage
+            // 
+            this.installOptionsPage.Location = new System.Drawing.Point(33, 59);
+            this.installOptionsPage.Name = "installOptionsPage";
+            this.installOptionsPage.Size = new System.Drawing.Size(364, 322);
+            this.installOptionsPage.TabIndex = 0;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
             this.ClientSize = new System.Drawing.Size(429, 393);
-            this.Controls.Add(this.titleBar);
             this.Controls.Add(this.installPage1);
+            this.Controls.Add(this.titleBar);
+            this.Controls.Add(this.installOptionsPage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MainForm";
             this.Text = "ZiboMod Install/Update Tool";
@@ -99,10 +110,11 @@
 
         #endregion
 
-        private InstallPage installPage1;
+        private InstallOptionsPage installOptionsPage;
         private System.Windows.Forms.Button closebutton;
         private System.Windows.Forms.Panel titleBar;
         private System.Windows.Forms.Label label1;
+        private InstallPage installPage1;
     }
 }
 

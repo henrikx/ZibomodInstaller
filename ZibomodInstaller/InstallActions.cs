@@ -161,7 +161,7 @@ namespace ZibomodInstaller
         //    DirectoryCopy(dirs[0]+"\\fmod",xplaneDir + @"Aircraft\B737-800X\fmod",true);
         //}
         //RGMod
-        public static string FindLatestRG()
+        public static string FindLatestRG() //Attempt to find the newest RG Mod to extract Jamalje's textures from, however as RG mod is now payware, this function is mainly deprecated. Automatic fallback to the newest known free RG Mod
         {
             using (WebClient VK = new WebClient())
             {
@@ -174,7 +174,7 @@ namespace ZibomodInstaller
                     DownloadID = posts[1].Groups[2].Value;
                 } catch (ArgumentOutOfRangeException)
                 {
-                    DownloadID = "1aZPQMD4tI51XFbdmlgT-bPh6RqlgKwlF";
+                    DownloadID = "1aZPQMD4tI51XFbdmlgT-bPh6RqlgKwlF"; //Fallback to newest known free version.
                 }
                 return DownloadID;
             }

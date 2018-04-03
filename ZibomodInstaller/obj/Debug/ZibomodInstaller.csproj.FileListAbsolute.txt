@@ -36,5 +36,6 @@ C:\lazarus\source\repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInsta
 C:\lazarus\source\repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.csproj.CoreCompileInputs.cache
 C:\lazarus\source\repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.exe
 C:\lazarus\source\repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.pdb
+C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.InstallOptionsPage.resources
 C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.InstallPage.resources
 C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.csprojResolveAssemblyReference.cache
