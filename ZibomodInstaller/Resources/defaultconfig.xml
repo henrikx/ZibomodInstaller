@@ -1,9 +1,12 @@
 <installer>
 		<configuration>
 			<xplanePath>C:\X-Plane\X-Plane.exe</xplanePath>
+			<audiobirdxp>true</audiobirdxp>
+			<texturemod>true</texturemod>
 		</configuration>
 		<data>
 			<ziboVer></ziboVer>
 			<fmodVer></fmodVer>
+			<texturemodinstalled>false</texturemodinstalled>
         </data>
 </installer>

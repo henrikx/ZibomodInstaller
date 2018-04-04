@@ -32,7 +32,7 @@
             this.titleBar = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.installPage1 = new ZibomodInstaller.InstallPage();
-            this.installOptionsPage = new ZibomodInstaller.InstallOptionsPage();
+            this.installOptionsPage1 = new ZibomodInstaller.InstallOptionsPage();
             this.titleBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -40,13 +40,14 @@
             // 
             this.closebutton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(80)))), ((int)(((byte)(100)))));
             this.closebutton.FlatAppearance.BorderSize = 0;
-            this.closebutton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red;
+            this.closebutton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.IndianRed;
             this.closebutton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.closebutton.Font = new System.Drawing.Font("Calibri", 8.5F);
+            this.closebutton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(45)))), ((int)(((byte)(60)))));
             this.closebutton.Location = new System.Drawing.Point(387, 3);
             this.closebutton.Name = "closebutton";
             this.closebutton.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
-            this.closebutton.Size = new System.Drawing.Size(42, 26);
+            this.closebutton.Size = new System.Drawing.Size(42, 22);
             this.closebutton.TabIndex = 1;
             this.closebutton.Text = "X";
             this.closebutton.UseVisualStyleBackColor = false;
@@ -84,21 +85,21 @@
             this.installPage1.TabIndex = 3;
             this.installPage1.Visible = false;
             // 
-            // installOptionsPage
+            // installOptionsPage1
             // 
-            this.installOptionsPage.Location = new System.Drawing.Point(0, 59);
-            this.installOptionsPage.Name = "installOptionsPage";
-            this.installOptionsPage.Size = new System.Drawing.Size(429, 322);
-            this.installOptionsPage.TabIndex = 0;
+            this.installOptionsPage1.Location = new System.Drawing.Point(0, 59);
+            this.installOptionsPage1.Name = "installOptionsPage1";
+            this.installOptionsPage1.Size = new System.Drawing.Size(429, 322);
+            this.installOptionsPage1.TabIndex = 4;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
-            this.ClientSize = new System.Drawing.Size(429, 393);
+            this.ClientSize = new System.Drawing.Size(429, 382);
+            this.Controls.Add(this.installOptionsPage1);
             this.Controls.Add(this.installPage1);
-            this.Controls.Add(this.installOptionsPage);
             this.Controls.Add(this.titleBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MainForm";
@@ -112,10 +113,11 @@
         #endregion
 
         private InstallOptionsPage installOptionsPage;
-        private System.Windows.Forms.Button closebutton;
         private System.Windows.Forms.Panel titleBar;
         private System.Windows.Forms.Label label1;
         public InstallPage installPage1;
+        public System.Windows.Forms.Button closebutton;
+        private InstallOptionsPage installOptionsPage1;
     }
 }
 

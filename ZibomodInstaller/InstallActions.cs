@@ -65,14 +65,32 @@ namespace ZibomodInstaller
                 File.WriteAllBytes(AppData + "\\data.xml", Properties.Resources.defaultconfig);
             }
         }
-        public static void UpdateUserStatus(string appendString)
+        public static void ResetConfig()
         {
-            LogFile.Write("\n [UserInfo]" + DateTime.Now.TimeOfDay + " | " + appendString);
-            InstallPage._InstallPage.CurrentAction.Text = appendString;
+            Directory.Delete(AppData, true);
+            InitConfig();
+        }
+        public static void SaveConfig()
+        {
+            System.Xml.XmlDocument xmlConfigDoc = new System.Xml.XmlDocument();
+            xmlConfigDoc.PreserveWhitespace = true;
+            xmlConfigDoc.Load(AppData + "\\data.xml");
+            xmlConfigDoc.SelectSingleNode("installer/configuration/xplanePath").InnerText = InstallOptionsPage._InstallOptionsPage.xplaneDirTextBox.Text;
+            xmlConfigDoc.SelectSingleNode("installer/configuration/audiobirdxp").InnerText = Convert.ToString(InstallOptionsPage._InstallOptionsPage.audioBirdCheck.Checked);
+            xmlConfigDoc.SelectSingleNode("installer/configuration/texturemod").InnerText = Convert.ToString(InstallOptionsPage._InstallOptionsPage.RGModCheckbox.Checked);
+            xmlConfigDoc.SelectSingleNode("installer/data/ziboVer").InnerText = Convert.ToString(InstallOptionsPage.installedZibo);
+            xmlConfigDoc.SelectSingleNode("installer/data/fmodVer").InnerText = Convert.ToString(InstallOptionsPage.installedAudioB);
+            xmlConfigDoc.SelectSingleNode("installer/data/texturemodinstalled").InnerText = Convert.ToString(InstallOptionsPage.texturemodInstalled);
+            xmlConfigDoc.Save(AppData + "\\data.xml");
+        }
+        public static void UpdateUserStatus(string text)
+        {
+            LogFile.Write("\n[UserInfo] " + DateTime.Now.TimeOfDay + " | " + text);
+            InstallPage._InstallPage.CurrentAction.Text = text;
         }
         public static void AppendLogText(string text)
         {
-            LogFile.Write(text);
+            LogFile.Write("\n[DebugMsg] " + DateTime.Now.TimeOfDay + " | " + text);
         }
 
         public static void ZiboPrepareDir(string xplaneDir)
@@ -134,10 +152,20 @@ namespace ZibomodInstaller
         }
         public static void ZiboExtract(string xplaneDir)
         {
-            using (ZipFile BoeingDL = ZipFile.Read(AppData + "\\BoeingDL.zip"))
+            try
             {
-                BoeingDL.ExtractAll(xplaneDir + @"Aircraft\B737-800X", ExtractExistingFileAction.OverwriteSilently);
+                using (ZipFile BoeingDL = ZipFile.Read(AppData + "\\BoeingDL.zip"))
+                {
+                    BoeingDL.ExtractAll(xplaneDir + @"Aircraft\B737-800X", ExtractExistingFileAction.OverwriteSilently);
+                }
+            } catch (Exception ex)
+            {
+                UpdateUserStatus("Download quota for the file is exceeded. Waiting 2 seconds.");
+                AppendLogText("Download quota for the file is exceeded or another issue has caused Google to return a non-zip file.");
+                Thread.Sleep(2000);
+                throw ex;
             }
+
         }
         //AudioBird
         public static void AudioDownload(string DownloadID)
@@ -235,7 +263,6 @@ namespace ZibomodInstaller
         }
         public static void CleanUp()
         {
-            MainForm mainForm = new MainForm();
             if(File.Exists(AppData + "\\BoeingDL.zip"))
             {
                 File.Delete(AppData + "\\BoeingDL.zip");

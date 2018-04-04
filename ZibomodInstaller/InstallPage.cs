@@ -31,17 +31,27 @@ namespace ZibomodInstaller
         {
             Thread InstallActionWorker = new Thread(InstallAction);
             InstallActions.UpdateUserStatus("Starting ZiboMod Install Operation...");
+            MainForm._MainForm.closebutton.Enabled = false;
+            InstallActions.SaveConfig();
             InstallActionWorker.Start();
 
         }
-        private void determineTaskLength()
+        private int determineTaskLength()
         {
-            //Determine task length here
+            int taskLength = 2;
+            if (InstallOptionsPage._InstallOptionsPage.audioBirdCheck.Checked) { taskLength+=3; } //There are three tasks for these two
+            if (InstallOptionsPage._InstallOptionsPage.RGModCheckbox.Checked) { taskLength+=3; }
+            return taskLength;
         }
         private void InstallAction()
         {
             string xplaneDir = "";
+            bool ziboModSkipped = false;
+            bool audioBirdSkipped = false;
+            bool texturemodSkipped = false;
+
             InstallActions.UpdateUserStatus("Preparing directory...");
+            int taskLength = determineTaskLength();
             xplaneDir = Regex.Match(InstallOptionsPage._InstallOptionsPage.xplaneDirTextBox.Text, @"([\s\S]*?)(X-Plane\.exe)").Groups[1].Value;
             try
             {
@@ -49,64 +59,103 @@ namespace ZibomodInstaller
             }
             catch (DirectoryNotFoundException)
             {
-                InstallActions.UpdateUserStatus("Could not find a valid X-Plane installation at this directory.");
-                MessageBox.Show("Could not find a valid X-Plane installation at this directory.");
-                InstallActions.CleanUp();
+                InstallActions.UpdateUserStatus("Could not find a valid X-Plane installation at this directory");
+                MessageBox.Show("Could not find a valid X-Plane installation at this directory");
                 goto AfterException;
             }
             InstallActions.UpdateUserStatus("Finding the latest Zibo Update...");
-            string DownloadIDZibo = InstallActions.FindLatestFile("0B-tdl3VvPeOOYm12Wm80V04wdDQ"); //Get Drive ID of the latest zibo release
-            InstallActions.UpdateUserStatus("Downloading ZiboMod...");
-            try
+            string DownloadIDZibo = InstallActions.FindLatestFile("0B-tdl3VvPeOOYm12Wm80V04wdDQ"); //Get Drive ID of the latest zibo release. The string is the Drive ID for the zibomod download folder.
+            if(DownloadIDZibo != InstallOptionsPage.installedZibo) //This compares the drive ID of the currently installed version to the newest known version
             {
-                InstallActions.ZiboDownload(DownloadIDZibo); //Download the selected file
-                InstallActions.UpdateUserStatus("Extracting and installing ZiboMod...");
-                InstallActions.ZiboExtract(xplaneDir); //Extract into xplane
-            }
-            catch (System.Net.WebException)
+                try
+                {
+                    InstallActions.UpdateUserStatus("Downloading ZiboMod... (1/" + Convert.ToString(taskLength) + ")");
+                    InstallActions.ZiboDownload(DownloadIDZibo); //Download the selected file
+                    InstallActions.UpdateUserStatus("Extracting and installing ZiboMod...(2/" + Convert.ToString(taskLength) + ")");
+                    InstallActions.ZiboExtract(xplaneDir); //Extract into xplane
+                    InstallOptionsPage.installedZibo = DownloadIDZibo;
+                    InstallActions.UpdateUserStatus("Done installing Zibomod");
+                } catch (Exception ex)
+                {
+                    InstallActions.AppendLogText(ex.Message);
+                    ziboModSkipped = true;
+                }
+            } else
             {
-                InstallActions.UpdateUserStatus("File couldn't be found or download quota exceeded. Ignoring...");
-                Thread.Sleep(1500);
+                ziboModSkipped = true;
+                InstallActions.UpdateUserStatus("Zibomod is already up to date! Skipping...");
+                Thread.Sleep(2000);
             }
-            InstallActions.UpdateUserStatus("Done installing Zibomod.");
+
             //AudioBird
             if (InstallOptionsPage._InstallOptionsPage.audioBirdCheck.Checked)
             {
-                InstallActions.UpdateUserStatus("Finding latest AudioBirdXP update...");
-                string DownloadIDAudio = InstallActions.FindLatestFile("1IgWBmhgwKg6j4cjH3jSSO8KYfG2eurVZ");
-                InstallActions.UpdateUserStatus("Downloading AudioBirdXP package...");
-                InstallActions.AudioDownload(DownloadIDAudio);
-                InstallActions.UpdateUserStatus("Installing into aircraft...");
-                InstallActions.AudioExtract();
-                InstallActions.AudioInstall(xplaneDir);
-                //InstallLogAppendText("Installing into aircraft...");
-                //InstallActions.AudioInstall(xplaneDir);
-                InstallActions.UpdateUserStatus("Done installing AudioBirdXP Sound Mod.");
+                try
+                {
+                    InstallActions.UpdateUserStatus("Finding latest AudioBirdXP update... (3/" + Convert.ToString(taskLength) + ")");
+                    string DownloadIDAudio = InstallActions.FindLatestFile("1IgWBmhgwKg6j4cjH3jSSO8KYfG2eurVZ");
+                    if (DownloadIDAudio != InstallOptionsPage.installedAudioB)
+                    {
+                        InstallActions.UpdateUserStatus("Downloading AudioBirdXP package... (4/" + Convert.ToString(taskLength) + ")");
+                        InstallActions.AudioDownload(DownloadIDAudio);
+                        InstallActions.UpdateUserStatus("Installing into aircraft... (5/" + Convert.ToString(taskLength) + ")");
+                        InstallActions.AudioExtract();
+                        InstallActions.AudioInstall(xplaneDir);
+                        InstallOptionsPage.installedAudioB = DownloadIDAudio;
+                        InstallActions.UpdateUserStatus("Done installing AudioBirdXP Sound Mod.");
+                    }
+                    else
+                    {
+                        audioBirdSkipped = true;
+                        InstallActions.UpdateUserStatus("AudioBirdXP is already up to date! Skipping...");
+                        Thread.Sleep(2000);
+                    }
+                } catch (Exception ex)
+                {
+                    InstallActions.AppendLogText(ex.Message);
+                    audioBirdSkipped = true;
+                }
             }
-            if (InstallOptionsPage._InstallOptionsPage.RGModCheckbox.Checked)
+            if (InstallOptionsPage._InstallOptionsPage.RGModCheckbox.Checked) //It is not necessary to reinstall the textures if zibomod isn't updated, however this causes a problem when the user already has the latest zibomod but has not installed the texturemod
             {
-                bool RGModTextureOnly = true; //Latest free RGMod isn't compatible with the latest zibo, so the user option is removed. Only textures are compatible.
-                InstallActions.UpdateUserStatus("Finding latest RG update...");
-                string DownloadIDRGMod = InstallActions.FindLatestRG();
-                InstallActions.UpdateUserStatus("Downloading RG Mod...");
-                InstallActions.RGDownload(DownloadIDRGMod);
-                InstallActions.UpdateUserStatus("Installing RG Mod into aircraft...");
-                InstallActions.RGExtract(RGModTextureOnly, xplaneDir);
-                InstallActions.UpdateUserStatus("Done installing RG Mod texture mod.");
+                if (!ziboModSkipped || !InstallOptionsPage.texturemodInstalled)
+                {
+                    try
+                    {
+
+                        bool RGModTextureOnly = true; //Latest free RGMod isn't compatible with the latest zibo, so the user option is removed. Only textures are compatible.
+                        InstallActions.UpdateUserStatus("Finding latest texture mod update... (6/" + Convert.ToString(taskLength) + ")");
+                        string DownloadIDRGMod = InstallActions.FindLatestRG();
+                        InstallActions.UpdateUserStatus("Downloading texture mod... (7/" + Convert.ToString(taskLength) + ")");
+                        InstallActions.RGDownload(DownloadIDRGMod);
+                        InstallActions.UpdateUserStatus("Installing texture mod into aircraft... (8/" + Convert.ToString(taskLength) + ")");
+                        InstallActions.RGExtract(RGModTextureOnly, xplaneDir);
+                        InstallOptionsPage.texturemodInstalled = true;
+                        InstallActions.UpdateUserStatus("Done installing RG Mod texture mod.");
+                    }
+                    catch (Exception ex)
+                    {
+                        InstallActions.AppendLogText(ex.Message);
+                        texturemodSkipped = true;
+                    }
+                } else
+                {
+                    texturemodSkipped = true;
+                }
             }
+            InstallActions.SaveConfig();
             AfterException:
             InstallActions.UpdateUserStatus("Cleaning up...");
             InstallActions.CleanUp();
             AfterCleanup();
-            InstallActions.UpdateUserStatus("All tasks have been completed. You may now close this program.");
-
         }
         private void AfterCleanup()
         {
+            UpdateProgressbar(100);
             InstallActions.UpdateUserStatus("All tasks completed. Press close to exit.");
             closeButton.Enabled = true;
+            MainForm._MainForm.closebutton.Enabled = true;
         }
-
         private void closeButton_Click(object sender, EventArgs e)
         {
             Application.Exit();

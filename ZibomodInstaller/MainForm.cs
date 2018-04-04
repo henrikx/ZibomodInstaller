@@ -21,10 +21,10 @@ namespace ZibomodInstaller
         public static MainForm _MainForm;
         public MainForm()
         {
+            InstallActions.InitConfig();
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
             _MainForm = this;
-            InstallActions.InitConfig();
         }
 
         #region dragabbletitlebar
@@ -56,6 +56,7 @@ namespace ZibomodInstaller
 
         private void xCloseButton(object sender, EventArgs e)
         {
+            InstallActions.SaveConfig();
             InstallActions.CleanUp();
             Application.Exit();
         }
@@ -63,7 +64,6 @@ namespace ZibomodInstaller
         {
             installPage1.Visible = true;
             InstallPage._InstallPage.InstallStart();
-            
         }
     }
 }

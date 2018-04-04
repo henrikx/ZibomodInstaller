@@ -28,14 +28,35 @@ namespace ZibomodInstaller
 
         //Load configuration
         string AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ZiboModInstaller";
+        public static string installedZibo = null;
+        public static string installedAudioB = null;
+        public static bool texturemodInstalled;
         private void LoadConfig()
         {
+            try
+            {
+                System.Xml.XmlDocument xmlConfigDoc = new System.Xml.XmlDocument();
+                xmlConfigDoc.PreserveWhitespace = true;
+                xmlConfigDoc.Load(AppData + "\\data.xml");
+                xplaneDirTextBox.Text = xmlConfigDoc.SelectSingleNode("installer/configuration/xplanePath").InnerText;
+                audioBirdCheck.Checked = Convert.ToBoolean(xmlConfigDoc.SelectSingleNode("installer/configuration/audiobirdxp").InnerText);
+                RGModCheckbox.Checked = Convert.ToBoolean(xmlConfigDoc.SelectSingleNode("installer/configuration/texturemod").InnerText);
+                installedZibo = xmlConfigDoc.SelectSingleNode("installer/data/ziboVer").InnerText;
+                installedAudioB = xmlConfigDoc.SelectSingleNode("installer/data/fmodVer").InnerText;
+                texturemodInstalled = Convert.ToBoolean(xmlConfigDoc.SelectSingleNode("installer/data/texturemodinstalled").InnerText);
+                xmlConfigDoc.Save(AppData + "\\data.xml");
 
-            System.Xml.XmlDocument xmlConfigDoc = new System.Xml.XmlDocument();
-            xmlConfigDoc.PreserveWhitespace = true;
-            xmlConfigDoc.Load(AppData + "\\data.xml");
-            xplaneDirTextBox.Text = xmlConfigDoc.SelectSingleNode("installer/configuration/xplanePath").InnerText;
-            xmlConfigDoc.Save(AppData + "\\data.xml");
+            } catch (Exception ex)
+            {
+                if (ex is NullReferenceException || ex is System.Xml.XmlException)
+                {
+                    InstallActions.ResetConfig();
+                    MessageBox.Show("Corrupt or old configuration detected. Configuration reset to default values.");
+                    InstallActions.AppendLogText("Couldn't load configuration! Corrupt or old configuration detected. Configuration reset to default values.");
+                    return;
+                }
+                throw;
+            }
         }
 
 
@@ -45,25 +66,14 @@ namespace ZibomodInstaller
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 xplaneDirTextBox.Text = openFileDialog1.FileName;
-                System.Xml.XmlDocument xmlConfigDoc = new System.Xml.XmlDocument();
-                xmlConfigDoc.PreserveWhitespace = true;
-                xmlConfigDoc.Load(AppData + "\\data.xml");
-                xmlConfigDoc.SelectSingleNode("installer/configuration/xplanePath").InnerText = xplaneDirTextBox.Text;
-                xmlConfigDoc.Save(AppData + "\\data.xml");
             }
         }
         //Install button
         private void button2_Click(object sender, EventArgs e)
         {
+            this.Visible = false;
             InstallPage._InstallPage.Visible = true;
             InstallPage._InstallPage.InstallStart();
-        }
-        private void audioBirdCheck_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!audioBirdCheck.Checked)
-            {
-                MessageBox.Show("It is recommended to install the sound mod in combination with ZiboMod. The sound mod is a significant improvement over the default sound model."); //Subject for redesign
-            }
         }
     }
 }

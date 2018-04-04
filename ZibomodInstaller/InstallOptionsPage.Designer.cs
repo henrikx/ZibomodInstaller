@@ -46,7 +46,7 @@
             this.panel1.Controls.Add(this.audioBirdCheck);
             this.panel1.Controls.Add(this.BrowseButton);
             this.panel1.Controls.Add(this.xplaneDirTextBox);
-            this.panel1.Location = new System.Drawing.Point(0, 57);
+            this.panel1.Location = new System.Drawing.Point(0, 70);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(429, 168);
             this.panel1.TabIndex = 5;
@@ -56,11 +56,11 @@
             this.RGModCheckbox.AutoSize = true;
             this.RGModCheckbox.Checked = true;
             this.RGModCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.RGModCheckbox.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RGModCheckbox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RGModCheckbox.ForeColor = System.Drawing.Color.White;
-            this.RGModCheckbox.Location = new System.Drawing.Point(37, 120);
+            this.RGModCheckbox.Location = new System.Drawing.Point(37, 123);
             this.RGModCheckbox.Name = "RGModCheckbox";
-            this.RGModCheckbox.Size = new System.Drawing.Size(206, 17);
+            this.RGModCheckbox.Size = new System.Drawing.Size(213, 19);
             this.RGModCheckbox.TabIndex = 5;
             this.RGModCheckbox.Text = "Jamaljé\'s improved cockpit textures";
             this.RGModCheckbox.UseVisualStyleBackColor = true;
@@ -76,8 +76,8 @@
             this.InstallButton.ForeColor = System.Drawing.Color.White;
             this.InstallButton.Location = new System.Drawing.Point(319, 120);
             this.InstallButton.Name = "InstallButton";
-            this.InstallButton.Size = new System.Drawing.Size(75, 23);
-            this.InstallButton.TabIndex = 3;
+            this.InstallButton.Size = new System.Drawing.Size(75, 22);
+            this.InstallButton.TabIndex = 0;
             this.InstallButton.Text = "Install";
             this.InstallButton.UseVisualStyleBackColor = false;
             this.InstallButton.Click += new System.EventHandler(this.button2_Click);
@@ -87,15 +87,14 @@
             this.audioBirdCheck.AutoSize = true;
             this.audioBirdCheck.Checked = true;
             this.audioBirdCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.audioBirdCheck.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.audioBirdCheck.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.audioBirdCheck.ForeColor = System.Drawing.Color.White;
-            this.audioBirdCheck.Location = new System.Drawing.Point(37, 84);
+            this.audioBirdCheck.Location = new System.Drawing.Point(37, 86);
             this.audioBirdCheck.Name = "audioBirdCheck";
-            this.audioBirdCheck.Size = new System.Drawing.Size(188, 17);
+            this.audioBirdCheck.Size = new System.Drawing.Size(192, 19);
             this.audioBirdCheck.TabIndex = 4;
             this.audioBirdCheck.Text = "Install AudioBirdXP Sound Mod";
             this.audioBirdCheck.UseVisualStyleBackColor = true;
-            this.audioBirdCheck.CheckedChanged += new System.EventHandler(this.audioBirdCheck_CheckedChanged);
             // 
             // BrowseButton
             // 
@@ -107,7 +106,7 @@
             this.BrowseButton.ForeColor = System.Drawing.Color.White;
             this.BrowseButton.Location = new System.Drawing.Point(319, 35);
             this.BrowseButton.Name = "BrowseButton";
-            this.BrowseButton.Size = new System.Drawing.Size(75, 23);
+            this.BrowseButton.Size = new System.Drawing.Size(75, 22);
             this.BrowseButton.TabIndex = 2;
             this.BrowseButton.Text = "Browse";
             this.BrowseButton.UseVisualStyleBackColor = false;
@@ -118,11 +117,11 @@
             this.xplaneDirTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(106)))), ((int)(((byte)(123)))));
             this.xplaneDirTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.xplaneDirTextBox.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.xplaneDirTextBox.Location = new System.Drawing.Point(37, 37);
+            this.xplaneDirTextBox.Location = new System.Drawing.Point(37, 35);
             this.xplaneDirTextBox.Name = "xplaneDirTextBox";
             this.xplaneDirTextBox.ReadOnly = true;
             this.xplaneDirTextBox.Size = new System.Drawing.Size(276, 22);
-            this.xplaneDirTextBox.TabIndex = 0;
+            this.xplaneDirTextBox.TabIndex = 3;
             this.xplaneDirTextBox.Text = "C:\\X-Plane\\X-Plane.exe";
             // 
             // openFileDialog1
