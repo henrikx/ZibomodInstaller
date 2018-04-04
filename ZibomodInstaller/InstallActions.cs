@@ -35,9 +35,25 @@ namespace ZibomodInstaller
             downloadProgress = e.ProgressPercentage;
         }
     }
+    class LogFile
+    {
+        public static string LogLoc = InstallActions.AppData + "\\log.txt";
+        public static void Write(string text)
+        {
+            File.AppendAllText(LogLoc, text);
+        }
+        public static void DeleteLog()
+        {
+            if (File.Exists(LogFile.LogLoc))
+            {
+                File.Delete(LogFile.LogLoc);
+            }
+        }
+    }
     class InstallActions
     {
-        static string AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ZiboModInstaller";
+        public static string AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ZiboModInstaller";
+
         public static void InitConfig()
         {
             if (!Directory.Exists(AppData))
@@ -49,6 +65,16 @@ namespace ZibomodInstaller
                 File.WriteAllBytes(AppData + "\\data.xml", Properties.Resources.defaultconfig);
             }
         }
+        public static void UpdateUserStatus(string appendString)
+        {
+            LogFile.Write("\n [UserInfo]" + DateTime.Now.TimeOfDay + " | " + appendString);
+            InstallPage._InstallPage.CurrentAction.Text = appendString;
+        }
+        public static void AppendLogText(string text)
+        {
+            LogFile.Write(text);
+        }
+
         public static void ZiboPrepareDir(string xplaneDir)
         {
             if(!Directory.Exists(xplaneDir + @"Aircraft\B737-800X")) 
@@ -118,6 +144,11 @@ namespace ZibomodInstaller
         {
             DriveAPI AudioDrive = new DriveAPI();
             AudioDrive.DownloadFile(DownloadID, AppData + "\\AXP-Immersion.zip"); //Downloads file to %Appdata%
+            while (AudioDrive.DriveClient.IsBusy)
+            {
+                InstallPage._InstallPage.UpdateProgressbar(AudioDrive.downloadProgress);
+                Thread.Sleep(2);
+            }
         }
         public static void AudioExtract()
         {
@@ -155,12 +186,8 @@ namespace ZibomodInstaller
             }
             return fmodDirectory;
         }
-        //public static void AudioInstall(string xplaneDir)
-        //{
-        //    string[] dirs = Directory.GetDirectories(AppData, "AXP IMM*");
-        //    DirectoryCopy(dirs[0]+"\\fmod",xplaneDir + @"Aircraft\B737-800X\fmod",true);
-        //}
-        //RGMod
+        //
+        //Jamalje's improved textures
         public static string FindLatestRG() //Attempt to find the newest RG Mod to extract Jamalje's textures from, however as RG mod is now payware, this function is mainly deprecated. Automatic fallback to the newest known free RG Mod
         {
             using (WebClient VK = new WebClient())
@@ -183,6 +210,11 @@ namespace ZibomodInstaller
         {
             DriveAPI RGDrive = new DriveAPI();
             RGDrive.DownloadFile(ID, AppData + "\\RG-Mod.zip");
+            while (RGDrive.DriveClient.IsBusy)
+            {
+                InstallPage._InstallPage.UpdateProgressbar(RGDrive.downloadProgress);
+                Thread.Sleep(2);
+            }
         }
         public static void RGExtract(bool isTextureOnly, string xPlanePath)
         {

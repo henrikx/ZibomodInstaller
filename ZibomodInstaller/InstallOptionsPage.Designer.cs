@@ -30,24 +30,25 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.RGModCheckbox = new System.Windows.Forms.CheckBox();
-            this.audioBirdCheck = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.xplaneDirTextBox = new System.Windows.Forms.TextBox();
-            this.InstallLog = new System.Windows.Forms.RichTextBox();
             this.InstallButton = new System.Windows.Forms.Button();
+            this.audioBirdCheck = new System.Windows.Forms.CheckBox();
+            this.BrowseButton = new System.Windows.Forms.Button();
+            this.xplaneDirTextBox = new System.Windows.Forms.TextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(45)))), ((int)(((byte)(60)))));
             this.panel1.Controls.Add(this.RGModCheckbox);
+            this.panel1.Controls.Add(this.InstallButton);
             this.panel1.Controls.Add(this.audioBirdCheck);
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.BrowseButton);
             this.panel1.Controls.Add(this.xplaneDirTextBox);
-            this.panel1.Location = new System.Drawing.Point(3, 134);
+            this.panel1.Location = new System.Drawing.Point(0, 57);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(363, 93);
+            this.panel1.Size = new System.Drawing.Size(429, 168);
             this.panel1.TabIndex = 5;
             // 
             // RGModCheckbox
@@ -57,12 +58,29 @@
             this.RGModCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.RGModCheckbox.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RGModCheckbox.ForeColor = System.Drawing.Color.White;
-            this.RGModCheckbox.Location = new System.Drawing.Point(3, 66);
+            this.RGModCheckbox.Location = new System.Drawing.Point(37, 120);
             this.RGModCheckbox.Name = "RGModCheckbox";
             this.RGModCheckbox.Size = new System.Drawing.Size(206, 17);
             this.RGModCheckbox.TabIndex = 5;
             this.RGModCheckbox.Text = "Jamaljé\'s improved cockpit textures";
             this.RGModCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // InstallButton
+            // 
+            this.InstallButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
+            this.InstallButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(56)))), ((int)(((byte)(81)))));
+            this.InstallButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
+            this.InstallButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
+            this.InstallButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.InstallButton.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.InstallButton.ForeColor = System.Drawing.Color.White;
+            this.InstallButton.Location = new System.Drawing.Point(319, 120);
+            this.InstallButton.Name = "InstallButton";
+            this.InstallButton.Size = new System.Drawing.Size(75, 23);
+            this.InstallButton.TabIndex = 3;
+            this.InstallButton.Text = "Install";
+            this.InstallButton.UseVisualStyleBackColor = false;
+            this.InstallButton.Click += new System.EventHandler(this.button2_Click);
             // 
             // audioBirdCheck
             // 
@@ -71,7 +89,7 @@
             this.audioBirdCheck.CheckState = System.Windows.Forms.CheckState.Checked;
             this.audioBirdCheck.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.audioBirdCheck.ForeColor = System.Drawing.Color.White;
-            this.audioBirdCheck.Location = new System.Drawing.Point(3, 43);
+            this.audioBirdCheck.Location = new System.Drawing.Point(37, 84);
             this.audioBirdCheck.Name = "audioBirdCheck";
             this.audioBirdCheck.Size = new System.Drawing.Size(188, 17);
             this.audioBirdCheck.TabIndex = 4;
@@ -79,54 +97,33 @@
             this.audioBirdCheck.UseVisualStyleBackColor = true;
             this.audioBirdCheck.CheckedChanged += new System.EventHandler(this.audioBirdCheck_CheckedChanged);
             // 
-            // button1
+            // BrowseButton
             // 
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(285, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 21);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Browse";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.BrowseButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
+            this.BrowseButton.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BrowseButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(56)))), ((int)(((byte)(81)))));
+            this.BrowseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BrowseButton.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BrowseButton.ForeColor = System.Drawing.Color.White;
+            this.BrowseButton.Location = new System.Drawing.Point(319, 35);
+            this.BrowseButton.Name = "BrowseButton";
+            this.BrowseButton.Size = new System.Drawing.Size(75, 23);
+            this.BrowseButton.TabIndex = 2;
+            this.BrowseButton.Text = "Browse";
+            this.BrowseButton.UseVisualStyleBackColor = false;
+            this.BrowseButton.Click += new System.EventHandler(this.button1_Click);
             // 
             // xplaneDirTextBox
             // 
+            this.xplaneDirTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(106)))), ((int)(((byte)(123)))));
             this.xplaneDirTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.xplaneDirTextBox.Location = new System.Drawing.Point(3, 3);
+            this.xplaneDirTextBox.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.xplaneDirTextBox.Location = new System.Drawing.Point(37, 37);
             this.xplaneDirTextBox.Name = "xplaneDirTextBox";
             this.xplaneDirTextBox.ReadOnly = true;
-            this.xplaneDirTextBox.Size = new System.Drawing.Size(270, 20);
+            this.xplaneDirTextBox.Size = new System.Drawing.Size(276, 22);
             this.xplaneDirTextBox.TabIndex = 0;
             this.xplaneDirTextBox.Text = "C:\\X-Plane\\X-Plane.exe";
-            // 
-            // InstallLog
-            // 
-            this.InstallLog.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.InstallLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.InstallLog.HideSelection = false;
-            this.InstallLog.Location = new System.Drawing.Point(3, 3);
-            this.InstallLog.Name = "InstallLog";
-            this.InstallLog.ReadOnly = true;
-            this.InstallLog.Size = new System.Drawing.Size(363, 125);
-            this.InstallLog.TabIndex = 1;
-            this.InstallLog.Text = "Welcome to ZiboMod Installer! Please select your X-Plane installation path below " +
-    "and hit Install to continue!";
-            // 
-            // InstallButton
-            // 
-            this.InstallButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.InstallButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.InstallButton.Location = new System.Drawing.Point(288, 279);
-            this.InstallButton.Name = "InstallButton";
-            this.InstallButton.Size = new System.Drawing.Size(75, 23);
-            this.InstallButton.TabIndex = 3;
-            this.InstallButton.Text = "Install";
-            this.InstallButton.UseVisualStyleBackColor = true;
-            this.InstallButton.Click += new System.EventHandler(this.button2_Click);
             // 
             // openFileDialog1
             // 
@@ -137,10 +134,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.InstallLog);
-            this.Controls.Add(this.InstallButton);
             this.Name = "InstallOptionsPage";
-            this.Size = new System.Drawing.Size(368, 319);
+            this.Size = new System.Drawing.Size(429, 322);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -150,12 +145,11 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.CheckBox RGModCheckbox;
-        private System.Windows.Forms.CheckBox audioBirdCheck;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox xplaneDirTextBox;
-        private System.Windows.Forms.RichTextBox InstallLog;
+        private System.Windows.Forms.Button BrowseButton;
         private System.Windows.Forms.Button InstallButton;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        public System.Windows.Forms.CheckBox audioBirdCheck;
+        public System.Windows.Forms.CheckBox RGModCheckbox;
+        public System.Windows.Forms.TextBox xplaneDirTextBox;
     }
 }

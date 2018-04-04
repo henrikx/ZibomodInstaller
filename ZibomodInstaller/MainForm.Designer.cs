@@ -38,7 +38,7 @@
             // 
             // closebutton
             // 
-            this.closebutton.BackColor = System.Drawing.Color.LightSlateGray;
+            this.closebutton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(80)))), ((int)(((byte)(100)))));
             this.closebutton.FlatAppearance.BorderSize = 0;
             this.closebutton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red;
             this.closebutton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -50,10 +50,11 @@
             this.closebutton.TabIndex = 1;
             this.closebutton.Text = "X";
             this.closebutton.UseVisualStyleBackColor = false;
-            this.closebutton.Click += new System.EventHandler(this.button1_Click);
+            this.closebutton.Click += new System.EventHandler(this.xCloseButton);
             // 
             // titleBar
             // 
+            this.titleBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(45)))), ((int)(((byte)(60)))));
             this.titleBar.Controls.Add(this.label1);
             this.titleBar.Controls.Add(this.closebutton);
             this.titleBar.Location = new System.Drawing.Point(0, -3);
@@ -77,17 +78,17 @@
             // 
             // installPage1
             // 
-            this.installPage1.Location = new System.Drawing.Point(33, 59);
+            this.installPage1.Location = new System.Drawing.Point(0, 59);
             this.installPage1.Name = "installPage1";
-            this.installPage1.Size = new System.Drawing.Size(368, 319);
+            this.installPage1.Size = new System.Drawing.Size(429, 322);
             this.installPage1.TabIndex = 3;
             this.installPage1.Visible = false;
             // 
             // installOptionsPage
             // 
-            this.installOptionsPage.Location = new System.Drawing.Point(33, 59);
+            this.installOptionsPage.Location = new System.Drawing.Point(0, 59);
             this.installOptionsPage.Name = "installOptionsPage";
-            this.installOptionsPage.Size = new System.Drawing.Size(364, 322);
+            this.installOptionsPage.Size = new System.Drawing.Size(429, 322);
             this.installOptionsPage.TabIndex = 0;
             // 
             // MainForm
@@ -97,8 +98,8 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
             this.ClientSize = new System.Drawing.Size(429, 393);
             this.Controls.Add(this.installPage1);
-            this.Controls.Add(this.titleBar);
             this.Controls.Add(this.installOptionsPage);
+            this.Controls.Add(this.titleBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MainForm";
             this.Text = "ZiboMod Install/Update Tool";
@@ -114,7 +115,7 @@
         private System.Windows.Forms.Button closebutton;
         private System.Windows.Forms.Panel titleBar;
         private System.Windows.Forms.Label label1;
-        private InstallPage installPage1;
+        public InstallPage installPage1;
     }
 }
 

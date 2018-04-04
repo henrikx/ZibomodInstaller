@@ -18,10 +18,11 @@ namespace ZibomodInstaller
 {
     public partial class InstallOptionsPage : UserControl
     {
+        public static InstallOptionsPage _InstallOptionsPage;
         public InstallOptionsPage()
         {
             InitializeComponent();
-            InstallActions.InitConfig();
+            _InstallOptionsPage = this;
             LoadConfig();
         }
 
@@ -54,89 +55,9 @@ namespace ZibomodInstaller
         //Install button
         private void button2_Click(object sender, EventArgs e)
         {
-            Thread InstallActionWorker = new Thread(InstallAction);
-            InstallLogAppendText("\nStarting ZiboMod Install Operation...\n");
-            InstallActionWorker.Start();
-
+            InstallPage._InstallPage.Visible = true;
+            InstallPage._InstallPage.InstallStart();
         }
-        private void InstallAction()
-        {
-            panel1.Enabled = false;
-            InstallButton.Enabled = false;
-            string xplaneDir = "";
-            InstallLogAppendText("\nPreparing directory...");
-            xplaneDir = Regex.Match(xplaneDirTextBox.Text, @"([\s\S]*?)(X-Plane\.exe)").Groups[1].Value;
-            try
-            {
-                
-                InstallActions.ZiboPrepareDir(xplaneDir); //Copy Laminar's 737
-            }
-            catch (DirectoryNotFoundException)
-            {
-                InstallLogAppendText("Could not find a valid X-Plane installation at this directory.");
-                MessageBox.Show("Could not find a valid X-Plane installation at this directory.");
-                InstallActions.CleanUp();
-                goto AfterException;
-            }
-            InstallLogAppendText("Finding the latest Zibo Update...");
-            string DownloadIDZibo = InstallActions.FindLatestFile("0B-tdl3VvPeOOYm12Wm80V04wdDQ"); //Get Drive ID of the latest zibo release
-            InstallLogAppendText("Downloading ZiboMod...");
-            try
-            {
-                InstallActions.ZiboDownload(DownloadIDZibo); //Download the selected file
-                InstallLogAppendText("Extracting and installing ZiboMod...");
-                InstallActions.ZiboExtract(xplaneDir); //Extract into xplane
-            }
-            catch (System.Net.WebException)
-            {
-                InstallLogAppendText("File couldn't be found or download quota exceeded. Ignoring...");
-            }
-            InstallLogAppendText("Done installing Zibomod.");
-            //AudioBird
-            if (audioBirdCheck.Checked)
-            {
-                InstallLogAppendText("\nAudioBirdXP Installation:\nFinding latest AudioBirdXP update...");
-                string DownloadIDAudio = InstallActions.FindLatestFile("1IgWBmhgwKg6j4cjH3jSSO8KYfG2eurVZ");
-                InstallLogAppendText("Downloading AudioBirdXP package...");
-                InstallActions.AudioDownload(DownloadIDAudio);
-                InstallLogAppendText("Installing into aircraft...");
-                InstallActions.AudioExtract();
-                InstallActions.AudioInstall(xplaneDir);
-                //InstallLogAppendText("Installing into aircraft...");
-                //InstallActions.AudioInstall(xplaneDir);
-                InstallLogAppendText("Done installing AudioBirdXP Sound Mod.");
-            }
-            if (RGModCheckbox.Checked)
-            {
-                bool RGModTextureOnly = true; //Latest free RGMod isn't compatible with the latest zibo, so the user option is removed. Only textures are compatible.
-                InstallLogAppendText("\nRG Mod Installation:\nFinding latest RG update...");
-                string DownloadIDRGMod = InstallActions.FindLatestRG();
-                InstallLogAppendText("Downloading RG Mod...");
-                InstallActions.RGDownload(DownloadIDRGMod);
-                InstallLogAppendText("Installing RG Mod into aircraft...");
-                InstallActions.RGExtract(RGModTextureOnly, xplaneDir);
-                InstallLogAppendText("Done installing RG Mod texture mod.");
-            }
-            AfterException:
-            InstallLogAppendText("Cleaning up...");
-            InstallActions.CleanUp();
-            AfterCleanup();
-            InstallLogAppendText("All tasks have been completed. You may now close this program.");
-
-        }
-        private void InstallLogAppendText(string appendString)
-        {
-            InstallLog.AppendText("\n" + appendString);
-            InstallLog.Select(InstallLog.TextLength, 0);
-            InstallLog.ScrollToCaret();
-        }
-        private void AfterCleanup()
-        {
-            panel1.Enabled = false;
-            InstallButton.Enabled = true;
-            InstallButton.Text = "Close";
-        }
-
         private void audioBirdCheck_CheckedChanged(object sender, EventArgs e)
         {
             if (!audioBirdCheck.Checked)
