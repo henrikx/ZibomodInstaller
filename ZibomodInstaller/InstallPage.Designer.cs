@@ -90,7 +90,7 @@
             this.Size = new System.Drawing.Size(429, 322);
             this.ResumeLayout(false);
             this.PerformLayout();
-
+            this.Visible = false;
         }
 
         #endregion

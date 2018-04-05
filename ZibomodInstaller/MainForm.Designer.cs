@@ -31,8 +31,9 @@
             this.closebutton = new System.Windows.Forms.Button();
             this.titleBar = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.installPage1 = new ZibomodInstaller.InstallPage();
+            this.displayEULA1 = new ZibomodInstaller.DisplayEULA();
             this.installOptionsPage1 = new ZibomodInstaller.InstallOptionsPage();
+            this.installPage1 = new ZibomodInstaller.InstallPage();
             this.titleBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,11 +45,10 @@
             this.closebutton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.closebutton.Font = new System.Drawing.Font("Calibri", 8.5F);
             this.closebutton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(45)))), ((int)(((byte)(60)))));
-            this.closebutton.Location = new System.Drawing.Point(580, 5);
-            this.closebutton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.closebutton.Location = new System.Drawing.Point(387, 3);
             this.closebutton.Name = "closebutton";
-            this.closebutton.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.closebutton.Size = new System.Drawing.Size(63, 34);
+            this.closebutton.Padding = new System.Windows.Forms.Padding(2, 0, 0, 0);
+            this.closebutton.Size = new System.Drawing.Size(42, 22);
             this.closebutton.TabIndex = 1;
             this.closebutton.Text = "X";
             this.closebutton.UseVisualStyleBackColor = false;
@@ -59,10 +59,9 @@
             this.titleBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(45)))), ((int)(((byte)(60)))));
             this.titleBar.Controls.Add(this.label1);
             this.titleBar.Controls.Add(this.closebutton);
-            this.titleBar.Location = new System.Drawing.Point(0, -5);
-            this.titleBar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.titleBar.Location = new System.Drawing.Point(0, -3);
             this.titleBar.Name = "titleBar";
-            this.titleBar.Size = new System.Drawing.Size(645, 86);
+            this.titleBar.Size = new System.Drawing.Size(430, 56);
             this.titleBar.TabIndex = 2;
             this.titleBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormMain_MouseDown);
             this.titleBar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormMain_MouseMove);
@@ -73,41 +72,45 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(4, 37);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(3, 24);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(272, 45);
+            this.label1.Size = new System.Drawing.Size(176, 30);
             this.label1.TabIndex = 2;
             this.label1.Text = "ZiboMod Installer";
             // 
-            // installPage1
+            // displayEULA1
             // 
-            this.installPage1.Location = new System.Drawing.Point(0, 91);
-            this.installPage1.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.installPage1.Name = "installPage1";
-            this.installPage1.Size = new System.Drawing.Size(644, 495);
-            this.installPage1.TabIndex = 3;
-            this.installPage1.Visible = false;
+            this.displayEULA1.Location = new System.Drawing.Point(0, 54);
+            this.displayEULA1.Name = "displayEULA1";
+            this.displayEULA1.Size = new System.Drawing.Size(429, 322);
+            this.displayEULA1.TabIndex = 5;
             // 
             // installOptionsPage1
             // 
-            this.installOptionsPage1.Location = new System.Drawing.Point(0, 90);
-            this.installOptionsPage1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.installOptionsPage1.Location = new System.Drawing.Point(0, 58);
             this.installOptionsPage1.Name = "installOptionsPage1";
-            this.installOptionsPage1.Size = new System.Drawing.Size(644, 495);
+            this.installOptionsPage1.Size = new System.Drawing.Size(429, 322);
             this.installOptionsPage1.TabIndex = 4;
+            // 
+            // installPage1
+            // 
+            this.installPage1.Location = new System.Drawing.Point(0, 59);
+            this.installPage1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.installPage1.Name = "installPage1";
+            this.installPage1.Size = new System.Drawing.Size(429, 322);
+            this.installPage1.TabIndex = 3;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
-            this.ClientSize = new System.Drawing.Size(644, 588);
+            this.ClientSize = new System.Drawing.Size(429, 382);
+            this.Controls.Add(this.displayEULA1);
             this.Controls.Add(this.installOptionsPage1);
             this.Controls.Add(this.installPage1);
             this.Controls.Add(this.titleBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "MainForm";
             this.Text = "ZiboMod Install/Update Tool";
             this.titleBar.ResumeLayout(false);
@@ -123,6 +126,7 @@
         public InstallPage installPage1;
         public System.Windows.Forms.Button closebutton;
         private InstallOptionsPage installOptionsPage1;
+        public DisplayEULA displayEULA1;
     }
 }
 

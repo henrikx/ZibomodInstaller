@@ -12,7 +12,6 @@ using Microsoft.Win32;
 using Ionic.Zip;
 using System.Net;
 using System.IO;
-using System.Threading;
 
 namespace ZibomodInstaller
 {
@@ -66,8 +65,6 @@ namespace ZibomodInstaller
                 throw;
             }
         }
-
-
         //Browse button
         private void button1_Click(object sender, EventArgs e)
         {

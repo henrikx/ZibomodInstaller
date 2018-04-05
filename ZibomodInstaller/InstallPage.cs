@@ -34,7 +34,6 @@ namespace ZibomodInstaller
             MainForm._MainForm.closebutton.Enabled = false;
             InstallActions.SaveConfig();
             InstallActionWorker.Start();
-
         }
         private int determineTaskLength()
         {
@@ -42,6 +41,17 @@ namespace ZibomodInstaller
             if (InstallOptionsPage._InstallOptionsPage.audioBirdCheck.Checked) { taskLength+=3; } //There are three tasks for these two
             if (InstallOptionsPage._InstallOptionsPage.RGModCheckbox.Checked) { taskLength+=3; }
             return taskLength;
+        }
+        public void ShowEULA()
+        {
+            InstallPage._InstallPage.Visible = false;
+            DisplayEULA._DisplayEULA.Visible = true;
+            while (DisplayEULA._DisplayEULA.Visible)
+            {
+                Thread.Sleep(150);
+            }
+            DisplayEULA._DisplayEULA.Visible = false;
+            InstallPage._InstallPage.Visible = true;
         }
         private void InstallAction()
         {
@@ -91,12 +101,12 @@ namespace ZibomodInstaller
             //AudioBird
             if (InstallOptionsPage._InstallOptionsPage.audioBirdCheck.Checked)
             {
-                try
-                {
+                try {
                     InstallActions.UpdateUserStatus("Finding latest AudioBirdXP update... (3/" + Convert.ToString(taskLength) + ")");
                     string DownloadIDAudio = InstallActions.FindLatestFile("1IgWBmhgwKg6j4cjH3jSSO8KYfG2eurVZ");
                     if (DownloadIDAudio != InstallOptionsPage.installedAudioB)
                     {
+                        //ShowEULA(); Doesn't work yet. Freezes UI for some reason, even if it's in another thread than the Main UI thread.
                         InstallActions.UpdateUserStatus("Downloading AudioBirdXP package... (4/" + Convert.ToString(taskLength) + ")");
                         InstallActions.AudioDownload(DownloadIDAudio);
                         InstallActions.UpdateUserStatus("Installing FMOD into aircraft... (5/" + Convert.ToString(taskLength) + ")");

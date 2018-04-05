@@ -60,10 +60,5 @@ namespace ZibomodInstaller
             InstallActions.CleanUp();
             Application.Exit();
         }
-        public void StartInstall()
-        {
-            installPage1.Visible = true;
-            InstallPage._InstallPage.InstallStart();
-        }
     }
 }
