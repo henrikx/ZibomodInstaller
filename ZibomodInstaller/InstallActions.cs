@@ -13,7 +13,7 @@ using System.Threading;
 namespace ZibomodInstaller
 {
     class DriveAPI //API parser
-    {
+    { 
         public WebClient DriveClient = new WebClient();
         public Dictionary<string,dynamic> GetDriveFolderList(string DriveFolderID)
         {
@@ -97,6 +97,8 @@ namespace ZibomodInstaller
         {
             if(!Directory.Exists(xplaneDir + @"Aircraft\B737-800X")) 
             {
+                InstallOptionsPage.installedZibo = "";
+                InstallOptionsPage.installedAudioB = "";
                 DirectoryCopy(xplaneDir + @"Aircraft\Laminar Research\Boeing B737-800", xplaneDir + @"Aircraft\B737-800X", true);
             }
         }

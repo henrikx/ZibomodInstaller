@@ -74,6 +74,7 @@ namespace ZibomodInstaller
                     InstallActions.UpdateUserStatus("Extracting and installing ZiboMod...(2/" + Convert.ToString(taskLength) + ")");
                     InstallActions.ZiboExtract(xplaneDir); //Extract into xplane
                     InstallOptionsPage.installedZibo = DownloadIDZibo;
+                    InstallOptionsPage.texturemodInstalled = false;
                     InstallActions.UpdateUserStatus("Done installing Zibomod");
                 } catch (Exception ex)
                 {
@@ -98,7 +99,7 @@ namespace ZibomodInstaller
                     {
                         InstallActions.UpdateUserStatus("Downloading AudioBirdXP package... (4/" + Convert.ToString(taskLength) + ")");
                         InstallActions.AudioDownload(DownloadIDAudio);
-                        InstallActions.UpdateUserStatus("Installing into aircraft... (5/" + Convert.ToString(taskLength) + ")");
+                        InstallActions.UpdateUserStatus("Installing FMOD into aircraft... (5/" + Convert.ToString(taskLength) + ")");
                         InstallActions.AudioExtract();
                         InstallActions.AudioInstall(xplaneDir);
                         InstallOptionsPage.installedAudioB = DownloadIDAudio;
@@ -124,11 +125,11 @@ namespace ZibomodInstaller
                     {
 
                         bool RGModTextureOnly = true; //Latest free RGMod isn't compatible with the latest zibo, so the user option is removed. Only textures are compatible.
-                        InstallActions.UpdateUserStatus("Finding latest texture mod update... (6/" + Convert.ToString(taskLength) + ")");
+                        InstallActions.UpdateUserStatus("Finding latest texture mod update... (" + GetCurrentTaskTexturemod(1) + "/" + Convert.ToString(taskLength) + ")");
                         string DownloadIDRGMod = InstallActions.FindLatestRG();
-                        InstallActions.UpdateUserStatus("Downloading texture mod... (7/" + Convert.ToString(taskLength) + ")");
+                        InstallActions.UpdateUserStatus("Downloading texture mod... (" + GetCurrentTaskTexturemod(2) + "/" + Convert.ToString(taskLength) + ")");
                         InstallActions.RGDownload(DownloadIDRGMod);
-                        InstallActions.UpdateUserStatus("Installing texture mod into aircraft... (8/" + Convert.ToString(taskLength) + ")");
+                        InstallActions.UpdateUserStatus("Installing texture mod into aircraft... (" + GetCurrentTaskTexturemod(3) + "/" + Convert.ToString(taskLength) + ")");
                         InstallActions.RGExtract(RGModTextureOnly, xplaneDir);
                         InstallOptionsPage.texturemodInstalled = true;
                         InstallActions.UpdateUserStatus("Done installing RG Mod texture mod.");
@@ -155,6 +156,13 @@ namespace ZibomodInstaller
             InstallActions.UpdateUserStatus("All tasks completed. Press close to exit.");
             closeButton.Enabled = true;
             MainForm._MainForm.closebutton.Enabled = true;
+        }
+        private string GetCurrentTaskTexturemod(int sequencenmb)
+        {
+            string sequence = "";
+            if (InstallOptionsPage._InstallOptionsPage.audioBirdCheck.Checked) { sequence = Convert.ToString(sequencenmb += 5); }
+            else { sequence = Convert.ToString(sequencenmb += 2); }
+            return sequence;
         }
         private void closeButton_Click(object sender, EventArgs e)
         {
