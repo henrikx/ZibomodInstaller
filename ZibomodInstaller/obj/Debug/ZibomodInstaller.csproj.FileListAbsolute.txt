@@ -20,3 +20,15 @@ C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\Zibomod
 C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.csproj.CoreCompileInputs.cache
 C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.exe
 C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.pdb
+C:\lazarus\source\repos\ZibomodInstaller\ZibomodInstaller\bin\Debug\ZibomodInstaller.exe.config
+C:\lazarus\source\repos\ZibomodInstaller\ZibomodInstaller\bin\Debug\ZibomodInstaller.exe
+C:\lazarus\source\repos\ZibomodInstaller\ZibomodInstaller\bin\Debug\ZibomodInstaller.pdb
+C:\lazarus\source\repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.InstallOptionsPage.resources
+C:\lazarus\source\repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.InstallPage.resources
+C:\lazarus\source\repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.MainForm.resources
+C:\lazarus\source\repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.Properties.Resources.resources
+C:\lazarus\source\repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.csproj.GenerateResource.Cache
+C:\lazarus\source\repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.csproj.CoreCompileInputs.cache
+C:\lazarus\source\repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.exe
+C:\lazarus\source\repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.pdb
+C:\lazarus\source\repos\ZibomodInstaller\ZibomodInstaller\obj\Debug\ZibomodInstaller.csprojResolveAssemblyReference.cache

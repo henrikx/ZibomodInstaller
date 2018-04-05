@@ -35,6 +35,10 @@ namespace ZibomodInstaller
         {
             try
             {
+                if (!File.Exists(InstallActions.AppData + "\\data.xml"))
+                {
+                    InstallActions.InitConfig();
+                }
                 System.Xml.XmlDocument xmlConfigDoc = new System.Xml.XmlDocument();
                 xmlConfigDoc.PreserveWhitespace = true;
                 xmlConfigDoc.Load(AppData + "\\data.xml");
@@ -53,6 +57,10 @@ namespace ZibomodInstaller
                     InstallActions.ResetConfig();
                     MessageBox.Show("Corrupt or old configuration detected. Configuration reset to default values.");
                     InstallActions.AppendLogText("Couldn't load configuration! Corrupt or old configuration detected. Configuration reset to default values.");
+                    return;
+                } if (ex is FileNotFoundException || ex is DirectoryNotFoundException)
+                {
+                    InstallActions.AppendLogText("The configuration or configuration folder couldn't be found.");
                     return;
                 }
                 throw;
