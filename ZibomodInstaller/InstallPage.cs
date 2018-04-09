@@ -27,9 +27,11 @@ namespace ZibomodInstaller
             progressBar1.Value = percentage;
         }
         //On Installation Start
+        Thread InstallActionWorker;
         public void InstallStart()
         {
-            Thread InstallActionWorker = new Thread(InstallAction);
+            InstallActionWorker = new Thread(InstallAction);
+            this.EULApanel.Visible = false;
             InstallActions.UpdateUserStatus("Starting ZiboMod Install Operation...");
             MainForm._MainForm.closebutton.Enabled = false;
             InstallActions.SaveConfig();
@@ -42,16 +44,34 @@ namespace ZibomodInstaller
             if (InstallOptionsPage._InstallOptionsPage.RGModCheckbox.Checked) { taskLength+=3; }
             return taskLength;
         }
-        public void ShowEULA()
+        bool isEULAActive = true;
+        public void ShowEULA(string EULAText)
         {
-            InstallPage._InstallPage.Visible = false;
-            DisplayEULA._DisplayEULA.Visible = true;
-            while (DisplayEULA._DisplayEULA.Visible)
+            try
             {
-                Thread.Sleep(150);
+                richTextBox1.Text = EULAText;
+                EULApanel.Visible = true;
+                MainForm._MainForm.closebutton.Enabled = true;
+                while (isEULAActive)
+                {
+                    Thread.Sleep(250);
+                }
+                MainForm._MainForm.closebutton.Enabled = false;
+                EULApanel.Visible = false;
+            } catch (ThreadAbortException e)
+            {
+                InstallActions.AppendLogText("InstallThread was aborted at EULAClose");
             }
-            DisplayEULA._DisplayEULA.Visible = false;
-            InstallPage._InstallPage.Visible = true;
+
+        }
+        private void EULAlabel_Click(object sender, EventArgs e)
+        {
+            acceptEULAbtn.Enabled = true;
+        }
+
+        private void acceptEULAbtn_Click(object sender, EventArgs e)
+        {
+            isEULAActive = false;
         }
         private void InstallAction()
         {
@@ -74,8 +94,8 @@ namespace ZibomodInstaller
                 goto AfterException;
             }
             InstallActions.UpdateUserStatus("Finding the latest Zibo Update...");
-            string DownloadIDZibo = InstallActions.FindLatestFile("0B-tdl3VvPeOOYm12Wm80V04wdDQ"); //Get Drive ID of the latest zibo release. The string is the Drive ID for the zibomod download folder.
-            if(DownloadIDZibo != InstallOptionsPage.installedZibo) //This compares the drive ID of the currently installed version to the newest known version
+            string DownloadIDZibo = InstallActions.FindLatestFile("0B-tdl3VvPeOOYm12Wm80V04wdDQ", true); //Get Drive ID of the latest zibo release. The string is the Drive ID for the zibomod download folder.
+            if(DownloadIDZibo != InstallOptionsPage.installedZibo || InstallOptionsPage._InstallOptionsPage.forceInstallCheckbox.Checked) //This compares the drive ID of the currently installed version to the newest known version
             {
                 try
                 {
@@ -101,12 +121,19 @@ namespace ZibomodInstaller
             //AudioBird
             if (InstallOptionsPage._InstallOptionsPage.audioBirdCheck.Checked)
             {
-                try {
+                try
+                {
                     InstallActions.UpdateUserStatus("Finding latest AudioBirdXP update... (3/" + Convert.ToString(taskLength) + ")");
-                    string DownloadIDAudio = InstallActions.FindLatestFile("1IgWBmhgwKg6j4cjH3jSSO8KYfG2eurVZ");
-                    if (DownloadIDAudio != InstallOptionsPage.installedAudioB)
+                    string DownloadIDAudio = InstallActions.FindLatestFile("1IgWBmhgwKg6j4cjH3jSSO8KYfG2eurVZ", false);
+                    if (DownloadIDAudio != InstallOptionsPage.installedAudioB || InstallOptionsPage._InstallOptionsPage.forceInstallCheckbox.Checked)
                     {
-                        //ShowEULA(); Doesn't work yet. Freezes UI for some reason, even if it's in another thread than the Main UI thread.
+                        string AudioBirdEULA = "By installing this sound pack, you acknowledge that it is not permitted to reupload any file in the pack to any other site or to modify, re-use, share any file in this pack. This also includes any configuration files and scripts that are provided with the immersion pack.\n\n" +
+                        "DO NOT USE with any other plane (it's not going to work properly).\n\n" +
+                        "You install and use this pack at your own risk. Should you damage your software or hardware in any way AudioBirdXP should not be held responsible.\n\n" +
+                        "OFFICIAL SITE: audiobirdxp.board.net\n" +
+                        "E-MAIL: audiobirdxp@gmail.com\n\n" +
+                        "Please click the text above this box to accept the EULA."; //TODO: Put this in it's own file
+                        ShowEULA(AudioBirdEULA);
                         InstallActions.UpdateUserStatus("Downloading AudioBirdXP package... (4/" + Convert.ToString(taskLength) + ")");
                         InstallActions.AudioDownload(DownloadIDAudio);
                         InstallActions.UpdateUserStatus("Installing FMOD into aircraft... (5/" + Convert.ToString(taskLength) + ")");
@@ -129,7 +156,7 @@ namespace ZibomodInstaller
             }
             if (InstallOptionsPage._InstallOptionsPage.RGModCheckbox.Checked) //It is not necessary to reinstall the textures if zibomod isn't updated, however this causes a problem when the user already has the latest zibomod but has not installed the texturemod
             {
-                if (!ziboModSkipped || !InstallOptionsPage.texturemodInstalled)
+                if (!ziboModSkipped || !InstallOptionsPage.texturemodInstalled || InstallOptionsPage._InstallOptionsPage.forceInstallCheckbox.Checked)
                 {
                     try
                     {
@@ -178,5 +205,6 @@ namespace ZibomodInstaller
         {
             Application.Exit();
         }
+
     }
 }

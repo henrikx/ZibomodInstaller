@@ -62,7 +62,7 @@ namespace ZibomodInstaller
                     InstallActions.AppendLogText("The configuration or configuration folder couldn't be found.");
                     return;
                 }
-                throw;
+                throw ex;
             }
         }
         //Browse button

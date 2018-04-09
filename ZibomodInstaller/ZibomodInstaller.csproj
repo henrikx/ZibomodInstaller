@@ -53,12 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DisplayEULA.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="DisplayEULA.Designer.cs">
-      <DependentUpon>DisplayEULA.cs</DependentUpon>
-    </Compile>
     <Compile Include="InstallActions.cs" />
     <Compile Include="InstallOptionsPage.cs">
       <SubType>UserControl</SubType>
@@ -80,9 +74,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="DisplayEULA.resx">
-      <DependentUpon>DisplayEULA.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="InstallOptionsPage.resx">
       <DependentUpon>InstallOptionsPage.cs</DependentUpon>
     </EmbeddedResource>

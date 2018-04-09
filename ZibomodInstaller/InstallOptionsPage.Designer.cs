@@ -35,12 +35,14 @@
             this.BrowseButton = new System.Windows.Forms.Button();
             this.xplaneDirTextBox = new System.Windows.Forms.TextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.forceInstallCheckbox = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(45)))), ((int)(((byte)(60)))));
+            this.panel1.Controls.Add(this.forceInstallCheckbox);
             this.panel1.Controls.Add(this.RGModCheckbox);
             this.panel1.Controls.Add(this.InstallButton);
             this.panel1.Controls.Add(this.audioBirdCheck);
@@ -58,11 +60,11 @@
             this.RGModCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.RGModCheckbox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RGModCheckbox.ForeColor = System.Drawing.Color.White;
-            this.RGModCheckbox.Location = new System.Drawing.Point(37, 123);
+            this.RGModCheckbox.Location = new System.Drawing.Point(37, 100);
             this.RGModCheckbox.Name = "RGModCheckbox";
-            this.RGModCheckbox.Size = new System.Drawing.Size(213, 19);
+            this.RGModCheckbox.Size = new System.Drawing.Size(247, 19);
             this.RGModCheckbox.TabIndex = 5;
-            this.RGModCheckbox.Text = "Jamaljé\'s improved cockpit textures";
+            this.RGModCheckbox.Text = "Install Jamaljé\'s improved cockpit textures";
             this.RGModCheckbox.UseVisualStyleBackColor = true;
             // 
             // InstallButton
@@ -89,7 +91,7 @@
             this.audioBirdCheck.CheckState = System.Windows.Forms.CheckState.Checked;
             this.audioBirdCheck.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.audioBirdCheck.ForeColor = System.Drawing.Color.White;
-            this.audioBirdCheck.Location = new System.Drawing.Point(37, 86);
+            this.audioBirdCheck.Location = new System.Drawing.Point(37, 75);
             this.audioBirdCheck.Name = "audioBirdCheck";
             this.audioBirdCheck.Size = new System.Drawing.Size(192, 19);
             this.audioBirdCheck.TabIndex = 4;
@@ -128,6 +130,18 @@
             // 
             this.openFileDialog1.Filter = "X-Plane.exe|X-Plane.exe";
             // 
+            // forceInstallCheckbox
+            // 
+            this.forceInstallCheckbox.AutoSize = true;
+            this.forceInstallCheckbox.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.forceInstallCheckbox.ForeColor = System.Drawing.Color.White;
+            this.forceInstallCheckbox.Location = new System.Drawing.Point(37, 125);
+            this.forceInstallCheckbox.Name = "forceInstallCheckbox";
+            this.forceInstallCheckbox.Size = new System.Drawing.Size(132, 17);
+            this.forceInstallCheckbox.TabIndex = 6;
+            this.forceInstallCheckbox.Text = "Ignore update check";
+            this.forceInstallCheckbox.UseVisualStyleBackColor = true;
+            // 
             // InstallOptionsPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -150,5 +164,6 @@
         public System.Windows.Forms.CheckBox audioBirdCheck;
         public System.Windows.Forms.CheckBox RGModCheckbox;
         public System.Windows.Forms.TextBox xplaneDirTextBox;
+        public System.Windows.Forms.CheckBox forceInstallCheckbox;
     }
 }

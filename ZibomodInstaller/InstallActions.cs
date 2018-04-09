@@ -64,6 +64,10 @@ namespace ZibomodInstaller
             {
                 File.WriteAllBytes(AppData + "\\data.xml", Properties.Resources.defaultconfig);
             }
+            if (File.Exists(AppData + "\\log.txt"))
+            {
+                File.Delete(AppData + "\\log.txt");
+            }
         }
         public static void ResetConfig()
         {
@@ -102,7 +106,7 @@ namespace ZibomodInstaller
                 DirectoryCopy(xplaneDir + @"Aircraft\Laminar Research\Boeing B737-800", xplaneDir + @"Aircraft\B737-800X", true);
             }
         }
-        public static string FindLatestFile(string FolderID)
+        public static string FindLatestFile(string FolderID, bool SearchZiboOnly)
         {
             string DownloadID = "";
             DriveAPI ZiboDrive = new DriveAPI(); //Import the API parser
@@ -121,7 +125,13 @@ namespace ZibomodInstaller
 
                 if (folderItemName[i].Contains(".zip"))
                 {
-                     potentialFiles.Add(i); //Add to list of zip files as ID, so that we don't have to look up later when we're downloading it
+                    if (!folderItemName[i].Contains("Boeing B") && SearchZiboOnly) //In case there are other files in zibo's Google Drive
+                    {
+                        
+                    } else
+                    {
+                        potentialFiles.Add(i); //Add to list of zip files as ID, so that we don't have to look up later when we're downloading it
+                    }
                 }
             }
             for (int i = 0; i < potentialFiles.Count; i++)

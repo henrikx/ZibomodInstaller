@@ -12,8 +12,6 @@ C:\lazarus\source\repos\ZibomodInstaller\ZibomodInstaller\obj\Release\ZibomodIns
 C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\bin\Release\ZibomodInstaller.exe.config
 C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\bin\Release\ZibomodInstaller.exe
 C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\bin\Release\ZibomodInstaller.pdb
-C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Release\ZibomodInstaller.csprojResolveAssemblyReference.cache
-C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Release\ZibomodInstaller.DisplayEULA.resources
 C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Release\ZibomodInstaller.InstallOptionsPage.resources
 C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Release\ZibomodInstaller.InstallPage.resources
 C:\Users\Henrik\Source\Repos\ZibomodInstaller\ZibomodInstaller\obj\Release\ZibomodInstaller.MainForm.resources
