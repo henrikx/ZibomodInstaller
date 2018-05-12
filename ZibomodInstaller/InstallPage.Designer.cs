@@ -17,7 +17,13 @@
             {
                 components.Dispose();
             }
-            InstallActionWorker.Abort();
+            try
+            {
+                InstallActionWorker.Abort();
+            } catch (System.NullReferenceException)
+            {
+
+            }
             base.Dispose(disposing);
         }
 

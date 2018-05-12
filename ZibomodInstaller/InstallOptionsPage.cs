@@ -43,10 +43,10 @@ namespace ZibomodInstaller
                 xmlConfigDoc.Load(AppData + "\\data.xml");
                 xplaneDirTextBox.Text = xmlConfigDoc.SelectSingleNode("installer/configuration/xplanePath").InnerText;
                 audioBirdCheck.Checked = Convert.ToBoolean(xmlConfigDoc.SelectSingleNode("installer/configuration/audiobirdxp").InnerText);
-                RGModCheckbox.Checked = Convert.ToBoolean(xmlConfigDoc.SelectSingleNode("installer/configuration/texturemod").InnerText);
+                //RGModCheckbox.Checked = Convert.ToBoolean(xmlConfigDoc.SelectSingleNode("installer/configuration/texturemod").InnerText);
                 installedZibo = xmlConfigDoc.SelectSingleNode("installer/data/ziboVer").InnerText;
                 installedAudioB = xmlConfigDoc.SelectSingleNode("installer/data/fmodVer").InnerText;
-                texturemodInstalled = Convert.ToBoolean(xmlConfigDoc.SelectSingleNode("installer/data/texturemodinstalled").InnerText);
+                //texturemodInstalled = Convert.ToBoolean(xmlConfigDoc.SelectSingleNode("installer/data/texturemodinstalled").InnerText);
                 xmlConfigDoc.Save(AppData + "\\data.xml");
 
             } catch (Exception ex)
@@ -79,6 +79,11 @@ namespace ZibomodInstaller
             this.Visible = false;
             InstallPage._InstallPage.Visible = true;
             InstallPage._InstallPage.InstallStart();
+        }
+
+        private void texturequestionmarkbtn_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Due to licencing issues, this option is not yet available.");
         }
     }
 }

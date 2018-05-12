@@ -44,11 +44,12 @@ namespace ZibomodInstaller
             if (InstallOptionsPage._InstallOptionsPage.RGModCheckbox.Checked) { taskLength+=3; }
             return taskLength;
         }
-        bool isEULAActive = true;
+        bool isEULAActive = false;
         public void ShowEULA(string EULAText)
         {
             try
             {
+                isEULAActive = true;
                 richTextBox1.Text = EULAText;
                 EULApanel.Visible = true;
                 MainForm._MainForm.closebutton.Enabled = true;
@@ -127,12 +128,27 @@ namespace ZibomodInstaller
                     string DownloadIDAudio = InstallActions.FindLatestFile("1IgWBmhgwKg6j4cjH3jSSO8KYfG2eurVZ", false);
                     if (DownloadIDAudio != InstallOptionsPage.installedAudioB || InstallOptionsPage._InstallOptionsPage.forceInstallCheckbox.Checked)
                     {
-                        string AudioBirdEULA = "By installing this sound pack, you acknowledge that it is not permitted to reupload any file in the pack to any other site or to modify, re-use, share any file in this pack. This also includes any configuration files and scripts that are provided with the immersion pack.\n\n" +
-                        "DO NOT USE with any other plane (it's not going to work properly).\n\n" +
-                        "You install and use this pack at your own risk. Should you damage your software or hardware in any way AudioBirdXP should not be held responsible.\n\n" +
-                        "OFFICIAL SITE: audiobirdxp.board.net\n" +
-                        "E-MAIL: audiobirdxp@gmail.com\n\n" +
-                        "Please click the text above this box to accept the EULA."; //TODO: Put this in it's own file
+                        string AudioBirdEULA = "(C) 2017/2018 by audiobirdxp / o. schmidt\n" +
+                                                "\n" +
+                                                "================================\n" +
+                                                "LICENSE / TERMS OF USE \n" +
+                                                "================================\n" +
+                                                "\n" +
+                                                "\n" +
+                                                "contact: audiobirdxp@gmail.com\n" +
+                                                "\n" +
+                                                "http://audiobirdxp.boards.net/\n" +
+                                                "\n" +
+                                                "This product is provided for free, but it is copyrighted and is shared with some rights reserved:\n" +
+                                                "\n" +
+                                                "By installing this sound pack, you acknowledge that it is not permitted to reupload any file in \n" +
+                                                "the download to any other site or to modify, re-use, reverse-engineer or share any file in this pack. \n" +
+                                                "This also includes any configuration files and scripts that are provided with this immersion pack. \n" +
+                                                "\n" +
+                                                "You install and use this pack at your own risk. Should you damage your software or hardware in any \n" +
+                                                "way I will not be held responsible.\n" +
+                                                "\n" +
+                                                "Click the title above this textbox to unlock the install button."; //TODO: Put this in it's own file
                         ShowEULA(AudioBirdEULA);
                         InstallActions.UpdateUserStatus("Downloading AudioBirdXP package... (4/" + Convert.ToString(taskLength) + ")");
                         InstallActions.AudioDownload(DownloadIDAudio);
@@ -154,33 +170,35 @@ namespace ZibomodInstaller
                     audioBirdSkipped = true;
                 }
             }
-            if (InstallOptionsPage._InstallOptionsPage.RGModCheckbox.Checked) //It is not necessary to reinstall the textures if zibomod isn't updated, however this causes a problem when the user already has the latest zibomod but has not installed the texturemod
-            {
-                if (!ziboModSkipped || !InstallOptionsPage.texturemodInstalled || InstallOptionsPage._InstallOptionsPage.forceInstallCheckbox.Checked)
-                {
-                    try
-                    {
+            //This code is not intended for official release, due to licencing issues
+            //
+            //if (InstallOptionsPage._InstallOptionsPage.RGModCheckbox.Checked) //It is not necessary to reinstall the textures if zibomod isn't updated, however this causes a problem when the user already has the latest zibomod but has not installed the texturemod
+            //{
+            //    if (!ziboModSkipped || !InstallOptionsPage.texturemodInstalled || InstallOptionsPage._InstallOptionsPage.forceInstallCheckbox.Checked)
+            //    {
+            //        try
+            //        {
 
-                        bool RGModTextureOnly = true; //Latest free RGMod isn't compatible with the latest zibo, so the user option is removed. Only textures are compatible.
-                        InstallActions.UpdateUserStatus("Finding latest texture mod update... (" + GetCurrentTaskTexturemod(1) + "/" + Convert.ToString(taskLength) + ")");
-                        string DownloadIDRGMod = InstallActions.FindLatestRG();
-                        InstallActions.UpdateUserStatus("Downloading texture mod... (" + GetCurrentTaskTexturemod(2) + "/" + Convert.ToString(taskLength) + ")");
-                        InstallActions.RGDownload(DownloadIDRGMod);
-                        InstallActions.UpdateUserStatus("Installing texture mod into aircraft... (" + GetCurrentTaskTexturemod(3) + "/" + Convert.ToString(taskLength) + ")");
-                        InstallActions.RGExtract(RGModTextureOnly, xplaneDir);
-                        InstallOptionsPage.texturemodInstalled = true;
-                        InstallActions.UpdateUserStatus("Done installing RG Mod texture mod.");
-                    }
-                    catch (Exception ex)
-                    {
-                        InstallActions.AppendLogText(ex.Message);
-                        texturemodSkipped = true;
-                    }
-                } else
-                {
-                    texturemodSkipped = true;
-                }
-            }
+            //            bool RGModTextureOnly = true; //Latest free RGMod isn't compatible with the latest zibo, so the user option is removed. Only textures are compatible.
+            //            InstallActions.UpdateUserStatus("Finding latest texture mod update... (" + GetCurrentTaskTexturemod(1) + "/" + Convert.ToString(taskLength) + ")");
+            //            string DownloadIDRGMod = InstallActions.FindLatestRG();
+            //            InstallActions.UpdateUserStatus("Downloading texture mod... (" + GetCurrentTaskTexturemod(2) + "/" + Convert.ToString(taskLength) + ")");
+            //            InstallActions.TextureDownload(DownloadIDRGMod);
+            //            InstallActions.UpdateUserStatus("Installing texture mod into aircraft... (" + GetCurrentTaskTexturemod(3) + "/" + Convert.ToString(taskLength) + ")");
+            //            InstallActions.RGExtract(RGModTextureOnly, xplaneDir);
+            //            InstallOptionsPage.texturemodInstalled = true;
+            //            InstallActions.UpdateUserStatus("Done installing RG Mod texture mod.");
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            InstallActions.AppendLogText(ex.Message);
+            //            texturemodSkipped = true;
+            //        }
+            //    } else
+            //    {
+            //        texturemodSkipped = true;
+            //    }
+            //}
             InstallActions.SaveConfig();
             AfterException:
             InstallActions.UpdateUserStatus("Cleaning up...");

@@ -54,6 +54,14 @@ namespace ZibomodInstaller
     {
         public static string AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ZiboModInstaller";
 
+        //public static void GetZiboModChangelog () //TODO: This function should return string
+        //{
+        //    WebClient ZiboForum = new WebClient();
+        //    string ZiboModChangelog = ZiboForum.DownloadString(@"https://forums.x-plane.org/index.php?/forums/topic/138974-b737-800x-zibo-mod-info-installation-download-links/");
+        //    MatchCollection regex = Regex.(ZiboModChangelog, @"[^>]+(?![^<]*\>)");
+        //    Console.WriteLine(Convert.ToString(regex));
+        //}
+
         public static void InitConfig()
         {
             if (!Directory.Exists(AppData))
@@ -81,10 +89,10 @@ namespace ZibomodInstaller
             xmlConfigDoc.Load(AppData + "\\data.xml");
             xmlConfigDoc.SelectSingleNode("installer/configuration/xplanePath").InnerText = InstallOptionsPage._InstallOptionsPage.xplaneDirTextBox.Text;
             xmlConfigDoc.SelectSingleNode("installer/configuration/audiobirdxp").InnerText = Convert.ToString(InstallOptionsPage._InstallOptionsPage.audioBirdCheck.Checked);
-            xmlConfigDoc.SelectSingleNode("installer/configuration/texturemod").InnerText = Convert.ToString(InstallOptionsPage._InstallOptionsPage.RGModCheckbox.Checked);
+            //xmlConfigDoc.SelectSingleNode("installer/configuration/texturemod").InnerText = Convert.ToString(InstallOptionsPage._InstallOptionsPage.RGModCheckbox.Checked);
             xmlConfigDoc.SelectSingleNode("installer/data/ziboVer").InnerText = Convert.ToString(InstallOptionsPage.installedZibo);
             xmlConfigDoc.SelectSingleNode("installer/data/fmodVer").InnerText = Convert.ToString(InstallOptionsPage.installedAudioB);
-            xmlConfigDoc.SelectSingleNode("installer/data/texturemodinstalled").InnerText = Convert.ToString(InstallOptionsPage.texturemodInstalled);
+            //xmlConfigDoc.SelectSingleNode("installer/data/texturemodinstalled").InnerText = Convert.ToString(InstallOptionsPage.texturemodInstalled);
             xmlConfigDoc.Save(AppData + "\\data.xml");
         }
         public static void UpdateUserStatus(string text)
@@ -138,16 +146,8 @@ namespace ZibomodInstaller
             {
                 potentialFilesAddedDate.Add(folderItemAddedDate[potentialFiles[i]]); //Add potentialfiles' last modified date so that they get the same ID.
             }
-            for (int i = 0; i < potentialFiles.Count; i++)
-            {
-                int NewestFile = potentialFiles[potentialFilesAddedDate.IndexOf(potentialFilesAddedDate.Max())]; //Find which file ID is the newest file.
-                if (potentialFiles[i] == NewestFile) //If the current file is the newest one, then do:
-                {
-                    int selectedDownload;
-                    selectedDownload = potentialFiles[i];
-                    DownloadID = folderItemDriveID[selectedDownload]; //Select DriveID for downloading the file
-                }
-            }
+            int NewestFile = potentialFiles[potentialFilesAddedDate.IndexOf(potentialFilesAddedDate.Max())]; //Find which file ID is the newest file.
+            DownloadID = folderItemDriveID[NewestFile];//Select DriveID for downloading the file
             return DownloadID;
         }
         //ZiboMod
@@ -228,51 +228,51 @@ namespace ZibomodInstaller
         }
         //
         //Jamalje's improved textures
-        public static string FindLatestRG() //Attempt to find the newest RG Mod to extract Jamalje's textures from, however as RG mod is now payware, this function is mainly deprecated. Automatic fallback to the newest known free RG Mod
-        {
-            using (WebClient VK = new WebClient())
-            {
-                string DownloadID = "";
-                VK.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1");
-                string VKGroup = VK.DownloadString(@"https://vk.com/xplane11rgmod");
-                MatchCollection posts = Regex.Matches(VKGroup, "div id=\"post-.*?_(.*?)\" class=\"_post[\\s\\S\\n]*?title=\"https:\\/\\/drive\\.google\\.com\\/file\\/d\\/(.*?)\\/view");
-                try
-                {
-                    DownloadID = posts[1].Groups[2].Value;
-                } catch (ArgumentOutOfRangeException)
-                {
-                    DownloadID = "1aZPQMD4tI51XFbdmlgT-bPh6RqlgKwlF"; //Fallback to newest known free version.
-                }
-                return DownloadID;
-            }
-        }
-        public static void RGDownload(string ID)
-        {
-            DriveAPI RGDrive = new DriveAPI();
-            RGDrive.DownloadFile(ID, AppData + "\\RG-Mod.zip");
-            while (RGDrive.DriveClient.IsBusy)
-            {
-                InstallPage._InstallPage.UpdateProgressbar(RGDrive.downloadProgress);
-                Thread.Sleep(2);
-            }
-        }
-        public static void RGExtract(bool isTextureOnly, string xPlanePath)
-        {
-            if (!isTextureOnly)
-            {
-                using (ZipFile RGMod = ZipFile.Read(AppData + "\\RG-Mod.zip"))
-                {
-                    RGMod.ExtractAll(xPlanePath + "\\Aircraft\\B737-800X", ExtractExistingFileAction.OverwriteSilently);
-                }
-            } else
-            {
-                using (ZipFile RGMod = ZipFile.Read(AppData + "\\RG-Mod.zip"))
-                {
-                    RGMod.ExtractSelectedEntries("name = *.dds", "objects", xPlanePath+"\\Aircraft\\B737-800X", ExtractExistingFileAction.OverwriteSilently);
-                }
-            }
+        //public static string FindLatestRG() //Attempt to find the newest RG Mod to extract Jamalje's textures from, however as RG mod is now payware, this function is mainly deprecated. Automatic fallback to the newest known free RG Mod
+        //{
+        //    using (WebClient VK = new WebClient())
+        //    {
+        //        string DownloadID = "";
+        //        VK.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1");
+        //        string VKGroup = VK.DownloadString(@"https://vk.com/xplane11rgmod");
+        //        MatchCollection posts = Regex.Matches(VKGroup, "div id=\"post-.*?_(.*?)\" class=\"_post[\\s\\S\\n]*?title=\"https:\\/\\/drive\\.google\\.com\\/file\\/d\\/(.*?)\\/view");
+        //        try
+        //        {
+        //            DownloadID = posts[1].Groups[2].Value;
+        //        } catch (ArgumentOutOfRangeException)
+        //        {
+        //            DownloadID = "1aZPQMD4tI51XFbdmlgT-bPh6RqlgKwlF"; //Fallback to newest known free version.
+        //        }
+        //        return DownloadID;
+        //    }
+        //}
+        //public static void TextureDownload(string ID)
+        //{
+        //    DriveAPI RGDrive = new DriveAPI();
+        //    RGDrive.DownloadFile(ID, AppData + "\\RG-Mod.zip");
+        //    while (RGDrive.DriveClient.IsBusy)
+        //    {
+        //        InstallPage._InstallPage.UpdateProgressbar(RGDrive.downloadProgress);
+        //        Thread.Sleep(2);
+        //    }
+        //}
+        //public static void TextureExtract(bool isTextureOnly, string xPlanePath)
+        //{
+        //    if (!isTextureOnly)
+        //    {
+        //        using (ZipFile RGMod = ZipFile.Read(AppData + "\\RG-Mod.zip"))
+        //        {
+        //            RGMod.ExtractAll(xPlanePath + "\\Aircraft\\B737-800X", ExtractExistingFileAction.OverwriteSilently);
+        //        }
+        //    } else
+        //    {
+        //        using (ZipFile RGMod = ZipFile.Read(AppData + "\\RG-Mod.zip"))
+        //        {
+        //            RGMod.ExtractSelectedEntries("name = *.dds", "objects", xPlanePath+"\\Aircraft\\B737-800X", ExtractExistingFileAction.OverwriteSilently);
+        //        }
+        //    }
 
-        }
+        //}
         public static void CleanUp()
         {
             if(File.Exists(AppData + "\\BoeingDL.zip"))
