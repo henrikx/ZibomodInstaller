@@ -15,21 +15,21 @@ namespace ZibomodInstaller
         [STAThread]
         static void Main()
         {
-#if !DEBUG
-            Assembly start = Assembly.Load((byte[])Properties.Resources.Ionic_Zip);
+            string SevenZipSharp = "ZibomodInstaller.SevenZipSharp.dll";
+            string IonicZip = "ZibomodInstaller.Ionic.Zip.dll";
+            EmbeddedAssembly.Load(SevenZipSharp, "SevenZipSharp.dll");
+            EmbeddedAssembly.Load(IonicZip, "Ionic.Zip.dll");
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
-#endif
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
         }
-#if !DEBUG
+
         static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
-            string assemblyName = new AssemblyName(args.Name).Name.Replace('.', '_');
-            byte[] assemblyBytes = (byte[])Properties.Resources.ResourceManager.GetObject(assemblyName, Properties.Resources.Culture);
-            return Assembly.Load(assemblyBytes);
+            return EmbeddedAssembly.Get(args.Name);
         }
-#endif
+
     }
 }

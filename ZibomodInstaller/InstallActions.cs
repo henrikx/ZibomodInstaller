@@ -9,10 +9,11 @@ using System.Web.Script.Serialization;
 using Ionic.Zip;
 using System.Text.RegularExpressions;
 using System.Threading;
+using SevenZip;
 
 namespace ZibomodInstaller
 {
-    class DriveAPI //API parser
+    class GDriveAPI //API parser
     { 
         public WebClient DriveClient = new WebClient();
         public Dictionary<string,dynamic> GetDriveFolderList(string DriveFolderID)
@@ -33,6 +34,17 @@ namespace ZibomodInstaller
         public void Downloader_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             downloadProgress = e.ProgressPercentage;
+        }
+    }
+    class OneDriveAPI
+    {
+        public WebClient OneDriveClient = new WebClient();
+        public Dictionary<string, dynamic> GetOneDriveDriveFolderList(string DriveFolderID)
+        {
+            string jsonData = OneDriveClient.DownloadString("https://skyapi.onedrive.live.com/API/2/GetItems?caller=&sb=0&ps=100&sd=0&gb=0&d=1&m=nb-NO&iabch=1&pi=5&path=1&lct=1&rset=odweb&v=0.8132011512416184&si=0&authKey=!AGh1XRe67b3h-u0&id=" + DriveFolderID);
+            Dictionary<string, dynamic> FolderContentData = null;
+            return FolderContentData;
+            //TODO: Fix function
         }
     }
     class LogFile
@@ -64,6 +76,7 @@ namespace ZibomodInstaller
 
         public static void InitConfig()
         {
+            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-us");
             if (!Directory.Exists(AppData))
             {
                 Directory.CreateDirectory(AppData);
@@ -72,6 +85,11 @@ namespace ZibomodInstaller
             {
                 File.WriteAllBytes(AppData + "\\data.xml", Properties.Resources.defaultconfig);
             }
+            if (!File.Exists(AppData + "\\7z.dll"))
+            {
+                File.WriteAllBytes(AppData + "\\7z.dll", Properties.Resources._7z);
+            }
+            SevenZipBase.SetLibraryPath(AppData + "\\7z.dll");
             if (File.Exists(AppData + "\\log.txt"))
             {
                 File.Delete(AppData + "\\log.txt");
@@ -114,10 +132,10 @@ namespace ZibomodInstaller
                 DirectoryCopy(xplaneDir + @"Aircraft\Laminar Research\Boeing B737-800", xplaneDir + @"Aircraft\B737-800X", true);
             }
         }
-        public static string FindLatestFile(string FolderID, bool SearchZiboOnly)
+        public static string FindLatestGDriveFile(string FolderID, bool SearchZiboOnly)
         {
             string DownloadID = "";
-            DriveAPI ZiboDrive = new DriveAPI(); //Import the API parser
+            GDriveAPI ZiboDrive = new GDriveAPI(); //Import the API parser
             Dictionary<string,dynamic> folderContentData = ZiboDrive.GetDriveFolderList(FolderID); //Get list of items in folder
             List<string> folderItemName = new List<string>(); //Define lists for item properties
             List<double> folderItemAddedDate = new List<double>();
@@ -133,7 +151,7 @@ namespace ZibomodInstaller
 
                 if (folderItemName[i].Contains(".zip"))
                 {
-                    if (!folderItemName[i].Contains("Boeing B") && SearchZiboOnly) //In case there are other files in zibo's Google Drive
+                    if (!folderItemName[i].Contains("B737") && !folderItemName[i].Contains("Boeing") && SearchZiboOnly) //In case there are other files in zibo's Google Drive
                     {
                         
                     } else
@@ -153,7 +171,7 @@ namespace ZibomodInstaller
         //ZiboMod
         public static void ZiboDownload(string DownloadID)
         {
-            DriveAPI ZiboDrive = new DriveAPI();
+            GDriveAPI ZiboDrive = new GDriveAPI();
             ZiboDrive.DownloadFile(DownloadID, AppData + "\\BoeingDL.zip"); //Downloads file to %Appdata%. Operation is async!
             while (ZiboDrive.DriveClient.IsBusy)
             {
@@ -166,10 +184,11 @@ namespace ZibomodInstaller
         {
             try
             {
-                using (ZipFile BoeingDL = ZipFile.Read(AppData + "\\BoeingDL.zip"))
+                using (Ionic.Zip.ZipFile BoeingDL = Ionic.Zip.ZipFile.Read(AppData + "\\BoeingDL.zip"))
                 {
                     BoeingDL.ExtractAll(xplaneDir + @"Aircraft\B737-800X", ExtractExistingFileAction.OverwriteSilently);
                 }
+                
             } catch (Exception ex)
             {
                 UpdateUserStatus("Download quota for the file is exceeded. Waiting 2 seconds.");
@@ -182,7 +201,7 @@ namespace ZibomodInstaller
         //AudioBird
         public static void AudioDownload(string DownloadID)
         {
-            DriveAPI AudioDrive = new DriveAPI();
+            GDriveAPI AudioDrive = new GDriveAPI();
             AudioDrive.DownloadFile(DownloadID, AppData + "\\AXP-Immersion.zip"); //Downloads file to %Appdata%
             while (AudioDrive.DriveClient.IsBusy)
             {
@@ -192,10 +211,15 @@ namespace ZibomodInstaller
         }
         public static void AudioExtract()
         {
-            using (ZipFile AudioDL = ZipFile.Read(AppData + "\\AXP-Immersion.zip"))
+            //using (ZipFile AudioDL = ZipFile.Read(AppData + "\\AXP-Immersion.zip"))
+            //{
+            //    AudioDL.ExtractAll(AppData + @"\AudioDL", ExtractExistingFileAction.OverwriteSilently);
+            //}
+            using (SevenZipExtractor AudioDL = new SevenZipExtractor(AppData + "\\AXP-Immersion.zip"))
             {
-                AudioDL.ExtractAll(AppData + @"\AudioDL", ExtractExistingFileAction.OverwriteSilently);
+                AudioDL.ExtractArchive(AppData + @"\AudioDL");
             }
+
         }
         public static void AudioInstall(string xplaneDir)
         {

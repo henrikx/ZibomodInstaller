@@ -59,7 +59,7 @@ namespace ZibomodInstaller
                 }
                 MainForm._MainForm.closebutton.Enabled = false;
                 EULApanel.Visible = false;
-            } catch (ThreadAbortException e)
+            } catch (ThreadAbortException)
             {
                 InstallActions.AppendLogText("InstallThread was aborted at EULAClose");
             }
@@ -95,8 +95,18 @@ namespace ZibomodInstaller
                 goto AfterException;
             }
             InstallActions.UpdateUserStatus("Finding the latest Zibo Update...");
-            string DownloadIDZibo = InstallActions.FindLatestFile("0B-tdl3VvPeOOYm12Wm80V04wdDQ", true); //Get Drive ID of the latest zibo release. The string is the Drive ID for the zibomod download folder.
-            if(DownloadIDZibo != InstallOptionsPage.installedZibo || InstallOptionsPage._InstallOptionsPage.forceInstallCheckbox.Checked) //This compares the drive ID of the currently installed version to the newest known version
+            string DownloadIDZibo = "";
+            try
+            {
+                DownloadIDZibo = InstallActions.FindLatestGDriveFile("0B-tdl3VvPeOOYm12Wm80V04wdDQ", true); //Get Drive ID of the latest zibo release. The string is the Drive ID for the zibomod download folder.
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Zibo has changed his means of distribution. Please wait for an update of this application or update it.");
+                InstallActions.AppendLogText(ex.Message);
+                ziboModSkipped = true;
+            }
+            if (DownloadIDZibo != InstallOptionsPage.installedZibo || InstallOptionsPage._InstallOptionsPage.forceInstallCheckbox.Checked) //This compares the drive ID of the currently installed version to the newest known version
             {
                 try
                 {
@@ -125,7 +135,7 @@ namespace ZibomodInstaller
                 try
                 {
                     InstallActions.UpdateUserStatus("Finding latest AudioBirdXP update... (3/" + Convert.ToString(taskLength) + ")");
-                    string DownloadIDAudio = InstallActions.FindLatestFile("1IgWBmhgwKg6j4cjH3jSSO8KYfG2eurVZ", false);
+                    string DownloadIDAudio = InstallActions.FindLatestGDriveFile("1Yv8vK6mjZ3OIf239xy34ECiOuX2-b1Iy", false);
                     if (DownloadIDAudio != InstallOptionsPage.installedAudioB || InstallOptionsPage._InstallOptionsPage.forceInstallCheckbox.Checked)
                     {
                         string AudioBirdEULA = "(C) 2017/2018 by audiobirdxp / o. schmidt\n" +
@@ -164,8 +174,11 @@ namespace ZibomodInstaller
                         InstallActions.UpdateUserStatus("AudioBirdXP is already up to date! Skipping...");
                         Thread.Sleep(2000);
                     }
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
+                    if (ex is ThreadAbortException) { return; };
+                    MessageBox.Show("AXP has changed it's means of distribution. Please wait for an update of this application or update it.");
                     InstallActions.AppendLogText(ex.Message);
                     audioBirdSkipped = true;
                 }
