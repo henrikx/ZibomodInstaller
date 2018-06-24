@@ -186,7 +186,7 @@ namespace ZibomodInstaller
             {
                 using (Ionic.Zip.ZipFile BoeingDL = Ionic.Zip.ZipFile.Read(AppData + "\\BoeingDL.zip"))
                 {
-                    BoeingDL.ExtractAll(xplaneDir + @"Aircraft\B737-800X", ExtractExistingFileAction.OverwriteSilently);
+                    BoeingDL.ExtractAll(AppData + @"\ZiboDL", ExtractExistingFileAction.OverwriteSilently);
                 }
                 
             } catch (Exception ex)
@@ -197,6 +197,11 @@ namespace ZibomodInstaller
                 throw ex;
             }
 
+        }
+        public static void ZiboInstall(string xplaneDir)
+        {
+            string acDirectory = FindACDir(AppData + @"\ZiboDL");
+            DirectoryCopy(AppData + @"\ZiboDL", xplaneDir + @"Aircraft\B737-800X\", true);
         }
         //AudioBird
         public static void AudioDownload(string DownloadID)
@@ -246,6 +251,25 @@ namespace ZibomodInstaller
                 else
                 {
                     fmodDirectory = FindFMODDir(subdir.FullName);
+                }
+            }
+            return fmodDirectory;
+        }
+        private static string FindACDir(string DirectoryToLookIn)
+        {
+            string fmodDirectory = null;
+            DirectoryInfo dir = new DirectoryInfo(DirectoryToLookIn);
+            DirectoryInfo[] dirs = dir.GetDirectories();
+            foreach (DirectoryInfo subdir in dirs)
+            {
+                if (subdir.FullName.Contains("B737-800X"))
+                {
+                    fmodDirectory = subdir.FullName;
+                    break;
+                }
+                else
+                {
+                    fmodDirectory = FindACDir(subdir.FullName);
                 }
             }
             return fmodDirectory;
