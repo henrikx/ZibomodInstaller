@@ -29,23 +29,23 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textuelabel = new System.Windows.Forms.Label();
+            this.dropdownbox = new System.Windows.Forms.ComboBox();
             this.forceInstallCheckbox = new System.Windows.Forms.CheckBox();
-            this.RGModCheckbox = new System.Windows.Forms.CheckBox();
             this.InstallButton = new System.Windows.Forms.Button();
             this.audioBirdCheck = new System.Windows.Forms.CheckBox();
             this.BrowseButton = new System.Windows.Forms.Button();
             this.xplaneDirTextBox = new System.Windows.Forms.TextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.texturequestionmarkbtn = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(45)))), ((int)(((byte)(60)))));
-            this.panel1.Controls.Add(this.texturequestionmarkbtn);
+            this.panel1.Controls.Add(this.textuelabel);
+            this.panel1.Controls.Add(this.dropdownbox);
             this.panel1.Controls.Add(this.forceInstallCheckbox);
-            this.panel1.Controls.Add(this.RGModCheckbox);
             this.panel1.Controls.Add(this.InstallButton);
             this.panel1.Controls.Add(this.audioBirdCheck);
             this.panel1.Controls.Add(this.BrowseButton);
@@ -54,6 +54,34 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(429, 168);
             this.panel1.TabIndex = 5;
+            // 
+            // textuelabel
+            // 
+            this.textuelabel.AutoSize = true;
+            this.textuelabel.Cursor = System.Windows.Forms.Cursors.Default;
+            this.textuelabel.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textuelabel.ForeColor = System.Drawing.Color.White;
+            this.textuelabel.Location = new System.Drawing.Point(79, 100);
+            this.textuelabel.Name = "textuelabel";
+            this.textuelabel.Size = new System.Drawing.Size(99, 13);
+            this.textuelabel.TabIndex = 8;
+            this.textuelabel.Text = "Texture resolution";
+            // 
+            // dropdownbox
+            // 
+            this.dropdownbox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(45)))), ((int)(((byte)(60)))));
+            this.dropdownbox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.dropdownbox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.dropdownbox.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dropdownbox.ForeColor = System.Drawing.Color.White;
+            this.dropdownbox.FormattingEnabled = true;
+            this.dropdownbox.Items.AddRange(new object[] {
+            "4k",
+            "2k"});
+            this.dropdownbox.Location = new System.Drawing.Point(37, 97);
+            this.dropdownbox.Name = "dropdownbox";
+            this.dropdownbox.Size = new System.Drawing.Size(36, 21);
+            this.dropdownbox.TabIndex = 7;
             // 
             // forceInstallCheckbox
             // 
@@ -66,19 +94,6 @@
             this.forceInstallCheckbox.TabIndex = 6;
             this.forceInstallCheckbox.Text = "Ignore update check";
             this.forceInstallCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // RGModCheckbox
-            // 
-            this.RGModCheckbox.AutoCheck = false;
-            this.RGModCheckbox.AutoSize = true;
-            this.RGModCheckbox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Strikeout);
-            this.RGModCheckbox.ForeColor = System.Drawing.Color.White;
-            this.RGModCheckbox.Location = new System.Drawing.Point(37, 100);
-            this.RGModCheckbox.Name = "RGModCheckbox";
-            this.RGModCheckbox.Size = new System.Drawing.Size(247, 19);
-            this.RGModCheckbox.TabIndex = 5;
-            this.RGModCheckbox.Text = "Install Jamaljé\'s improved cockpit textures";
-            this.RGModCheckbox.UseVisualStyleBackColor = true;
             // 
             // InstallButton
             // 
@@ -143,23 +158,6 @@
             // 
             this.openFileDialog1.Filter = "X-Plane.exe|X-Plane.exe";
             // 
-            // texturequestionmarkbtn
-            // 
-            this.texturequestionmarkbtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
-            this.texturequestionmarkbtn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(56)))), ((int)(((byte)(81)))));
-            this.texturequestionmarkbtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
-            this.texturequestionmarkbtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
-            this.texturequestionmarkbtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.texturequestionmarkbtn.Font = new System.Drawing.Font("Segoe UI", 8.25F);
-            this.texturequestionmarkbtn.ForeColor = System.Drawing.Color.White;
-            this.texturequestionmarkbtn.Location = new System.Drawing.Point(279, 96);
-            this.texturequestionmarkbtn.Name = "texturequestionmarkbtn";
-            this.texturequestionmarkbtn.Size = new System.Drawing.Size(20, 23);
-            this.texturequestionmarkbtn.TabIndex = 7;
-            this.texturequestionmarkbtn.Text = "?";
-            this.texturequestionmarkbtn.UseVisualStyleBackColor = false;
-            this.texturequestionmarkbtn.Click += new System.EventHandler(this.texturequestionmarkbtn_Click);
-            // 
             // InstallOptionsPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -180,9 +178,9 @@
         private System.Windows.Forms.Button InstallButton;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         public System.Windows.Forms.CheckBox audioBirdCheck;
-        public System.Windows.Forms.CheckBox RGModCheckbox;
         public System.Windows.Forms.TextBox xplaneDirTextBox;
         public System.Windows.Forms.CheckBox forceInstallCheckbox;
-        private System.Windows.Forms.Button texturequestionmarkbtn;
+        private System.Windows.Forms.Label textuelabel;
+        public System.Windows.Forms.ComboBox dropdownbox;
     }
 }

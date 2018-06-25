@@ -110,6 +110,7 @@ namespace ZibomodInstaller
             //xmlConfigDoc.SelectSingleNode("installer/configuration/texturemod").InnerText = Convert.ToString(InstallOptionsPage._InstallOptionsPage.RGModCheckbox.Checked);
             xmlConfigDoc.SelectSingleNode("installer/data/ziboVer").InnerText = Convert.ToString(InstallOptionsPage.installedZibo);
             xmlConfigDoc.SelectSingleNode("installer/data/fmodVer").InnerText = Convert.ToString(InstallOptionsPage.installedAudioB);
+            xmlConfigDoc.SelectSingleNode("installer/configuration/textureres").InnerText = Convert.ToString(InstallOptionsPage._InstallOptionsPage.dropdownbox.SelectedIndex);
             //xmlConfigDoc.SelectSingleNode("installer/data/texturemodinstalled").InnerText = Convert.ToString(InstallOptionsPage.texturemodInstalled);
             xmlConfigDoc.Save(AppData + "\\data.xml");
         }
@@ -125,12 +126,9 @@ namespace ZibomodInstaller
 
         public static void ZiboPrepareDir(string xplaneDir)
         {
-            if(!Directory.Exists(xplaneDir + @"Aircraft\B737-800X")) 
-            {
-                InstallOptionsPage.installedZibo = "";
-                InstallOptionsPage.installedAudioB = "";
-                DirectoryCopy(xplaneDir + @"Aircraft\Laminar Research\Boeing B737-800", xplaneDir + @"Aircraft\B737-800X", true);
-            }
+            InstallOptionsPage.installedZibo = "";
+            InstallOptionsPage.installedAudioB = "";
+            DirectoryCopy(xplaneDir + @"Aircraft\Laminar Research\Boeing B737-800", xplaneDir + @"Aircraft\B737-800X", true);
         }
         public static void ZiboCleanDir(string xplaneDir)
         {
@@ -242,6 +240,13 @@ namespace ZibomodInstaller
         {
             string acDirectory = FindACDir(AppData + @"\ZiboDL");
             DirectoryCopy(acDirectory, xplaneDir + @"Aircraft\B737-800X\", true);
+            if(InstallOptionsPage._InstallOptionsPage.dropdownbox.SelectedIndex == 1)
+            {
+                File.Copy(acDirectory + @"\ACF_2k_4k\b738.acf.4k", xplaneDir + @"Aircraft\B737-800X\b738.acf", true);
+            } else
+            {
+                File.Copy(acDirectory + @"\ACF_2k_4k\b738.acf.2k", xplaneDir + @"Aircraft\B737-800X\b738.acf", true);
+            }
         }
         //AudioBird
         public static void AudioDownload(string DownloadID)

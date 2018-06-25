@@ -3,7 +3,8 @@
 			<xplanePath>C:\X-Plane\X-Plane.exe</xplanePath>
 			<audiobirdxp>true</audiobirdxp>
 			<texturemod>true</texturemod>
-		</configuration>
+      <textureres>2</textureres>
+    </configuration>
 		<data>
 			<ziboVer></ziboVer>
 			<fmodVer></fmodVer>

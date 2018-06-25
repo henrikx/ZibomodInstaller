@@ -46,6 +46,7 @@ namespace ZibomodInstaller
                 //RGModCheckbox.Checked = Convert.ToBoolean(xmlConfigDoc.SelectSingleNode("installer/configuration/texturemod").InnerText);
                 installedZibo = xmlConfigDoc.SelectSingleNode("installer/data/ziboVer").InnerText;
                 installedAudioB = xmlConfigDoc.SelectSingleNode("installer/data/fmodVer").InnerText;
+                dropdownbox.SelectedIndex = Convert.ToInt32(xmlConfigDoc.SelectSingleNode("installer/configuration/textureres").InnerText);
                 //texturemodInstalled = Convert.ToBoolean(xmlConfigDoc.SelectSingleNode("installer/data/texturemodinstalled").InnerText);
                 xmlConfigDoc.Save(AppData + "\\data.xml");
 

@@ -41,7 +41,7 @@ namespace ZibomodInstaller
         {
             int taskLength = 2;
             if (InstallOptionsPage._InstallOptionsPage.audioBirdCheck.Checked) { taskLength+=3; } //There are three tasks for these two
-            if (InstallOptionsPage._InstallOptionsPage.RGModCheckbox.Checked) { taskLength+=3; }
+            //if (InstallOptionsPage._InstallOptionsPage.RGModCheckbox.Checked) { taskLength+=3; }
             return taskLength;
         }
         bool isEULAActive = false;
@@ -101,11 +101,12 @@ namespace ZibomodInstaller
                 {
                     InstallActions.UpdateUserStatus("Downloading ZiboMod... (1/" + Convert.ToString(taskLength) + ")");
                     InstallActions.ZiboDownload(DownloadIDZibo); //Download the selected file
+                    InstallActions.UpdateUserStatus("Extracting ZiboMod to temporary directory... (2/" + Convert.ToString(taskLength) + ")");
                     InstallActions.ZiboExtract(xplaneDir); //Extract into temp dir
                     try
                     {
                         InstallActions.UpdateUserStatus("Preparing directory...");
-                        InstallActions.ZiboPrepareDir(xplaneDir); //Copy Laminar's 737
+                        //InstallActions.ZiboPrepareDir(xplaneDir); //Copy Laminar's 737. Not required anymore. Zibo distributes the entire plane in one package
                     }
                     catch (DirectoryNotFoundException)
                     {
@@ -113,7 +114,7 @@ namespace ZibomodInstaller
                         MessageBox.Show("Could not find a valid X-Plane installation at this directory");
                         goto AfterException;
                     }
-                    InstallActions.UpdateUserStatus("Extracting and installing ZiboMod...(2/" + Convert.ToString(taskLength) + ")");
+                    InstallActions.UpdateUserStatus("Installing ZiboMod...(2/" + Convert.ToString(taskLength) + ")");
                     InstallActions.ZiboInstall(xplaneDir); // move files into xplane
                     InstallOptionsPage.installedZibo = DownloadIDZibo;
                     InstallOptionsPage.texturemodInstalled = false;
