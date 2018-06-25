@@ -132,6 +132,45 @@ namespace ZibomodInstaller
                 DirectoryCopy(xplaneDir + @"Aircraft\Laminar Research\Boeing B737-800", xplaneDir + @"Aircraft\B737-800X", true);
             }
         }
+        public static void ZiboCleanDir(string xplaneDir)
+        {
+            if (Directory.Exists(xplaneDir + @"Aircraft\B737-800X\airfoils"))
+            {
+                Directory.Delete(xplaneDir + @"Aircraft\B737-800X\airfoils", true);
+            }
+            if (Directory.Exists(xplaneDir + @"Aircraft\B737-800X\cockpit"))
+            {
+                Directory.Delete(xplaneDir + @"Aircraft\B737-800X\cockpit", true);
+            }
+            if (Directory.Exists(xplaneDir + @"Aircraft\B737-800X\cockpit_3d"))
+            {
+                Directory.Delete(xplaneDir + @"Aircraft\B737-800X\cockpit_3d", true);
+            }
+            if (Directory.Exists(xplaneDir + @"Aircraft\B737-800X\objects"))
+            {
+                Directory.Delete(xplaneDir + @"Aircraft\B737-800X\objects", true);
+            }
+            if (Directory.Exists(xplaneDir + @"Aircraft\B737-800X\plugins"))
+            {
+                Directory.Delete(xplaneDir + @"Aircraft\B737-800X\plugins", true);
+            }
+            if (Directory.Exists(xplaneDir + @"Aircraft\B737-800X\sounds"))
+            {
+                Directory.Delete(xplaneDir + @"Aircraft\B737-800X\sounds", true);
+            }
+            if (File.Exists(xplaneDir + @"Aircraft\B737-800X\b738.acf"))
+            {
+                File.Delete(xplaneDir + @"Aircraft\B737-800X\b738.acf");
+            }
+            if (File.Exists(xplaneDir + @"Aircraft\B737-800X\B738X_apt.dat"))
+            {
+                File.Delete(xplaneDir + @"Aircraft\B737-800X\B738X_apt.dat");
+            }
+            if (File.Exists(xplaneDir + @"Aircraft\B737-800X\B738X_rnw.dat"))
+            {
+                File.Delete(xplaneDir + @"Aircraft\B737-800X\B738X_rnw.dat");
+            }
+        }
         public static string FindLatestGDriveFile(string FolderID, bool SearchZiboOnly)
         {
             string DownloadID = "";
@@ -186,12 +225,13 @@ namespace ZibomodInstaller
             {
                 using (Ionic.Zip.ZipFile BoeingDL = Ionic.Zip.ZipFile.Read(AppData + "\\BoeingDL.zip"))
                 {
+                    ZiboCleanDir(InstallPage.xplaneDir);
                     BoeingDL.ExtractAll(AppData + @"\ZiboDL", ExtractExistingFileAction.OverwriteSilently);
                 }
                 
             } catch (Exception ex)
             {
-                UpdateUserStatus("Download quota for the file is exceeded. Waiting 2 seconds.");
+                UpdateUserStatus("Download quota for the file is exceeded.");
                 AppendLogText("Download quota for the file is exceeded or another issue has caused Google to return a non-zip file.");
                 Thread.Sleep(2000);
                 throw ex;
@@ -201,7 +241,7 @@ namespace ZibomodInstaller
         public static void ZiboInstall(string xplaneDir)
         {
             string acDirectory = FindACDir(AppData + @"\ZiboDL");
-            DirectoryCopy(AppData + @"\ZiboDL", xplaneDir + @"Aircraft\B737-800X\", true);
+            DirectoryCopy(acDirectory, xplaneDir + @"Aircraft\B737-800X\", true);
         }
         //AudioBird
         public static void AudioDownload(string DownloadID)
@@ -257,22 +297,22 @@ namespace ZibomodInstaller
         }
         private static string FindACDir(string DirectoryToLookIn)
         {
-            string fmodDirectory = null;
+            string ACDir = null;
             DirectoryInfo dir = new DirectoryInfo(DirectoryToLookIn);
             DirectoryInfo[] dirs = dir.GetDirectories();
             foreach (DirectoryInfo subdir in dirs)
             {
                 if (subdir.FullName.Contains("B737-800X"))
                 {
-                    fmodDirectory = subdir.FullName;
+                    ACDir = subdir.FullName;
                     break;
                 }
                 else
                 {
-                    fmodDirectory = FindACDir(subdir.FullName);
+                    ACDir = FindACDir(subdir.FullName);
                 }
             }
-            return fmodDirectory;
+            return ACDir;
         }
         //
         //Jamalje's improved textures
@@ -338,6 +378,10 @@ namespace ZibomodInstaller
             if (Directory.Exists(AppData + "\\AudioDL"))
             {
                 Directory.Delete(AppData + "\\AudioDL", true);
+            }
+            if (Directory.Exists(AppData + "\\ZiboDL"))
+            {
+                Directory.Delete(AppData + "\\ZiboDL", true);
             }
         }
         //

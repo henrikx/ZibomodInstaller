@@ -74,26 +74,15 @@ namespace ZibomodInstaller
         {
             isEULAActive = false;
         }
+        public static string xplaneDir = "";
         private void InstallAction()
         {
-            string xplaneDir = "";
             bool ziboModSkipped = false;
             bool audioBirdSkipped = false;
             bool texturemodSkipped = false;
 
-            InstallActions.UpdateUserStatus("Preparing directory...");
             int taskLength = determineTaskLength();
             xplaneDir = Regex.Match(InstallOptionsPage._InstallOptionsPage.xplaneDirTextBox.Text, @"([\s\S]*?)(X-Plane\.exe)").Groups[1].Value;
-            try
-            {
-                InstallActions.ZiboPrepareDir(xplaneDir); //Copy Laminar's 737
-            }
-            catch (DirectoryNotFoundException)
-            {
-                InstallActions.UpdateUserStatus("Could not find a valid X-Plane installation at this directory");
-                MessageBox.Show("Could not find a valid X-Plane installation at this directory");
-                goto AfterException;
-            }
             InstallActions.UpdateUserStatus("Finding the latest Zibo Update...");
             string DownloadIDZibo = "";
             try
@@ -112,8 +101,20 @@ namespace ZibomodInstaller
                 {
                     InstallActions.UpdateUserStatus("Downloading ZiboMod... (1/" + Convert.ToString(taskLength) + ")");
                     InstallActions.ZiboDownload(DownloadIDZibo); //Download the selected file
+                    InstallActions.ZiboExtract(xplaneDir); //Extract into temp dir
+                    try
+                    {
+                        InstallActions.UpdateUserStatus("Preparing directory...");
+                        InstallActions.ZiboPrepareDir(xplaneDir); //Copy Laminar's 737
+                    }
+                    catch (DirectoryNotFoundException)
+                    {
+                        InstallActions.UpdateUserStatus("Could not find a valid X-Plane installation at this directory");
+                        MessageBox.Show("Could not find a valid X-Plane installation at this directory");
+                        goto AfterException;
+                    }
                     InstallActions.UpdateUserStatus("Extracting and installing ZiboMod...(2/" + Convert.ToString(taskLength) + ")");
-                    InstallActions.ZiboExtract(xplaneDir); //Extract into xplane
+                    InstallActions.ZiboInstall(xplaneDir); // move files into xplane
                     InstallOptionsPage.installedZibo = DownloadIDZibo;
                     InstallOptionsPage.texturemodInstalled = false;
                     InstallActions.UpdateUserStatus("Done installing Zibomod");
