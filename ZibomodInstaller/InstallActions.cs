@@ -240,7 +240,7 @@ namespace ZibomodInstaller
         {
             string acDirectory = FindACDir(AppData + @"\ZiboDL");
             DirectoryCopy(acDirectory, xplaneDir + @"Aircraft\B737-800X\", true);
-            if(InstallOptionsPage._InstallOptionsPage.dropdownbox.SelectedIndex == 1)
+            if(InstallOptionsPage._InstallOptionsPage.dropdownbox.SelectedIndex == 0)
             {
                 File.Copy(acDirectory + @"\ACF_2k_4k\b738.acf.4k", xplaneDir + @"Aircraft\B737-800X\b738.acf", true);
             } else
