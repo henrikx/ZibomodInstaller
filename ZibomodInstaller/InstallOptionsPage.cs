@@ -52,9 +52,10 @@ namespace ZibomodInstaller
 
             } catch (Exception ex)
             {
-                if (ex is NullReferenceException || ex is System.Xml.XmlException)
+                if (ex is NullReferenceException || ex is System.Xml.XmlException || ex is System.ArgumentOutOfRangeException)
                 {
                     InstallActions.ResetConfig();
+                    LoadConfig();
                     MessageBox.Show("Corrupt or old configuration detected. Configuration reset to default values.");
                     InstallActions.AppendLogText("Couldn't load configuration! Corrupt or old configuration detected. Configuration reset to default values.");
                     return;

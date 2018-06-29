@@ -81,6 +81,7 @@ namespace ZibomodInstaller
             {
                 Directory.CreateDirectory(AppData);
             }
+            Thread.Sleep(50);
             if (!File.Exists(AppData + "\\data.xml"))
             {
                 File.WriteAllBytes(AppData + "\\data.xml", Properties.Resources.defaultconfig);
@@ -167,6 +168,14 @@ namespace ZibomodInstaller
             if (File.Exists(xplaneDir + @"Aircraft\B737-800X\B738X_rnw.dat"))
             {
                 File.Delete(xplaneDir + @"Aircraft\B737-800X\B738X_rnw.dat");
+            }
+            if (File.Exists(xplaneDir + @"Aircraft\B737-800X\B738X_rnw.dat"))
+            {
+                File.Delete(xplaneDir + @"Aircraft\B737-800X\B738X_rnw.dat");
+            }
+            if (File.Exists(xplaneDir + @"Aircraft\B737-800X\b738_cockpit.obj"))
+            {
+                File.Delete(xplaneDir + @"Aircraft\B737-800X\b738_cockpit.obj");
             }
         }
         public static string FindLatestGDriveFile(string FolderID, bool SearchZiboOnly)
