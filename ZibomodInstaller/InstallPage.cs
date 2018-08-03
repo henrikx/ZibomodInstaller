@@ -40,7 +40,7 @@ namespace ZibomodInstaller
         private int determineTaskLength()
         {
             int taskLength = 2;
-            if (InstallOptionsPage._InstallOptionsPage.audioBirdCheck.Checked) { taskLength+=3; } //There are three tasks for these two
+            //if (InstallOptionsPage._InstallOptionsPage.audioBirdCheck.Checked) { taskLength+=3; } //There are three tasks for these two
             //if (InstallOptionsPage._InstallOptionsPage.RGModCheckbox.Checked) { taskLength+=3; }
             return taskLength;
         }
@@ -131,60 +131,60 @@ namespace ZibomodInstaller
                 Thread.Sleep(2000);
             }
 
-            //AudioBird
-            if (InstallOptionsPage._InstallOptionsPage.audioBirdCheck.Checked)
-            {
-                try
-                {
-                    InstallActions.UpdateUserStatus("Finding latest AudioBirdXP update... (3/" + Convert.ToString(taskLength) + ")");
-                    string DownloadIDAudio = InstallActions.FindLatestGDriveFile("1Yv8vK6mjZ3OIf239xy34ECiOuX2-b1Iy", false);
-                    if (DownloadIDAudio != InstallOptionsPage.installedAudioB || InstallOptionsPage._InstallOptionsPage.forceInstallCheckbox.Checked)
-                    {
-                        string AudioBirdEULA = "(C) 2017/2018 by audiobirdxp / o. schmidt\n" +
-                                                "\n" +
-                                                "================================\n" +
-                                                "LICENSE / TERMS OF USE \n" +
-                                                "================================\n" +
-                                                "\n" +
-                                                "\n" +
-                                                "contact: audiobirdxp@gmail.com\n" +
-                                                "\n" +
-                                                "http://audiobirdxp.boards.net/\n" +
-                                                "\n" +
-                                                "This product is provided for free, but it is copyrighted and is shared with some rights reserved:\n" +
-                                                "\n" +
-                                                "By installing this sound pack, you acknowledge that it is not permitted to reupload any file in \n" +
-                                                "the download to any other site or to modify, re-use, reverse-engineer or share any file in this pack. \n" +
-                                                "This also includes any configuration files and scripts that are provided with this immersion pack. \n" +
-                                                "\n" +
-                                                "You install and use this pack at your own risk. Should you damage your software or hardware in any \n" +
-                                                "way I will not be held responsible.\n" +
-                                                "\n" +
-                                                "Click the title above this textbox to unlock the install button."; //TODO: Put this in it's own file
-                        ShowEULA(AudioBirdEULA);
-                        InstallActions.UpdateUserStatus("Downloading AudioBirdXP package... (4/" + Convert.ToString(taskLength) + ")");
-                        InstallActions.AudioDownload(DownloadIDAudio);
-                        InstallActions.UpdateUserStatus("Installing FMOD into aircraft... (5/" + Convert.ToString(taskLength) + ")");
-                        InstallActions.AudioExtract();
-                        InstallActions.AudioInstall(xplaneDir);
-                        InstallOptionsPage.installedAudioB = DownloadIDAudio;
-                        InstallActions.UpdateUserStatus("Done installing AudioBirdXP Sound Mod.");
-                    }
-                    else
-                    {
-                        audioBirdSkipped = true;
-                        InstallActions.UpdateUserStatus("AudioBirdXP is already up to date! Skipping...");
-                        Thread.Sleep(2000);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    if (ex is ThreadAbortException) { return; };
-                    MessageBox.Show("AXP has changed it's means of distribution. Please wait for an update of this application or update it.");
-                    InstallActions.AppendLogText(ex.Message);
-                    audioBirdSkipped = true;
-                }
-            }
+            ////AudioBird
+            //if (InstallOptionsPage._InstallOptionsPage.audioBirdCheck.Checked)
+            //{
+            //    try
+            //    {
+            //        InstallActions.UpdateUserStatus("Finding latest AudioBirdXP update... (3/" + Convert.ToString(taskLength) + ")");
+            //        string DownloadIDAudio = InstallActions.FindLatestGDriveFile("1Yv8vK6mjZ3OIf239xy34ECiOuX2-b1Iy", false);
+            //        if (DownloadIDAudio != InstallOptionsPage.installedAudioB || InstallOptionsPage._InstallOptionsPage.forceInstallCheckbox.Checked)
+            //        {
+            //            string AudioBirdEULA = "(C) 2017/2018 by audiobirdxp / o. schmidt\n" +
+            //                                    "\n" +
+            //                                    "================================\n" +
+            //                                    "LICENSE / TERMS OF USE \n" +
+            //                                    "================================\n" +
+            //                                    "\n" +
+            //                                    "\n" +
+            //                                    "contact: audiobirdxp@gmail.com\n" +
+            //                                    "\n" +
+            //                                    "http://audiobirdxp.boards.net/\n" +
+            //                                    "\n" +
+            //                                    "This product is provided for free, but it is copyrighted and is shared with some rights reserved:\n" +
+            //                                    "\n" +
+            //                                    "By installing this sound pack, you acknowledge that it is not permitted to reupload any file in \n" +
+            //                                    "the download to any other site or to modify, re-use, reverse-engineer or share any file in this pack. \n" +
+            //                                    "This also includes any configuration files and scripts that are provided with this immersion pack. \n" +
+            //                                    "\n" +
+            //                                    "You install and use this pack at your own risk. Should you damage your software or hardware in any \n" +
+            //                                    "way I will not be held responsible.\n" +
+            //                                    "\n" +
+            //                                    "Click the title above this textbox to unlock the install button."; //TODO: Put this in it's own file
+            //            ShowEULA(AudioBirdEULA);
+            //            InstallActions.UpdateUserStatus("Downloading AudioBirdXP package... (4/" + Convert.ToString(taskLength) + ")");
+            //            InstallActions.AudioDownload(DownloadIDAudio);
+            //            InstallActions.UpdateUserStatus("Installing FMOD into aircraft... (5/" + Convert.ToString(taskLength) + ")");
+            //            InstallActions.AudioExtract();
+            //            InstallActions.AudioInstall(xplaneDir);
+            //            InstallOptionsPage.installedAudioB = DownloadIDAudio;
+            //            InstallActions.UpdateUserStatus("Done installing AudioBirdXP Sound Mod.");
+            //        }
+            //        else
+            //        {
+            //            audioBirdSkipped = true;
+            //            InstallActions.UpdateUserStatus("AudioBirdXP is already up to date! Skipping...");
+            //            Thread.Sleep(2000);
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        if (ex is ThreadAbortException) { return; };
+            //        MessageBox.Show("AXP has changed it's means of distribution. Please wait for an update of this application or update it.");
+            //        InstallActions.AppendLogText(ex.Message);
+            //        audioBirdSkipped = true;
+            //    }
+            //}
             //This code is not intended for official release, due to licencing issues
             //
             //if (InstallOptionsPage._InstallOptionsPage.RGModCheckbox.Checked) //It is not necessary to reinstall the textures if zibomod isn't updated, however this causes a problem when the user already has the latest zibomod but has not installed the texturemod
@@ -227,13 +227,13 @@ namespace ZibomodInstaller
             closeButton.Enabled = true;
             MainForm._MainForm.closebutton.Enabled = true;
         }
-        private string GetCurrentTaskTexturemod(int sequencenmb)
-        {
-            string sequence = "";
-            if (InstallOptionsPage._InstallOptionsPage.audioBirdCheck.Checked) { sequence = Convert.ToString(sequencenmb += 5); }
-            else { sequence = Convert.ToString(sequencenmb += 2); }
-            return sequence;
-        }
+        //private string GetCurrentTaskTexturemod(int sequencenmb)
+        //{
+        //    string sequence = "";
+        //    if (InstallOptionsPage._InstallOptionsPage.audioBirdCheck.Checked) { sequence = Convert.ToString(sequencenmb += 5); }
+        //    else { sequence = Convert.ToString(sequencenmb += 2); }
+        //    return sequence;
+        //}
         private void closeButton_Click(object sender, EventArgs e)
         {
             Application.Exit();

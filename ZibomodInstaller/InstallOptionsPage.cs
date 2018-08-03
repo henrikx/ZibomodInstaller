@@ -42,10 +42,10 @@ namespace ZibomodInstaller
                 xmlConfigDoc.PreserveWhitespace = true;
                 xmlConfigDoc.Load(AppData + "\\data.xml");
                 xplaneDirTextBox.Text = xmlConfigDoc.SelectSingleNode("installer/configuration/xplanePath").InnerText;
-                audioBirdCheck.Checked = Convert.ToBoolean(xmlConfigDoc.SelectSingleNode("installer/configuration/audiobirdxp").InnerText);
+                //audioBirdCheck.Checked = Convert.ToBoolean(xmlConfigDoc.SelectSingleNode("installer/configuration/audiobirdxp").InnerText);
                 //RGModCheckbox.Checked = Convert.ToBoolean(xmlConfigDoc.SelectSingleNode("installer/configuration/texturemod").InnerText);
                 installedZibo = xmlConfigDoc.SelectSingleNode("installer/data/ziboVer").InnerText;
-                installedAudioB = xmlConfigDoc.SelectSingleNode("installer/data/fmodVer").InnerText;
+                //installedAudioB = xmlConfigDoc.SelectSingleNode("installer/data/fmodVer").InnerText;
                 dropdownbox.SelectedIndex = Convert.ToInt32(xmlConfigDoc.SelectSingleNode("installer/configuration/textureres").InnerText);
                 //texturemodInstalled = Convert.ToBoolean(xmlConfigDoc.SelectSingleNode("installer/data/texturemodinstalled").InnerText);
                 xmlConfigDoc.Save(AppData + "\\data.xml");

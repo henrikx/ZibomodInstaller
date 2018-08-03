@@ -9,7 +9,7 @@ using System.Web.Script.Serialization;
 using Ionic.Zip;
 using System.Text.RegularExpressions;
 using System.Threading;
-using SevenZip;
+//using SevenZip;
 
 namespace ZibomodInstaller
 {
@@ -36,17 +36,17 @@ namespace ZibomodInstaller
             downloadProgress = e.ProgressPercentage;
         }
     }
-    class OneDriveAPI
-    {
-        public WebClient OneDriveClient = new WebClient();
-        public Dictionary<string, dynamic> GetOneDriveDriveFolderList(string DriveFolderID)
-        {
-            string jsonData = OneDriveClient.DownloadString("https://skyapi.onedrive.live.com/API/2/GetItems?caller=&sb=0&ps=100&sd=0&gb=0&d=1&m=nb-NO&iabch=1&pi=5&path=1&lct=1&rset=odweb&v=0.8132011512416184&si=0&authKey=!AGh1XRe67b3h-u0&id=" + DriveFolderID);
-            Dictionary<string, dynamic> FolderContentData = null;
-            return FolderContentData;
-            //TODO: Fix function
-        }
-    }
+    //class OneDriveAPI
+    //{
+    //    public WebClient OneDriveClient = new WebClient();
+    //    public Dictionary<string, dynamic> GetOneDriveDriveFolderList(string DriveFolderID)
+    //    {
+    //        string jsonData = OneDriveClient.DownloadString("https://skyapi.onedrive.live.com/API/2/GetItems?caller=&sb=0&ps=100&sd=0&gb=0&d=1&m=nb-NO&iabch=1&pi=5&path=1&lct=1&rset=odweb&v=0.8132011512416184&si=0&authKey=!AGh1XRe67b3h-u0&id=" + DriveFolderID);
+    //        Dictionary<string, dynamic> FolderContentData = null;
+    //        return FolderContentData;
+    //        //TODO: Fix function
+    //    }
+    //}
     class LogFile
     {
         public static string LogLoc = InstallActions.AppData + "\\log.txt";
@@ -90,7 +90,7 @@ namespace ZibomodInstaller
             {
                 File.WriteAllBytes(AppData + "\\7z.dll", Properties.Resources._7z);
             }
-            SevenZipBase.SetLibraryPath(AppData + "\\7z.dll");
+            //SevenZipBase.SetLibraryPath(AppData + "\\7z.dll");
             if (File.Exists(AppData + "\\log.txt"))
             {
                 File.Delete(AppData + "\\log.txt");
@@ -107,10 +107,10 @@ namespace ZibomodInstaller
             xmlConfigDoc.PreserveWhitespace = true;
             xmlConfigDoc.Load(AppData + "\\data.xml");
             xmlConfigDoc.SelectSingleNode("installer/configuration/xplanePath").InnerText = InstallOptionsPage._InstallOptionsPage.xplaneDirTextBox.Text;
-            xmlConfigDoc.SelectSingleNode("installer/configuration/audiobirdxp").InnerText = Convert.ToString(InstallOptionsPage._InstallOptionsPage.audioBirdCheck.Checked);
+            //xmlConfigDoc.SelectSingleNode("installer/configuration/audiobirdxp").InnerText = Convert.ToString(InstallOptionsPage._InstallOptionsPage.audioBirdCheck.Checked);
             //xmlConfigDoc.SelectSingleNode("installer/configuration/texturemod").InnerText = Convert.ToString(InstallOptionsPage._InstallOptionsPage.RGModCheckbox.Checked);
             xmlConfigDoc.SelectSingleNode("installer/data/ziboVer").InnerText = Convert.ToString(InstallOptionsPage.installedZibo);
-            xmlConfigDoc.SelectSingleNode("installer/data/fmodVer").InnerText = Convert.ToString(InstallOptionsPage.installedAudioB);
+            //xmlConfigDoc.SelectSingleNode("installer/data/fmodVer").InnerText = Convert.ToString(InstallOptionsPage.installedAudioB);
             xmlConfigDoc.SelectSingleNode("installer/configuration/textureres").InnerText = Convert.ToString(InstallOptionsPage._InstallOptionsPage.dropdownbox.SelectedIndex);
             //xmlConfigDoc.SelectSingleNode("installer/data/texturemodinstalled").InnerText = Convert.ToString(InstallOptionsPage.texturemodInstalled);
             xmlConfigDoc.Save(AppData + "\\data.xml");
@@ -261,58 +261,58 @@ namespace ZibomodInstaller
                 File.Copy(acDirectory + @"\ACF_2k_4k\b738.acf.2k", xplaneDir + @"Aircraft\B737-800X\b738.acf", true);
             }
         }
-        //AudioBird
-        public static void AudioDownload(string DownloadID)
-        {
-            GDriveAPI AudioDrive = new GDriveAPI();
-            AudioDrive.DownloadFile(DownloadID, AppData + "\\AXP-Immersion.zip"); //Downloads file to %Appdata%
-            while (AudioDrive.DriveClient.IsBusy)
-            {
-                InstallPage._InstallPage.UpdateProgressbar(AudioDrive.downloadProgress);
-                Thread.Sleep(2);
-            }
-        }
-        public static void AudioExtract()
-        {
-            //using (ZipFile AudioDL = ZipFile.Read(AppData + "\\AXP-Immersion.zip"))
-            //{
-            //    AudioDL.ExtractAll(AppData + @"\AudioDL", ExtractExistingFileAction.OverwriteSilently);
-            //}
-            using (SevenZipExtractor AudioDL = new SevenZipExtractor(AppData + "\\AXP-Immersion.zip"))
-            {
-                AudioDL.ExtractArchive(AppData + @"\AudioDL");
-            }
+        ////AudioBird
+        //public static void AudioDownload(string DownloadID)
+        //{
+        //    GDriveAPI AudioDrive = new GDriveAPI();
+        //    AudioDrive.DownloadFile(DownloadID, AppData + "\\AXP-Immersion.zip"); //Downloads file to %Appdata%
+        //    while (AudioDrive.DriveClient.IsBusy)
+        //    {
+        //        InstallPage._InstallPage.UpdateProgressbar(AudioDrive.downloadProgress);
+        //        Thread.Sleep(2);
+        //    }
+        //}
+        //public static void AudioExtract()
+        //{
+        //    //using (ZipFile AudioDL = ZipFile.Read(AppData + "\\AXP-Immersion.zip"))
+        //    //{
+        //    //    AudioDL.ExtractAll(AppData + @"\AudioDL", ExtractExistingFileAction.OverwriteSilently);
+        //    //}
+        //    using (SevenZipExtractor AudioDL = new SevenZipExtractor(AppData + "\\AXP-Immersion.zip"))
+        //    {
+        //        AudioDL.ExtractArchive(AppData + @"\AudioDL");
+        //    }
 
-        }
-        public static void AudioInstall(string xplaneDir)
-        {
-            if (!Directory.Exists(xplaneDir + @"Aircraft\B737-800X\fmod"))
-            {
-                Directory.CreateDirectory(xplaneDir + @"Aircraft\B737-800X\fmod");
-            }
-            string fmodDirectory = FindFMODDir(AppData + @"\AudioDL");
+        //}
+        //public static void AudioInstall(string xplaneDir)
+        //{
+        //    if (!Directory.Exists(xplaneDir + @"Aircraft\B737-800X\fmod"))
+        //    {
+        //        Directory.CreateDirectory(xplaneDir + @"Aircraft\B737-800X\fmod");
+        //    }
+        //    string fmodDirectory = FindFMODDir(AppData + @"\AudioDL");
 
-            DirectoryCopy(fmodDirectory, xplaneDir + @"Aircraft\B737-800X\fmod", true);
-        }
-        private static string FindFMODDir(string DirectoryToLookIn)
-        {
-            string fmodDirectory = null;
-            DirectoryInfo dir = new DirectoryInfo(DirectoryToLookIn);
-            DirectoryInfo[] dirs = dir.GetDirectories();
-            foreach (DirectoryInfo subdir in dirs)
-            {
-                if (subdir.FullName.Contains("fmod"))
-                {
-                    fmodDirectory = subdir.FullName;
-                    break;
-                }
-                else
-                {
-                    fmodDirectory = FindFMODDir(subdir.FullName);
-                }
-            }
-            return fmodDirectory;
-        }
+        //    DirectoryCopy(fmodDirectory, xplaneDir + @"Aircraft\B737-800X\fmod", true);
+        //}
+        //private static string FindFMODDir(string DirectoryToLookIn)
+        //{
+        //    string fmodDirectory = null;
+        //    DirectoryInfo dir = new DirectoryInfo(DirectoryToLookIn);
+        //    DirectoryInfo[] dirs = dir.GetDirectories();
+        //    foreach (DirectoryInfo subdir in dirs)
+        //    {
+        //        if (subdir.FullName.Contains("fmod"))
+        //        {
+        //            fmodDirectory = subdir.FullName;
+        //            break;
+        //        }
+        //        else
+        //        {
+        //            fmodDirectory = FindFMODDir(subdir.FullName);
+        //        }
+        //    }
+        //    return fmodDirectory;
+        //}
         private static string FindACDir(string DirectoryToLookIn)
         {
             string ACDir = null;

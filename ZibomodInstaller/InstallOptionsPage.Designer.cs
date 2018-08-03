@@ -33,7 +33,7 @@
             this.dropdownbox = new System.Windows.Forms.ComboBox();
             this.forceInstallCheckbox = new System.Windows.Forms.CheckBox();
             this.InstallButton = new System.Windows.Forms.Button();
-            this.audioBirdCheck = new System.Windows.Forms.CheckBox();
+            //this.audioBirdCheck = new System.Windows.Forms.CheckBox();
             this.BrowseButton = new System.Windows.Forms.Button();
             this.xplaneDirTextBox = new System.Windows.Forms.TextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -47,7 +47,7 @@
             this.panel1.Controls.Add(this.dropdownbox);
             this.panel1.Controls.Add(this.forceInstallCheckbox);
             this.panel1.Controls.Add(this.InstallButton);
-            this.panel1.Controls.Add(this.audioBirdCheck);
+            //this.panel1.Controls.Add(this.audioBirdCheck);
             this.panel1.Controls.Add(this.BrowseButton);
             this.panel1.Controls.Add(this.xplaneDirTextBox);
             this.panel1.Location = new System.Drawing.Point(0, 70);
@@ -111,20 +111,20 @@
             this.InstallButton.Text = "Install";
             this.InstallButton.UseVisualStyleBackColor = false;
             this.InstallButton.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // audioBirdCheck
-            // 
-            this.audioBirdCheck.AutoSize = true;
-            this.audioBirdCheck.Checked = true;
-            this.audioBirdCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.audioBirdCheck.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.audioBirdCheck.ForeColor = System.Drawing.Color.White;
-            this.audioBirdCheck.Location = new System.Drawing.Point(37, 75);
-            this.audioBirdCheck.Name = "audioBirdCheck";
-            this.audioBirdCheck.Size = new System.Drawing.Size(192, 19);
-            this.audioBirdCheck.TabIndex = 4;
-            this.audioBirdCheck.Text = "Install AudioBirdXP Sound Mod";
-            this.audioBirdCheck.UseVisualStyleBackColor = true;
+            //// 
+            //// audioBirdCheck
+            //// 
+            //this.audioBirdCheck.AutoSize = true;
+            //this.audioBirdCheck.Checked = true;
+            //this.audioBirdCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            //this.audioBirdCheck.Font = new System.Drawing.Font("Segoe UI", 9F);
+            //this.audioBirdCheck.ForeColor = System.Drawing.Color.White;
+            //this.audioBirdCheck.Location = new System.Drawing.Point(37, 75);
+            //this.audioBirdCheck.Name = "audioBirdCheck";
+            //this.audioBirdCheck.Size = new System.Drawing.Size(192, 19);
+            //this.audioBirdCheck.TabIndex = 4;
+            //this.audioBirdCheck.Text = "Install AudioBirdXP Sound Mod";
+            //this.audioBirdCheck.UseVisualStyleBackColor = true;
             // 
             // BrowseButton
             // 
@@ -177,7 +177,7 @@
         private System.Windows.Forms.Button BrowseButton;
         private System.Windows.Forms.Button InstallButton;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        public System.Windows.Forms.CheckBox audioBirdCheck;
+        //public System.Windows.Forms.CheckBox audioBirdCheck;
         public System.Windows.Forms.TextBox xplaneDirTextBox;
         public System.Windows.Forms.CheckBox forceInstallCheckbox;
         private System.Windows.Forms.Label textuelabel;
