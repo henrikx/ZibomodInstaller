@@ -248,6 +248,10 @@ namespace ZibomodInstaller
         public static void ZiboInstall(string xplaneDir)
         {
             string acDirectory = FindACDir(AppData + @"\ZiboDL");
+            if (acDirectory == null) //If FindACDir couldn't find the b737-800x directory, the files are probably in the root
+            {
+                acDirectory = AppData + @"\ZiboDL";
+            }
             DirectoryCopy(acDirectory, xplaneDir + @"Aircraft\B737-800X\", true);
             if(InstallOptionsPage._InstallOptionsPage.dropdownbox.SelectedIndex == 0)
             {
