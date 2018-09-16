@@ -9,13 +9,39 @@ using System.Web.Script.Serialization;
 using Ionic.Zip;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Windows.Forms;
 //using SevenZip;
 
 namespace ZibomodInstaller
 {
     class GDriveAPI //API parser
-    { 
+    {
+        public string accessToken = null;
         public WebClient DriveClient = new WebClient();
+        DriveAPIWindow driveAPI = new DriveAPIWindow();
+        public void GetPrivateDriveAccessToken()
+        {
+            accessToken = null;
+            driveAPI.FormClosed += DriveAPI_FormClosed;
+            driveAPI.Show();
+        }
+
+        private void DriveAPI_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            accessToken = Regex.Match(Convert.ToString(driveAPI.webBrowser1.Url), "code=(.*?)#").Groups[1].Value;
+            string client_id = "483328243011-p256f3f7p8tlbfsl5reqj2b22rqvk2e5.apps.googleusercontent.com";
+            if (accessToken == null)
+            {
+
+            } else
+            {
+                Uri uri = new Uri("https://www.googleapis.com/oauth2/v4/token?code=" + accessToken + "&client_id=483328243011-p07ia8t70iec45qm818sh5ucjkkg98m7.apps.googleusercontent.com&client_secret=NZag9WKbGjvZled9YX8kRKPi&redirect_uri=https://oauth2.example.com&scope=&grant_type=authorization_code");
+                string getAccessToken = DriveClient.UploadString(uri, "");
+                accessToken = Regex.Match(getAccessToken, "\"access_token\": \"(.*?)\",").Groups[1].Value;
+                CopyToDrive("1qiNHMsbIj8-kMoPCf_JaVyglvPTaP8rQ", accessToken, GetOwnDriveID(accessToken));
+            }
+        }
+
         public Dictionary<string,dynamic> GetDriveFolderList(string DriveFolderID)
         {
             Dictionary<string, dynamic> folderContentData = null; //Define data storage for parsed JSON content
@@ -34,6 +60,34 @@ namespace ZibomodInstaller
         public void Downloader_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             downloadProgress = e.ProgressPercentage;
+        }
+        public void DownloadFileWithAuth(string ID, string DownloadLocation, string AuthID)
+        {
+            System.Uri Uri = new System.Uri("https://www.googleapis.com/drive/v3/files/" + ID + "?alt=media&access_token=" + AuthID + "&key=AIzaSyCTF8x5DeVXllRTPMrtIwnY5DaBjbjKts8");
+            DriveClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(Downloader_DownloadProgressChanged);
+            DriveClient.DownloadFile(Uri, DownloadLocation);
+        }
+        public void CopyToDrive(string ID, string AuthID, string folderID)
+        {
+            System.Uri Uri = new System.Uri("https://www.googleapis.com/drive/v2/files/" + ID + "/copy?access_token=" + AuthID + "&key=AIzaSyCTF8x5DeVXllRTPMrtIwnY5DaBjbjKts8");
+            JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
+            Dictionary<string, dynamic> fileData = new Dictionary<string, dynamic>();
+            fileData.Add("title", "B738-InstallerCopy.zip");
+            fileData.Add("parents", new Dictionary<string,dynamic>());
+            string[] ownDriveID = new string[1] { folderID };
+            (fileData["parents"]).Add("id", ownDriveID);
+            string jsondata = javaScriptSerializer.Serialize(fileData);
+            string copy = DriveClient.UploadString(Uri, "{\"title\":\"ZiboModInstaller-quotabypass.zip\",\"parents\":[{\"id\":\"0AMUcLKx7YvgfUk9PVA\"}]}");
+        }
+        public string GetOwnDriveID(string AuthID)
+        {
+            Uri Uri = new Uri("https://www.googleapis.com/drive/v2/about?access_token=" + AuthID + "&key=AIzaSyCTF8x5DeVXllRTPMrtIwnY5DaBjbjKts8");
+            string response = DriveClient.DownloadString(Uri);
+            Dictionary<string, dynamic> jsonResponse = null; //Define data storage for parsed JSON content
+            JavaScriptSerializer jsonParser = new JavaScriptSerializer();
+            jsonResponse = jsonParser.Deserialize<Dictionary<string, dynamic>>(response); //Convert downloaded JSON data to data which is readable by C#
+            string DriveID = jsonResponse["rootFolderId"];
+            return DriveID;
         }
     }
     //class OneDriveAPI

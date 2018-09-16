@@ -96,6 +96,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DriveAPIWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DriveAPIWindow.Designer.cs">
+      <DependentUpon>DriveAPIWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="EmbeddedAssembly.cs" />
     <Compile Include="InstallActions.cs" />
     <Compile Include="InstallOptionsPage.cs">
@@ -118,6 +124,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DriveAPIWindow.resx">
+      <DependentUpon>DriveAPIWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="InstallOptionsPage.resx">
       <DependentUpon>InstallOptionsPage.cs</DependentUpon>
     </EmbeddedResource>
