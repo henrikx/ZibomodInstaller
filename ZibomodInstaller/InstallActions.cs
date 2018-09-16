@@ -18,29 +18,29 @@ namespace ZibomodInstaller
     {
         public string accessToken = null;
         public WebClient DriveClient = new WebClient();
-        DriveAPIWindow driveAPI = new DriveAPIWindow();
-        public void GetPrivateDriveAccessToken()
-        {
-            accessToken = null;
-            driveAPI.FormClosed += DriveAPI_FormClosed;
-            driveAPI.Show();
-        }
+        //DriveAPIWindow driveAPI = new DriveAPIWindow();
+        //public void GetPrivateDriveAccessToken()
+        //{
+        //    accessToken = null;
+        //    driveAPI.FormClosed += DriveAPI_FormClosed;
+        //    driveAPI.Show();
+        //}
 
-        private void DriveAPI_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            accessToken = Regex.Match(Convert.ToString(driveAPI.webBrowser1.Url), "code=(.*?)#").Groups[1].Value;
-            string client_id = "483328243011-p256f3f7p8tlbfsl5reqj2b22rqvk2e5.apps.googleusercontent.com";
-            if (accessToken == null)
-            {
+        //private void DriveAPI_FormClosed(object sender, FormClosedEventArgs e)
+        //{
+        //    accessToken = Regex.Match(Convert.ToString(driveAPI.webBrowser1.Url), "code=(.*?)#").Groups[1].Value;
+        //    string client_id = "483328243011-p256f3f7p8tlbfsl5reqj2b22rqvk2e5.apps.googleusercontent.com";
+        //    if (accessToken == null)
+        //    {
 
-            } else
-            {
-                Uri uri = new Uri("https://www.googleapis.com/oauth2/v4/token?code=" + accessToken + "&client_id=483328243011-p07ia8t70iec45qm818sh5ucjkkg98m7.apps.googleusercontent.com&client_secret=NZag9WKbGjvZled9YX8kRKPi&redirect_uri=https://oauth2.example.com&scope=&grant_type=authorization_code");
-                string getAccessToken = DriveClient.UploadString(uri, "");
-                accessToken = Regex.Match(getAccessToken, "\"access_token\": \"(.*?)\",").Groups[1].Value;
-                CopyToDrive("1qiNHMsbIj8-kMoPCf_JaVyglvPTaP8rQ", accessToken, GetOwnDriveID(accessToken));
-            }
-        }
+        //    } else
+        //    {
+        //        Uri uri = new Uri("https://www.googleapis.com/oauth2/v4/token?code=" + accessToken + "&client_id=483328243011-p07ia8t70iec45qm818sh5ucjkkg98m7.apps.googleusercontent.com&client_secret=NZag9WKbGjvZled9YX8kRKPi&redirect_uri=https://oauth2.example.com&scope=&grant_type=authorization_code");
+        //        string getAccessToken = DriveClient.UploadString(uri, "");
+        //        accessToken = Regex.Match(getAccessToken, "\"access_token\": \"(.*?)\",").Groups[1].Value;
+        //        CopyToDrive("1qiNHMsbIj8-kMoPCf_JaVyglvPTaP8rQ", accessToken, GetOwnDriveID(accessToken));
+        //    }
+        //}
 
         public Dictionary<string,dynamic> GetDriveFolderList(string DriveFolderID)
         {

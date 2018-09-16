@@ -1,4 +1,6 @@
-﻿namespace ZibomodInstaller
+﻿using System.Threading;
+
+namespace ZibomodInstaller
 {
     partial class DriveAPIWindow
     {
