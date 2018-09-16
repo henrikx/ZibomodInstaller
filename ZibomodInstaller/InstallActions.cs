@@ -251,7 +251,7 @@ namespace ZibomodInstaller
 
                 if (folderItemName[i].Contains(".zip"))
                 {
-                    if (!folderItemName[i].Contains("B737") && !folderItemName[i].Contains("Boeing") && SearchZiboOnly) //In case there are other files in zibo's Google Drive
+                    if (!folderItemName[i].Contains("B738") &&!folderItemName[i].Contains("B737") && !folderItemName[i].Contains("Boeing") && SearchZiboOnly) //In case there are other files in zibo's Google Drive
                     {
                         
                     } else
